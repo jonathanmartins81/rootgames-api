@@ -12,9 +12,9 @@ export default {
     locales: [],
     translations: {
       en: {
-        "Auth.form.welcome.title": "Welcome to Won Games!",
+        "Auth.form.welcome.title": "Welcome to Root Games!",
         "Auth.form.welcome.subtitle": "Log in to your account",
-        "app.components.LeftMenu.navbrand.title": "Won Games Dashboard",
+        "app.components.LeftMenu.navbrand.title": "Root Games Dashboard",
       },
     },
     menu: {
@@ -37,5 +37,5 @@ export default {
       releases: false,
     },
   },
-  bootstrap() {},
+  bootstrap() { },
 };
