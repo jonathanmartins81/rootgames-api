@@ -14,7 +14,7 @@ export default {
       en: {
         "Auth.form.welcome.title": "Welcome to Root Games!",
         "Auth.form.welcome.subtitle": "Log in to your account",
-        "app.components.LeftMenu.navbrand.title": "Root Games Dashboard",
+        "app.components.LeftMenu.navbrand.title": "Root Games",
       },
     },
     menu: {
