@@ -28,7 +28,7 @@ export default {
           primary600: "#FFB300",
           primary700: "#FFB300",
           neutral0: "#0d102f",
-          neutral100: "#212121",
+          neutral100: "#172554",
         },
       },
     },
