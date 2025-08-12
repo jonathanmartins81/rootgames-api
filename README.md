@@ -1,57 +1,434 @@
-# 🚀 Getting started with Strapi
+# 🎮 RootGames API
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+[![Strapi](https://img.shields.io/badge/Strapi-4.12.5-2F2E8B?style=for-the-badge&logo=strapi)](https://strapi.io/)
+[![Node.js](https://img.shields.io/badge/Node.js-20.19.4-339933?style=for-the-badge&logo=node.js)](https://nodejs.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16.9-336791?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-### `develop`
+> **API Headless para Catálogo de Jogos** - Uma solução completa construída com Strapi CMS para gerenciamento de jogos, categorias, plataformas, desenvolvedores e publicadores.
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+## 🌟 Características
+
+- 🚀 **API RESTful e GraphQL** completa
+- 🎯 **Importação automática** de jogos da GOG
+- 🖼️ **Sistema de mídia** avançado com upload automático
+- 🔐 **Autenticação robusta** com JWT e tokens de API
+- 📱 **Painel administrativo** customizado
+- 🌍 **Suporte a internacionalização** (i18n)
+- ✨ **Editor rico CKEditor** para descrições
+- 📊 **Relacionamentos complexos** entre entidades
+- 🔄 **Webhooks** para integrações
+- 📈 **Escalável** e pronto para produção
+
+## 🏗️ Arquitetura
 
 ```
-npm run develop
-# or
+rootgames-api/
+├── 📁 config/                 # Configurações do Strapi
+├── 📁 src/
+│   ├── 📁 api/               # APIs e entidades
+│   │   ├── 🎮 game/         # Entidade de jogos
+│   │   ├── 🏷️ category/     # Entidade de categorias
+│   │   ├── 🎯 platform/     # Entidade de plataformas
+│   │   ├── 👨‍💻 developer/    # Entidade de desenvolvedores
+│   │   └── 📢 publisher/    # Entidade de publicadores
+│   ├── 📁 admin/            # Customizações do painel admin
+│   └── 📁 extensions/       # Extensões personalizadas
+├── 📁 database/             # Migrações e dados
+├── 📁 docs/                 # 📚 Documentação completa
+├── 📁 public/               # Arquivos públicos
+└── 📁 patches/              # Patches personalizados
+```
+
+## 📊 Modelo de Dados
+
+### **Entidades Principais**
+
+| Entidade | Descrição | Campos Principais |
+|----------|-----------|-------------------|
+| **🎮 Games** | Jogos do catálogo | Nome, preço, descrição, rating, capa, galeria |
+| **🏷️ Categories** | Categorias/gêneros | Nome, slug |
+| **🎯 Platforms** | Plataformas (PC, PS5, Xbox) | Nome, slug |
+| **👨‍💻 Developers** | Estúdios de desenvolvimento | Nome, slug |
+| **📢 Publishers** | Empresas publicadoras | Nome, slug |
+
+### **Relacionamentos**
+
+- **Games ↔ Categories**: Many-to-Many
+- **Games ↔ Platforms**: Many-to-Many  
+- **Games ↔ Developers**: Many-to-Many
+- **Games ↔ Publisher**: Many-to-One
+
+## 🚀 Início Rápido
+
+### **Pré-requisitos**
+
+- **Node.js**: 16.x - 20.x (recomendado: 18.x LTS)
+- **Yarn**: Gerenciador de pacotes
+- **PostgreSQL**: 12+ (recomendado: 15+)
+- **Git**: Controle de versão
+
+### **Instalação**
+
+```bash
+# 1. Clone o repositório
+git clone https://github.com/jonathanmartins81/rootgames-api.git
+cd rootgames-api
+
+# 2. Instale as dependências
+yarn install
+
+# 3. Configure o banco de dados PostgreSQL
+# (veja docs/STRAPI_CONFIGURATION.md para detalhes)
+
+# 4. Crie o arquivo .env
+cp .env.example .env
+# Edite o arquivo .env com suas configurações
+
+# 5. Inicie o servidor
 yarn develop
 ```
 
-### `start`
+### **Configuração do Banco**
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
+```bash
+# Acesse PostgreSQL como superusuário
+sudo -u postgres psql
 
-```
-npm run start
-# or
-yarn start
-```
+# Crie usuário e banco de dados
+CREATE USER rootgames WITH PASSWORD 'rootgames';
+CREATE DATABASE rootgames OWNER rootgames;
+GRANT ALL PRIVILEGES ON DATABASE rootgames TO rootgames;
 
-### `build`
-
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
-
-```
-npm run build
-# or
-yarn build
+# Saia do PostgreSQL
+\q
 ```
 
-## ⚙️ Deployment
+### **Arquivo de Ambiente (.env)**
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+```env
+# Database Configuration
+DATABASE_CLIENT=postgres
+DATABASE_HOST=127.0.0.1
+DATABASE_PORT=5432
+DATABASE_NAME=rootgames
+DATABASE_USERNAME=rootgames
+DATABASE_PASSWORD=rootgames
+DATABASE_SSL=false
 
-## 📚 Learn more
+# App Configuration
+HOST=0.0.0.0
+PORT=1337
 
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
+# Security Keys (GENERATE NEW ONES FOR PRODUCTION!)
+APP_KEYS=key1,key2,key3,key4
+API_TOKEN_SALT=salt123
+ADMIN_JWT_SECRET=admin-secret
+JWT_SECRET=jwt-secret
+TRANSFER_TOKEN_SALT=transfer-salt
+```
 
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
+## 🌐 Acessos
 
-## ✨ Community
+Após iniciar o servidor, acesse:
 
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
+- **🖥️ Admin Panel**: [http://localhost:1337/admin](http://localhost:1337/admin)
+- **🔌 API REST**: [http://localhost:1337/api](http://localhost:1337/api)
+- **📡 GraphQL**: [http://localhost:1337/graphql](http://localhost:1337/graphql)
+
+## 📚 Documentação
+
+### **📖 Documentação Completa**
+
+A documentação completa está disponível na pasta [`docs/`](./docs/):
+
+- **[📋 Índice](./docs/INDEX.md)** - Navegação e índice completo
+- **[🚀 Configuração](./docs/STRAPI_CONFIGURATION.md)** - Setup e configuração
+- **[🔌 API](./docs/API_DOCUMENTATION.md)** - Endpoints e funcionalidades
+- **[💡 Exemplos](./docs/EXAMPLES.md)** - Casos de uso e scripts
+- **[📖 Visão Geral](./docs/README.md)** - Introdução ao projeto
+
+### **🎯 Início Rápido por Tipo de Usuário**
+
+#### **Para Desenvolvedores Novos**
+1. [📖 Visão Geral](./docs/README.md) - Entenda o projeto
+2. [🚀 Configuração](./docs/STRAPI_CONFIGURATION.md) - Configure o ambiente
+3. [🔌 API](./docs/API_DOCUMENTATION.md) - Aprenda a usar a API
+
+#### **Para Desenvolvedores Experientes**
+1. [🔌 API](./docs/API_DOCUMENTATION.md) - Referência rápida
+2. [💡 Exemplos](./docs/EXAMPLES.md) - Exemplos avançados
+3. [🗺️ Roadmap 2025](./ROADMAP_2025.md) - Próximos passos
+
+## 🔌 API Endpoints
+
+### **🎮 Jogos**
+
+```bash
+# Listar jogos
+GET /api/games?populate=*&sort=name:asc
+
+# Buscar jogo por ID
+GET /api/games/1?populate=*
+
+# Criar jogo
+POST /api/games
+Authorization: Bearer YOUR_API_TOKEN
+
+# Atualizar jogo
+PUT /api/games/1
+
+# Deletar jogo
+DELETE /api/games/1
+```
+
+### **🏷️ Categorias**
+
+```bash
+# Listar categorias
+GET /api/categories?populate=games
+
+# Criar categoria
+POST /api/categories
+```
+
+### **🔄 Populate Automático**
+
+```bash
+# Importar jogos da GOG
+POST /api/games/populate
+Authorization: Bearer YOUR_API_TOKEN
+
+# Com parâmetros
+{
+  "limit": 100,
+  "order": "desc:trending"
+}
+```
+
+### **🔍 Filtros Avançados**
+
+```bash
+# Jogos de RPG com preço < $50
+GET /api/games?filters[categories][name][$eq]=RPG&filters[price][$lt]=50
+
+# Jogos lançados em 2024 para PC
+GET /api/games?filters[release_date][$gte]=2024-01-01&filters[platforms][name][$eq]=PC
+```
+
+## 🛠️ Comandos Úteis
+
+```bash
+# Desenvolvimento
+yarn develop          # Iniciar servidor de desenvolvimento
+yarn build           # Construir para produção
+yarn start           # Iniciar servidor de produção
+
+# Manutenção
+yarn strapi info     # Informações do sistema
+yarn strapi cache:clean  # Limpar cache
+yarn strapi admin:create-user  # Criar usuário admin
+
+# Banco de dados
+yarn strapi database:backup    # Backup do banco
+```
+
+## 🔧 Configurações Avançadas
+
+### **Cache Redis**
+
+```javascript
+// config/database.js
+module.exports = ({ env }) => ({
+  settings: {
+    cache: {
+      enabled: true,
+      type: 'redis',
+      max: 32767,
+      ttl: 3600000,
+    },
+  },
+});
+```
+
+### **Rate Limiting**
+
+```javascript
+// config/middlewares.js
+module.exports = [
+  'strapi::errors',
+  {
+    name: 'strapi::security',
+    config: {
+      rateLimit: {
+        enabled: true,
+        interval: 15 * 60 * 1000, // 15 minutos
+        max: 100, // máximo 100 requests por intervalo
+      },
+    },
+  },
+  // ... outros middlewares
+];
+```
+
+## 🚀 Funcionalidades Implementadas
+
+### **✅ Concluído**
+- [x] API REST completa com CRUD
+- [x] API GraphQL funcional
+- [x] Sistema de upload de mídia
+- [x] Importação automática da GOG
+- [x] Painel administrativo customizado
+- [x] Sistema de permissões
+- [x] Editor rico CKEditor
+- [x] Relacionamentos entre entidades
+- [x] Documentação completa
+
+### **🔄 Em Desenvolvimento**
+- [ ] Sistema de usuários avançado
+- [ ] Reviews e avaliações
+- [ ] Wishlist e favoritos
+- [ ] Sistema de notificações
+
+### **📋 Planejado (2025)**
+- [ ] Integração multi-loja (Steam, Epic, etc.)
+- [ ] Sistema de preços dinâmicos
+- [ ] Analytics e relatórios
+- [ ] Mobile app nativo
+- [ ] IA/ML para recomendações
+
+## 🐛 Troubleshooting
+
+### **Problemas Comuns**
+
+#### **Erro de Conexão PostgreSQL**
+```bash
+# Verificar se o serviço está rodando
+sudo systemctl status postgresql
+
+# Testar conexão
+PGPASSWORD=rootgames psql -h 127.0.0.1 -U rootgames -d rootgames
+```
+
+#### **Erro de Compilação TypeScript**
+```bash
+# Limpar cache
+rm -rf .cache dist
+yarn develop
+```
+
+#### **Erro de Memória**
+```bash
+# Aumentar memória do Node.js
+export NODE_OPTIONS="--max-old-space-size=4096"
+yarn develop
+```
+
+### **Logs Úteis**
+
+```bash
+# Logs do Strapi
+tail -f .tmp/logs/strapi.log
+
+# Logs do PostgreSQL
+sudo journalctl -u postgresql -f
+```
+
+## 🔐 Segurança
+
+### **Configurações de Produção**
+
+```env
+# Sempre use HTTPS
+NODE_ENV=production
+DATABASE_SSL=true
+CORS_ORIGIN=https://yourdomain.com
+
+# Chaves seguras (geradas aleatoriamente)
+APP_KEYS=chave1-segura,chave2-segura,chave3-segura,chave4-segura
+API_TOKEN_SALT=salt-seguro-aleatorio
+ADMIN_JWT_SECRET=jwt-secret-seguro
+JWT_SECRET=jwt-secret-seguro
+TRANSFER_TOKEN_SALT=transfer-salt-seguro
+```
+
+### **Firewall e Rede**
+
+```bash
+# Configurar firewall
+sudo ufw allow 1337/tcp
+sudo ufw allow 5432/tcp
+
+# Restringir acesso ao PostgreSQL
+sudo nano /var/lib/pgsql/data/pg_hba.conf
+```
+
+## 📈 Roadmap 2025
+
+Consulte o [🗺️ ROADMAP_2025.md](./ROADMAP_2025.md) para detalhes completos sobre:
+
+- **Q1 2025**: Fundação e estabilização
+- **Q2 2025**: Expansão de funcionalidades
+- **Q3 2025**: Integração e automação
+- **Q4 2025**: Escalabilidade e inovação
+
+## 🤝 Contribuindo
+
+### **Como Contribuir**
+
+1. **Fork** o repositório
+2. **Crie** uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. **Commit** suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** para a branch (`git push origin feature/AmazingFeature`)
+5. **Abra** um Pull Request
+
+### **Padrões de Código**
+
+- Use **TypeScript** para todo o código
+- Siga as **convenções do Strapi**
+- **Documente** novas funcionalidades
+- Mantenha **testes atualizados**
+- Use **conventional commits**
+
+### **Reportando Bugs**
+
+- Use o sistema de **Issues** do GitHub
+- Inclua **passos para reproduzir**
+- Adicione **logs de erro**
+- Especifique **versão e ambiente**
+
+## 📄 Licença
+
+Este projeto está licenciado sob a **MIT License** - veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+## 🙏 Agradecimentos
+
+- **[Strapi Team](https://strapi.io/)** - Pelo excelente CMS headless
+- **[GOG.com](https://www.gog.com/)** - Pela API de jogos
+- **[Comunidade Open Source](https://opensource.org/)** - Pelas contribuições
+- **Todos os contribuidores** que ajudaram neste projeto
+
+## 📞 Suporte
+
+### **Recursos**
+- **📚 Documentação**: [docs/](./docs/)
+- **🐛 Issues**: [GitHub Issues](https://github.com/jonathanmartins81/rootgames-api/issues)
+- **💬 Discussões**: [GitHub Discussions](https://github.com/jonathanmartins81/rootgames-api/discussions)
+
+### **Comunidade Strapi**
+- **🌐 Fórum**: [forum.strapi.io](https://forum.strapi.io/)
+- **💬 Discord**: [discord.strapi.io](https://discord.strapi.io/)
+- **📖 Documentação**: [docs.strapi.io](https://docs.strapi.io/)
 
 ---
 
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+## ⭐ Se este projeto te ajudou, considere dar uma estrela!
+
+**RootGames API** - Transformando a gestão de catálogos de jogos com tecnologia moderna e código aberto! 🎮✨
+
+---
+
+*Última atualização: Agosto 2025*  
+*Versão: 1.0.0*  
+*Mantido com ❤️ pela comunidade*
