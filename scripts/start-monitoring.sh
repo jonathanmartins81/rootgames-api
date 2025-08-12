@@ -52,18 +52,18 @@ check_monitor_running() {
 # Configurar diretórios
 setup_directories() {
     log "Configurando diretórios de monitoramento..."
-    
+
     mkdir -p ./logs
     mkdir -p ./backups
     mkdir -p ./metrics
-    
+
     success "Diretórios configurados"
 }
 
 # Configurar variáveis de ambiente para produção
 setup_production_env() {
     log "Configurando ambiente de produção..."
-    
+
     # Configurações de alerta (configurar conforme necessário)
     export ALERT_COOLDOWN=300  # 5 minutos entre alertas
     export MAX_ALERTS_PER_HOUR=10
@@ -71,33 +71,33 @@ setup_production_env() {
     export RESPONSE_TIME_THRESHOLD=2000  # 2 segundos
     export MEMORY_THRESHOLD=85
     export CPU_THRESHOLD=80
-    
+
     # Configurações de monitoramento
     export CHECK_INTERVAL=$MONITOR_INTERVAL
     export LOG_FILE=$LOG_FILE
     export ALERT_LOG=$ALERT_LOG
     export METRICS_FILE=$METRICS_FILE
-    
+
     success "Ambiente de produção configurado"
 }
 
 # Iniciar monitoramento em background
 start_monitoring() {
     log "Iniciando monitoramento contínuo em produção..."
-    
+
     # Executar monitor em background
     nohup ./scripts/monitor.sh > "$LOG_FILE" 2>&1 &
     MONITOR_PID=$!
-    
+
     # Salvar PID para controle
     echo $MONITOR_PID > ./logs/monitor.pid
-    
+
     success "Monitor iniciado com PID: $MONITOR_PID"
     log "Logs sendo salvos em: $LOG_FILE"
     log "Alertas sendo salvos em: $ALERT_LOG"
     log "Métricas sendo salvas em: $METRICS_FILE"
     log "Intervalo de verificação: ${MONITOR_INTERVAL}s"
-    
+
     # Verificar se iniciou corretamente
     sleep 5
     if kill -0 $MONITOR_PID 2>/dev/null; then
@@ -113,26 +113,26 @@ start_monitoring() {
 # Função principal
 main() {
     log "🚀 Iniciando monitoramento contínuo em produção..."
-    
+
     # Verificar argumentos
     if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
         echo "Uso: $0 [intervalo_em_segundos]"
         echo "  intervalo_em_segundos: Intervalo entre verificações (padrão: 60s)"
         exit 0
     fi
-    
+
     # Configurar intervalo se fornecido
     if [ -n "$1" ]; then
         MONITOR_INTERVAL="$1"
         log "Intervalo configurado para: ${MONITOR_INTERVAL}s"
     fi
-    
+
     # Executar etapas
     check_monitor_running
     setup_directories
     setup_production_env
     start_monitoring
-    
+
     log "📊 Monitoramento ativo - Sistema protegido!"
 }
 
