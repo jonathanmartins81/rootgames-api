@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 🚀 Script de Implementação LTS Strapi 5.x + React 19 + Node.js 22
+# 🚀 Script de Implementação LTS Strapi 5.x + React 19 + Node.js 22 (AUTOMÁTICO)
 # Versão: 1.0.0
 # Data: 12 de Agosto de 2025
 
@@ -68,45 +68,12 @@ check_versions() {
     echo "======================"
 }
 
-# Função para atualizar Node.js
+# Função para atualizar Node.js (pulada automaticamente)
 update_nodejs() {
-    log "Atualizando Node.js para versão 22.x..."
-
-    # Verificar se já está na versão 22
-    NODE_VERSION=$(node --version 2>/dev/null | cut -d'v' -f2 | cut -d'.' -f1 || echo "0")
-
-    if [ "$NODE_VERSION" -ge 22 ]; then
-        success "Node.js já está na versão 22 ou superior"
-        return 0
-    fi
-
+    log "Pulando atualização do Node.js (modo automático)..."
     warning "Node.js atual: $(node --version 2>/dev/null || echo 'Não instalado')"
-    warning "Atualização para Node.js 22.x requer intervenção manual"
-    warning "Execute os seguintes comandos:"
-    echo ""
-    echo "curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -"
-    echo "sudo apt-get install -y nodejs"
-    echo ""
-    echo "Ou use NVM:"
-    echo "nvm install 22"
-    echo "nvm use 22"
-    echo "nvm alias default 22"
-    echo ""
-
-    read -p "Pressione Enter após atualizar o Node.js, ou 's' para pular: " choice
-    if [ "$choice" = "s" ]; then
-        warning "Pulando atualização do Node.js"
-        return 0
-    fi
-
-    # Verificar novamente
-    NODE_VERSION=$(node --version 2>/dev/null | cut -d'v' -f2 | cut -d'.' -f1 || echo "0")
-    if [ "$NODE_VERSION" -ge 22 ]; then
-        success "Node.js atualizado com sucesso: $(node --version)"
-    else
-        error "Falha na atualização do Node.js"
-        return 1
-    fi
+    warning "Atualização para Node.js 22.x será feita manualmente posteriormente"
+    return 0
 }
 
 # Função para atualizar NPM
@@ -212,7 +179,7 @@ generate_report() {
 
 | Componente | Versão Anterior | Versão Nova | Status |
 |------------|----------------|-------------|--------|
-| Node.js | $(node --version 2>/dev/null || echo 'N/A') | $(node --version) | ✅ Atualizado |
+| Node.js | $(node --version 2>/dev/null || echo 'N/A') | $(node --version) | ⚠️ Mantido (atualização manual necessária) |
 | NPM | $(npm --version 2>/dev/null || echo 'N/A') | $(npm --version) | ✅ Atualizado |
 | React | ^18.3.1 | ^19.1.1 | ✅ Atualizado |
 | React DOM | ^18.3.1 | ^19.1.1 | ✅ Atualizado |
@@ -221,7 +188,7 @@ generate_report() {
 ## 🔧 Testes Realizados
 
 - [x] ✅ Backup completo do sistema
-- [x] ✅ Atualização Node.js 22.x
+- [x] ⚠️ Atualização Node.js 22.x (pulada - requer manual)
 - [x] ✅ Atualização NPM 9.x
 - [x] ✅ Atualização React 19.1.1
 - [x] ✅ Instalação de dependências
@@ -242,10 +209,20 @@ generate_report() {
 
 ## 🚀 Próximos Passos
 
-1. **Monitoramento**: Observar comportamento em produção
-2. **Testes**: Executar testes de integração completos
-3. **Documentação**: Atualizar README com novas versões
-4. **Deploy**: Preparar para deploy em produção
+1. **Node.js 22.x**: Atualizar manualmente quando possível
+2. **Monitoramento**: Observar comportamento em produção
+3. **Testes**: Executar testes de integração completos
+4. **Documentação**: Atualizar README com novas versões
+5. **Deploy**: Preparar para deploy em produção
+
+## ⚠️ Ações Pendentes
+
+- **Node.js 22.x**: Requer atualização manual do sistema
+- **Comandos sugeridos**:
+  \`\`\`bash
+  curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+  sudo apt-get install -y nodejs
+  \`\`\`
 
 ---
 
@@ -260,27 +237,21 @@ EOF
 main() {
     START_TIME=$(date +%s)
 
-    log "🚀 Iniciando implementação LTS Strapi 5.x + React 19 + Node.js 22"
+    log "🚀 Iniciando implementação LTS Strapi 5.x + React 19 + Node.js 22 (MODO AUTOMÁTICO)"
     log "Data: $(date '+%Y-%m-%d %H:%M:%S')"
 
     echo ""
-    echo "=== ESTRATÉGIA DE IMPLEMENTAÇÃO ==="
+    echo "=== ESTRATÉGIA DE IMPLEMENTAÇÃO (AUTOMÁTICA) ==="
     echo "1. Backup completo do sistema"
-    echo "2. Atualização Node.js para 22.x"
+    echo "2. Atualização Node.js para 22.x (PULADA - automática)"
     echo "3. Atualização NPM para 9.x"
     echo "4. Atualização React para 19.1.1"
     echo "5. Testes de compatibilidade"
     echo "6. Geração de relatório"
-    echo "=================================="
+    echo "================================================"
     echo ""
 
-    read -p "Deseja continuar com a implementação? (y/N): " confirm
-    if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
-        warning "Implementação cancelada pelo usuário"
-        exit 0
-    fi
-
-    # Executar etapas
+    # Executar etapas automaticamente
     backup_system
     check_versions
     update_nodejs
@@ -292,11 +263,11 @@ main() {
     generate_report
 
     echo ""
-    success "🎉 Implementação LTS concluída com sucesso!"
+    success "🎉 Implementação LTS concluída com sucesso (modo automático)!"
     echo ""
     echo "=== RESUMO FINAL ==="
     echo "✅ Backup: $(cat .backup_path 2>/dev/null || echo 'N/A')"
-    echo "✅ Node.js: $(node --version)"
+    echo "⚠️  Node.js: $(node --version) (atualização manual necessária)"
     echo "✅ NPM: $(npm --version)"
     echo "✅ React: 19.1.1"
     echo "✅ Build: Funcionando"
@@ -305,6 +276,7 @@ main() {
     echo ""
     echo "📊 Relatório completo: ./docs/LTS_IMPLEMENTATION_REPORT.md"
     echo "🛡️ Rollback: cp package.json.react-backup package.json"
+    echo "⚠️  Node.js 22.x: Atualizar manualmente quando possível"
     echo ""
 }
 

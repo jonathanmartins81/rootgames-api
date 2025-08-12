@@ -15,7 +15,7 @@ NC='\033[0m' # No Color
 
 # Função para logging
 log() {
-    echo -e "${BLUE}[$(date +'%Y-%m-%d %H:%M:%S')]${NC} $1"
+    echo -e "${BLUE}[$(date '+%Y-%m-%d %H:%M:%S')]${NC} $1"
 }
 
 success() {
@@ -138,7 +138,7 @@ generate_rollback_report() {
 
 ## 🎯 Resumo do Rollback
 
-**Data**: $(date +%Y-%m-%d %H:%M:%S)
+**Data**: $(date '+%Y-%m-%d %H:%M:%S')
 **Status**: ✅ Rollback Concluído
 **Motivo**: Rollback solicitado pelo usuário
 
@@ -185,7 +185,7 @@ generate_rollback_report() {
 ---
 
 **Rollback executado por**: Script de Automação
-**Verificado em**: $(date +%Y-%m-%d %H:%M:%S)
+**Verificado em**: $(date '+%Y-%m-%d %H:%M:%S')
 EOF
 
     success "Relatório de rollback gerado: $REPORT_FILE"
@@ -194,7 +194,7 @@ EOF
 # Função principal
 main() {
     log "🔄 Iniciando rollback LTS Strapi 5.x + React 19 + Node.js 22"
-    log "Data: $(date +%Y-%m-%d %H:%M:%S)"
+    log "Data: $(date '+%Y-%m-%d %H:%M:%S')"
 
     echo ""
     echo "=== ROLLBACK LTS OPTIMIZATION ==="
