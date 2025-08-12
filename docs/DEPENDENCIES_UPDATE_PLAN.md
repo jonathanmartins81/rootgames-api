@@ -2,60 +2,80 @@
 
 ## 🎯 Visão Geral
 
-Este documento detalha o plano de atualização das dependências do projeto RootGames API, incluindo cronograma, riscos e procedimentos de segurança.
+Este documento detalha o plano de atualização das dependências do projeto RootGames API, incluindo cronograma, riscos e procedimentos de segurança. **Atualizado para agosto de 2025**.
 
 ---
 
-## 📊 Status Atual das Dependências
+## 📊 Status Atual das Dependências (Agosto 2025)
 
 ### **✅ Dependências Atualizadas (Janeiro 2025)**
-- **axios**: 1.6.0 → 1.11.0
-- **jsdom**: 22.1.0 → 26.1.0  
-- **pg**: 8.8.0 → 8.16.3
-- **caniuse-lite**: Atualizado para versão mais recente
+- **axios**: 1.6.0 → 1.11.0 ✅
+- **jsdom**: 22.1.0 → 26.1.0 ✅  
+- **pg**: 8.8.0 → 8.16.3 ✅
+- **caniuse-lite**: Atualizado para versão mais recente ✅
 
 ### **🟡 Atualizações Pendentes (Compatíveis)**
 - **@strapi/plugin-i18n**: 4.12.5 → 4.25.23
 - **@strapi/plugin-users-permissions**: 4.12.5 → 4.25.23
+- **@strapi/plugin-graphql**: 4.15.0 → 4.25.23
+- **@strapi/strapi**: 4.12.5 → 4.25.23
 
-### **🔴 Atualizações Maiores (Planejadas)**
-- **@strapi/strapi**: 4.12.5 → 5.21.0
-- **@strapi/plugin-graphql**: 4.15.0 → 5.21.0
-- **Todos os plugins**: Migração para série 5.x
+### **🔴 Atualizações Maiores (Decisão Crítica)**
+- **Migração para Strapi 5.x**: 4.25.23 → 5.21.0
+- **Remoção do plugin i18n**: Agora é core no Strapi 5.x
+- **Breaking changes significativos**: Requer migração completa
 
 ---
 
-## 🚀 Cronograma de Atualizações
+## 🚨 **INFORMAÇÃO CRÍTICA - Agosto 2025**
 
-### **Fase 1: Atualizações Menores (Janeiro 2025) ✅**
+### **Strapi v4 em Modo Manutenção**
+- **Strapi v4** está em modo manutenção até **março de 2026**
+- Não recebe novos recursos, apenas correções críticas
+- **Strapi v5** é a versão ativa com novos recursos
+
+### **Mudanças Importantes no Strapi 5.x**
+- **@strapi/plugin-i18n**: Removido (agora é core)
+- **Estrutura de plugins**: Reorganizada
+- **Breaking changes**: Significativos
+- **Node.js**: Requer 18+ (atual: 20.19.4 ✅)
+
+---
+
+## 🚀 Cronograma de Atualizações Atualizado
+
+### **Fase 1: Atualizações Strapi 4.x (Agosto 2025) ✅**
 - [x] Atualizar dependências menores (axios, jsdom, pg)
 - [x] Atualizar browserslist
-- [ ] Atualizar plugins Strapi para série 4.x
+- [ ] **ATUALIZAR PARA STRAPI 4.25.23** (última versão 4.x)
 - [ ] Testar funcionalidades existentes
 
 **Comandos:**
 ```bash
-# Atualizar plugins Strapi
-yarn add @strapi/plugin-i18n@^4.25.23 @strapi/plugin-users-permissions@^4.25.23
+# Atualizar para última versão Strapi 4.x
+yarn add @strapi/strapi@^4.25.23
+yarn add @strapi/plugin-i18n@^4.25.23
+yarn add @strapi/plugin-users-permissions@^4.25.23
+yarn add @strapi/plugin-graphql@^4.25.23
 
 # Verificar compatibilidade
 yarn build
 yarn develop
 ```
 
-### **Fase 2: Preparação Strapi 5.x (Fevereiro-Março 2025)**
-- [ ] Criar ambiente de staging
+### **Fase 2: Decisão Strapi 5.x (Setembro 2025)**
+- [ ] **DECISÃO CRÍTICA**: Migrar para Strapi 5.x ou manter 4.x
+- [ ] Análise de impacto completo
+- [ ] Preparar ambiente de staging
 - [ ] Implementar testes automatizados
-- [ ] Preparar scripts de migração
 - [ ] Documentar breaking changes
-- [ ] Treinar equipe nas mudanças
 
-### **Fase 3: Migração Strapi 5.x (Abril-Maio 2025)**
+### **Fase 3: Migração Strapi 5.x (Outubro-Novembro 2025)**
 - [ ] Backup completo do sistema
+- [ ] Usar comando oficial: `npx @strapi/upgrade major`
 - [ ] Migração em ambiente de staging
 - [ ] Testes extensivos de funcionalidades
 - [ ] Deploy em produção com rollback automático
-- [ ] Monitoramento pós-migração
 
 ---
 
@@ -73,7 +93,7 @@ yarn develop
 ### **Testes em Ambiente Isolado**
 ```bash
 # Criar branch de teste
-git checkout -b test-dependencies-update
+git checkout -b test-strapi-update
 
 # Testar em ambiente local
 yarn install
@@ -133,6 +153,7 @@ git reset --hard HEAD~1
 
 ### **Alto Risco**
 - **Migração Strapi 4.x → 5.x**: Breaking changes significativos
+- **Remoção do plugin i18n**: Pode quebrar funcionalidades existentes
 - **Mudanças de API**: Pode quebrar funcionalidades existentes
 
 ---
@@ -141,7 +162,8 @@ git reset --hard HEAD~1
 
 ### **Documentação Oficial**
 - [Strapi Migration Guide](https://docs.strapi.io/dev-docs/migration-guides)
-- [Strapi 5.x Breaking Changes](https://docs.strapi.io/dev-docs/migration-guides/migration-guide-4.x-to-5.0.0)
+- [Strapi 5.x Breaking Changes](https://docs.strapi.io/dev-docs/migration-guides/migration-guide-4.x-to-v5.0.0)
+- [Strapi v4 Maintenance Mode](https://strapi.io/v4)
 - [Node.js Compatibility](https://nodejs.org/en/about/releases/)
 
 ### **Comunidade**
@@ -175,9 +197,11 @@ git reset --hard HEAD~1
 | 2025-01-XX | jsdom | 22.1.0 | 26.1.0 | ✅ Concluída |
 | 2025-01-XX | pg | 8.8.0 | 8.16.3 | ✅ Concluída |
 | 2025-01-XX | caniuse-lite | - | Latest | ✅ Concluída |
-| 2025-02-XX | @strapi/plugin-i18n | 4.12.5 | 4.25.23 | 🟡 Pendente |
-| 2025-02-XX | @strapi/plugin-users-permissions | 4.12.5 | 4.25.23 | 🟡 Pendente |
-| 2025-04-XX | @strapi/strapi | 4.12.5 | 5.21.0 | 🔴 Planejada |
+| 2025-08-XX | @strapi/strapi | 4.12.5 | 4.25.23 | 🟡 Pendente |
+| 2025-08-XX | @strapi/plugin-i18n | 4.12.5 | 4.25.23 | 🟡 Pendente |
+| 2025-08-XX | @strapi/plugin-users-permissions | 4.12.5 | 4.25.23 | 🟡 Pendente |
+| 2025-08-XX | @strapi/plugin-graphql | 4.15.0 | 4.25.23 | 🟡 Pendente |
+| 2025-10-XX | Migração Strapi 5.x | 4.25.23 | 5.21.0 | 🔴 Planejada |
 
 ---
 
@@ -197,6 +221,6 @@ git reset --hard HEAD~1
 
 ---
 
-*Última atualização: Janeiro 2025*
-*Versão do Plano: 1.0.0*
-*Próxima revisão: Fevereiro 2025*
+*Última atualização: Agosto 2025*
+*Versão do Plano: 2.0.0*
+*Próxima revisão: Setembro 2025*

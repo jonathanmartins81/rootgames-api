@@ -9,6 +9,7 @@
 | **[API_DOCUMENTATION.md](./API_DOCUMENTATION.md)** | Documentação completa da API | 567 |
 | **[EXAMPLES.md](./EXAMPLES.md)** | Exemplos práticos e casos de uso | 490 |
 | **[DEPENDENCIES_UPDATE_PLAN.md](./DEPENDENCIES_UPDATE_PLAN.md)** | Plano de atualização de dependências | 200 |
+| **[STRAPI_UPDATE_OPTIONS.md](./STRAPI_UPDATE_OPTIONS.md)** | Opções de atualização do Strapi | 300 |
 
 ---
 
@@ -47,8 +48,8 @@
 
 ## 📊 **Estatísticas da Documentação**
 
-- **Total de Páginas**: 1.890 linhas
-- **Arquivos**: 5 documentos principais
+- **Total de Páginas**: 2.190 linhas
+- **Arquivos**: 6 documentos principais
 - **Exemplos de Código**: 50+ exemplos
 - **Scripts Práticos**: 10+ scripts
 - **Casos de Uso**: 15+ cenários
