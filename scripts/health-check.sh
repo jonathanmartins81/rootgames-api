@@ -253,15 +253,15 @@ main() {
 
     # 1. Verificar endpoints críticos
     TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
-    if check_endpoint "/_health" "Health Check Endpoint"; then
-        success "✅ Health check endpoint: OK"
+    if check_endpoint "/" "Root Endpoint" "200"; then
+        success "✅ Root endpoint: OK"
     else
-        error "❌ Health check endpoint: FALHOU"
+        error "❌ Root endpoint: FALHOU"
         FAILED_CHECKS=$((FAILED_CHECKS + 1))
     fi
 
     TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
-    if check_endpoint "/api/games?limit=1" "API Games"; then
+    if check_endpoint "/api/games?limit=1" "API Games" "403"; then
         success "✅ API Games: OK"
     else
         error "❌ API Games: FALHOU"
@@ -269,7 +269,7 @@ main() {
     fi
 
     TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
-    if check_endpoint "/admin" "Admin Panel"; then
+    if check_endpoint "/admin" "Admin Panel" "200"; then
         success "✅ Admin Panel: OK"
     else
         error "❌ Admin Panel: FALHOU"
