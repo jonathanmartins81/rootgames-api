@@ -147,6 +147,86 @@ export MAX_ALERTS_PER_HOUR=10
 - ✅ Build da aplicação
 - ✅ Deploy por ambiente
 - ✅ Health check pós-deploy
+
+---
+
+### 🚀 **start-monitoring.sh** - Iniciar Monitoramento
+**Descrição**: Inicia monitoramento contínuo em produção com configurações otimizadas.
+
+**Uso**:
+```bash
+# Iniciar com intervalo padrão (60s)
+./scripts/start-monitoring.sh
+
+# Iniciar com intervalo customizado
+./scripts/start-monitoring.sh 30
+
+# Ajuda
+./scripts/start-monitoring.sh --help
+```
+
+**Funcionalidades**:
+- ✅ Verificação de monitor já rodando
+- ✅ Configuração automática de diretórios
+- ✅ Configurações otimizadas para produção
+- ✅ Execução em background com PID
+- ✅ Logs estruturados e organizados
+- ✅ Integração com sistema de alertas
+
+**Configurações de Produção**:
+```bash
+export MONITOR_INTERVAL=60
+export ALERT_COOLDOWN=300
+export MAX_ALERTS_PER_HOUR=10
+export ERROR_THRESHOLD=5
+export RESPONSE_TIME_THRESHOLD=2000
+export MEMORY_THRESHOLD=85
+export CPU_THRESHOLD=80
+```
+
+---
+
+### 🛑 **stop-monitoring.sh** - Parar Monitoramento
+**Descrição**: Para o monitoramento contínuo de forma segura.
+
+**Uso**:
+```bash
+# Parar monitoramento
+./scripts/stop-monitoring.sh
+
+# Ajuda
+./scripts/stop-monitoring.sh --help
+```
+
+**Funcionalidades**:
+- ✅ Parada segura com PID salvo
+- ✅ Aguardar parada natural
+- ✅ Forçar parada se necessário
+- ✅ Limpeza de arquivos temporários
+- ✅ Relatório final de execução
+- ✅ Estatísticas de monitoramento
+
+---
+
+### 📊 **monitor-status.sh** - Status do Monitoramento
+**Descrição**: Verifica status completo do monitoramento contínuo.
+
+**Uso**:
+```bash
+# Verificar status completo
+./scripts/monitor-status.sh
+
+# Ajuda
+./scripts/monitor-status.sh --help
+```
+
+**Funcionalidades**:
+- ✅ Status do processo de monitoramento
+- ✅ Verificação de logs recentes
+- ✅ Análise de métricas coletadas
+- ✅ Recursos do sistema em tempo real
+- ✅ Conectividade de serviços
+- ✅ Relatório completo de status
 - ✅ Rollback automático em caso de falha
 - ✅ Notificações de resultado
 
