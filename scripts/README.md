@@ -327,6 +327,62 @@ export BACKUP_FILE="./backups/backup_latest.sql"
 ---
 
 ### 🔄 **rollback-strapi5.sh** - Rollback da Migração Strapi 5.x
+
+---
+
+## 🚀 **Scripts de Otimização LTS 2025**
+
+### 🚀 **implement-lts-optimization.sh** - Implementar Otimizações LTS
+**Descrição**: Implementa otimizações LTS completas (React 19, Node.js 22, NPM 9.x).
+
+**Uso**:
+```bash
+# Executar otimização completa
+./scripts/implement-lts-optimization.sh
+
+# Ajuda
+./scripts/implement-lts-optimization.sh --help
+```
+
+**Funcionalidades**:
+- ✅ Backup completo do sistema
+- ✅ Atualização Node.js para 22.x
+- ✅ Atualização NPM para 9.x
+- ✅ Atualização React para 19.1.1
+- ✅ Atualização React Router DOM
+- ✅ Instalação de dependências
+- ✅ Testes de build e desenvolvimento
+- ✅ Geração de relatório completo
+- ✅ Rollback automático em caso de falha
+
+**Versões Atualizadas**:
+- Node.js: 22.x (LTS até 2026)
+- NPM: 9.8.x (última estável)
+- React: 19.1.1 (LTS mais recente)
+- React DOM: 19.1.1
+- React Router DOM: 6.30.1
+
+---
+
+### 🔄 **rollback-lts-optimization.sh** - Rollback das Otimizações LTS
+**Descrição**: Rollback completo das otimizações LTS para versões anteriores.
+
+**Uso**:
+```bash
+# Executar rollback
+./scripts/rollback-lts-optimization.sh
+
+# Ajuda
+./scripts/rollback-lts-optimization.sh --help
+```
+
+**Funcionalidades**:
+- ✅ Verificação de backups disponíveis
+- ✅ Rollback do package.json
+- ✅ Rollback completo (se disponível)
+- ✅ Reinstalação de dependências
+- ✅ Teste de rollback
+- ✅ Geração de relatório de rollback
 **Descrição**: Rollback específico e seguro da migração Strapi 5.x.
 
 **Uso**:

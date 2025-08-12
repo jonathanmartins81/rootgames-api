@@ -12,6 +12,7 @@
 | **[STRAPI_UPDATE_OPTIONS.md](./STRAPI_UPDATE_OPTIONS.md)** | Opções de atualização do Strapi | 300 |
 | **[STRAPI_5_MIGRATION_PREP.md](./STRAPI_5_MIGRATION_PREP.md)** | Preparação para migração Strapi 5.x | 450 |
 | **[PACKAGE_JSON_LTS_UPDATE_2025.md](./PACKAGE_JSON_LTS_UPDATE_2025.md)** | Atualizações LTS de agosto 2025 | 180 |
+| **[STRAPI_5X_LTS_OPTIMIZATION_STRATEGY.md](./STRAPI_5X_LTS_OPTIMIZATION_STRATEGY.md)** | Estratégia de otimização LTS 2025 | 250 |
 
 ---
 
