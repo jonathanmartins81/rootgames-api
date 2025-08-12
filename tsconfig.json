@@ -1,9 +1,18 @@
 {
   "extends": "@strapi/typescript-utils/tsconfigs/server",
-  "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "."
+"compilerOptions": {
+  "outDir": "dist",
+  "rootDir": ".",
+  "baseUrl": ".",
+  "paths": {
+    "@/*": ["src/*"]
   },
+  "types": [
+    "node",
+    "@types/react",
+    // ... outras bibliotecas de tipos
+  ]
+},
   "include": [
     "./",
     "./**/*.ts",
