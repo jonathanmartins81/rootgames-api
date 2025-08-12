@@ -232,6 +232,137 @@ export CPU_THRESHOLD=80
 
 ---
 
+### 🔄 **prepare-strapi5-migration.sh** - Preparar Migração Strapi 5.x
+**Descrição**: Prepara ambiente completo para migração segura para Strapi 5.x.
+
+**Uso**:
+```bash
+# Preparar migração
+./scripts/prepare-strapi5-migration.sh
+
+# Ajuda
+./scripts/prepare-strapi5-migration.sh --help
+```
+
+**Funcionalidades**:
+- ✅ Verificação de pré-requisitos (Node.js 18+, Yarn, PostgreSQL)
+- ✅ Backup completo do sistema atual
+- ✅ Criação de branch de staging
+- ✅ Configuração de ambiente de staging
+- ✅ Criação de banco de dados de staging
+- ✅ Restauração de dados de produção para staging
+- ✅ Análise de impacto da migração
+- ✅ Verificação de dependências e configurações
+
+**Configurações**:
+```bash
+export STAGING_DB="rootgames_staging"
+export BACKUP_FILE="./backups/backup_latest.sql"
+```
+
+---
+
+### 🚀 **migrate-strapi5.sh** - Executar Migração Strapi 5.x
+**Descrição**: Executa migração completa para Strapi 5.x com rollback automático.
+
+**Uso**:
+```bash
+# Executar migração
+./scripts/migrate-strapi5.sh
+
+# Ajuda
+./scripts/migrate-strapi5.sh --help
+```
+
+**Funcionalidades**:
+- ✅ Verificação de ambiente de staging
+- ✅ Backup final antes da migração
+- ✅ Migração oficial via `npx @strapi/upgrade major`
+- ✅ Migração manual como fallback
+- ✅ Remoção automática do plugin i18n
+- ✅ Atualização de dependências React
+- ✅ Verificação de compatibilidade
+- ✅ Build e teste da aplicação
+- ✅ Rollback automático em caso de falha
+- ✅ Commit das mudanças de migração
+
+**Rollback Automático**:
+- ✅ Restauração de código via Git
+- ✅ Restauração de dependências
+- ✅ Restauração de banco de dados
+- ✅ Verificação pós-rollback
+
+---
+
+### 🧪 **validate-strapi5.sh** - Validar Migração Strapi 5.x
+**Descrição**: Validação completa da migração com testes automatizados.
+
+**Uso**:
+```bash
+# Executar validação completa
+./scripts/validate-strapi5.sh
+
+# Ajuda
+./scripts/validate-strapi5.sh --help
+```
+
+**Testes Executados**:
+- ✅ Verificação de versão Strapi 5.x
+- ✅ Validação de plugins compatíveis
+- ✅ Verificação de dependências React
+- ✅ Teste de build da aplicação
+- ✅ Verificação de arquivos de configuração
+- ✅ Teste de funcionalidades básicas
+- ✅ Validação de endpoints (REST, GraphQL, Admin)
+- ✅ Verificação de peer dependencies
+- ✅ Análise de estrutura de arquivos
+- ✅ Relatório detalhado em JSON
+
+**Resultados**:
+- 📊 Relatório com taxa de sucesso
+- 📁 Logs detalhados de validação
+- 🎯 Recomendações de próximos passos
+- ⚠️ Alertas para problemas identificados
+
+---
+
+### 🔄 **rollback-strapi5.sh** - Rollback da Migração Strapi 5.x
+**Descrição**: Rollback específico e seguro da migração Strapi 5.x.
+
+**Uso**:
+```bash
+# Rollback interativo
+./scripts/rollback-strapi5.sh
+
+# Rollback forçado
+./scripts/rollback-strapi5.sh --force
+
+# Rollback apenas staging
+./scripts/rollback-strapi5.sh --staging-only
+
+# Ajuda
+./scripts/rollback-strapi5.sh --help
+```
+
+**Funcionalidades**:
+- ✅ Verificação de branch e ambiente
+- ✅ Confirmação interativa do usuário
+- ✅ Backup antes do rollback
+- ✅ Rollback de código via Git
+- ✅ Restauração de dependências Strapi 4.x
+- ✅ Restauração de banco de dados
+- ✅ Verificação de build e funcionamento
+- ✅ Commit do rollback
+- ✅ Modo staging-only para testes
+
+**Segurança**:
+- 🛡️ Confirmação para rollback em produção
+- 🛡️ Backup automático antes do rollback
+- 🛡️ Verificação de integridade pós-rollback
+- 🛡️ Logs detalhados de todas as operações
+
+---
+
 ## ⚙️ Configurações de Feature Flags
 
 ### **config/features.js**
