@@ -11,8 +11,7 @@
 | **[DEPENDENCIES_UPDATE_PLAN.md](./DEPENDENCIES_UPDATE_PLAN.md)** | Plano de atualização de dependências | 200 |
 | **[STRAPI_UPDATE_OPTIONS.md](./STRAPI_UPDATE_OPTIONS.md)** | Opções de atualização do Strapi | 300 |
 | **[STRAPI_5_MIGRATION_PREP.md](./STRAPI_5_MIGRATION_PREP.md)** | Preparação para migração Strapi 5.x | 450 |
-| **[MIGRATION_SUMMARY.md](./MIGRATION_SUMMARY.md)** | Resumo da migração Strapi 5.x concluída | 300 |
-| **[STRAPI_5_FINAL_RECOMMENDATIONS.md](./STRAPI_5_FINAL_RECOMMENDATIONS.md)** | Recomendações finais pós-migração | 400 |
+| **[PACKAGE_JSON_LTS_UPDATE_2025.md](./PACKAGE_JSON_LTS_UPDATE_2025.md)** | Atualizações LTS de agosto 2025 | 180 |
 
 ---
 
@@ -52,8 +51,8 @@
 
 ## 📊 **Estatísticas da Documentação**
 
-- **Total de Páginas**: 3.340 linhas
-- **Arquivos**: 9 documentos principais
+- **Total de Páginas**: 2.640 linhas
+- **Arquivos**: 7 documentos principais
 - **Exemplos de Código**: 50+ exemplos
 - **Scripts Práticos**: 10+ scripts
 - **Casos de Uso**: 15+ cenários
