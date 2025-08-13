@@ -1,7 +1,14 @@
-############################
-# OS X
-############################
+# ===========================================
+# ROOTGAMES API - GITIGNORE
+# ===========================================
+# Configurações específicas para Strapi 5.x + Node.js + TypeScript
+# ===========================================
 
+# ===========================================
+# SISTEMAS OPERACIONAIS
+# ===========================================
+
+# macOS
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -9,19 +16,25 @@ Icon
 .Spotlight-V100
 .Trashes
 ._*
+.DocumentRevisions-V100
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
 
-
-############################
 # Linux
-############################
-
 *~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
 
-
-############################
 # Windows
-############################
-
 Thumbs.db
 ehthumbs.db
 Desktop.ini
@@ -30,11 +43,13 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+*.lnk
+*.tmp
+*.temp
 
-
-############################
-# Packages
-############################
+# ===========================================
+# ARQUIVOS COMPACTADOS E BINÁRIOS
+# ===========================================
 
 *.7z
 *.csv
@@ -59,56 +74,296 @@ $RECYCLE.BIN/
 *.swm
 *.out
 *.pid
+*.bin
+*.app
+*.deb
+*.rpm
+*.pkg
 
+# ===========================================
+# LOGS E BANCOS DE DADOS
+# ===========================================
 
-############################
-# Logs and databases
-############################
-
-.tmp
+# Logs
 *.log
+*.log.*
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Bancos de dados
 *.sql
 *.sqlite
 *.sqlite3
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
 
+# ===========================================
+# NODE.JS
+# ===========================================
 
-############################
-# Misc.
-############################
+# Dependências
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
 
-*#
-ssl
-.idea
-nbproject
-public/uploads/*
-!public/uploads/.gitkeep
-
-############################
-# Node.js
-############################
-
-lib-cov
-lcov.info
+# Runtime data
 pids
-logs
-results
-node_modules
-.node_history
+*.pid
+*.seed
+*.pid.lock
 
-############################
-# Tests
-############################
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+.nyc_output
 
-coverage
+# Dependency directories
+jspm_packages/
 
-############################
-# Strapi
-############################
+# Optional npm cache directory
+.npm
 
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+public
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
+
+# ===========================================
+# STRAPI
+# ===========================================
+
+# Strapi specific
 .env
+.env.*
+!.env.example
 license.txt
 exports
 *.cache
-dist
-build
+dist/
+build/
 .strapi-updater.json
+.strapi/
+
+# Strapi uploads (keep structure)
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Strapi database
+.tmp/
+.cache/
+
+# ===========================================
+# DESENVOLVIMENTO E FERRAMENTAS
+# ===========================================
+
+# IDEs e Editores
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+.metadata
+bin/
+*.tmp
+*.temp
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ===========================================
+# TESTES
+# ===========================================
+
+# Testes
+coverage/
+.nyc_output/
+*.lcov
+test-results/
+playwright-report/
+test-results.xml
+coverage.xml
+*.test.js.snap
+*.spec.js.snap
+
+# Jest
+jest-coverage/
+.jest/
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+
+# ===========================================
+# BUILD E DEPLOYMENT
+# ===========================================
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+
+# Docker
+.dockerignore
+Dockerfile.prod
+docker-compose.override.yml
+
+# ===========================================
+# SEGURANÇA E CONFIGURAÇÕES
+# ===========================================
+
+# Arquivos de configuração sensíveis
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.staging.local
+
+# Chaves e certificados
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.p8
+
+# Backup files
+*.backup
+*.bak
+*.old
+*.orig
+
+# ===========================================
+# ARQUIVOS ESPECÍFICOS DO PROJETO
+# ===========================================
+
+# Imagens baixadas temporariamente
+downloaded_image.jpg
+downloaded_*.jpg
+downloaded_*.png
+downloaded_*.gif
+downloaded_*.webp
+
+# Backups do projeto
+*.backup
+package.json.backup
+package.json.react-backup
+
+# Arquivos de monitoramento
+metrics/
+logs/
+monitoring/
+
+# ===========================================
+# MISC
+# ===========================================
+
+# Arquivos temporários
+*#
+ssl
+nbproject
+
+# Arquivos de sistema
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# Arquivos de lock (manter apenas os necessários)
+# package-lock.json (manter se usar npm)
+# yarn.lock (manter se usar yarn)
+# pnpm-lock.yaml (manter se usar pnpm)
+
+# ===========================================
+# EXCEÇÕES (arquivos que DEVEM ser versionados)
+# ===========================================
+
+# Manter estrutura de uploads
+!public/uploads/.gitkeep
+
+# Manter exemplos de configuração
+!.env.example
+!docker-compose.example.yml
+
+# Manter documentação
+!docs/
+!README*.md
+!CHANGELOG*.md
+!LICENSE*
+
+# Manter configurações de build
+!webpack.config.example.js
+!tsconfig.json
+!.eslintrc.js
+!.prettierrc.js

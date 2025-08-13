@@ -1,24 +1,80 @@
 {
   "extends": "@strapi/typescript-utils/tsconfigs/server",
-"compilerOptions": {
-  "outDir": "dist",
-  "rootDir": ".",
-  "baseUrl": ".",
-  "paths": {
-    "@/*": ["src/*"]
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+
+    // Configurações de compilação
+    "target": "ES2022",
+    "module": "CommonJS",
+    "lib": ["ES2022"],
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "checkJs": false,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": true,
+    "removeComments": false,
+    "noEmitOnError": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Configurações de paths e resolução
+    "paths": {
+      "@/*": ["src/*"],
+      "@api/*": ["src/api/*"],
+      "@config/*": ["config/*"],
+      "@database/*": ["database/*"],
+      "@docs/*": ["docs/*"],
+      "@scripts/*": ["scripts/*"],
+      "@types/*": ["types/*"],
+      "@utils/*": ["src/utils/*"],
+      "@services/*": ["src/services/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@extensions/*": ["src/extensions/*"]
+    },
+
+    // Tipos incluídos
+    "types": [
+      "node",
+      "@types/react",
+      "@strapi/strapi",
+      "jest",
+      "supertest"
+    ],
+
+    // Configurações de performance
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true
   },
-  "types": [
-    "node",
-    "@types/react",
-    // ... outras bibliotecas de tipos
-  ]
-},
+
   "include": [
     "./",
     "./**/*.ts",
     "./**/*.js",
-    "src/**/*.json"
+    "./**/*.json",
+    "src/**/*",
+    "config/**/*",
+    "database/**/*",
+    "scripts/**/*",
+    "types/**/*"
   ],
+
   "exclude": [
     "node_modules/",
     "build/",
@@ -27,6 +83,26 @@
     ".tmp/",
     "src/admin/",
     "**/*.test.*",
-    "src/plugins/**"
+    "**/*.spec.*",
+    "**/__tests__/**",
+    "**/tests/**",
+    "src/plugins/**",
+    "coverage/",
+    "*.min.js",
+    "*.bundle.js"
+  ],
+
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    },
+    "transpileOnly": true,
+    "files": true
+  },
+
+  "references": [
+    {
+      "path": "./src/admin"
+    }
   ]
 }

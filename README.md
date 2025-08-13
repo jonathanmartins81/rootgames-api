@@ -1,12 +1,13 @@
 # 🎮 RootGames API
 
-[![Strapi](https://img.shields.io/badge/Strapi-4.12.5-2F2E8B?style=for-the-badge&logo=strapi)](https://strapi.io/)
+[![Strapi](https://img.shields.io/badge/Strapi-5.21.0-2F2E8B?style=for-the-badge&logo=strapi)](https://strapi.io/)
 [![Node.js](https://img.shields.io/badge/Node.js-20.19.4-339933?style=for-the-badge&logo=node.js)](https://nodejs.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16.9-336791?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19.1.1-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-> **API Headless para Catálogo de Jogos** - Uma solução completa construída com Strapi CMS para gerenciamento de jogos, categorias, plataformas, desenvolvedores e publicadores.
+> **🎯 API Headless para Catálogo de Jogos** - Uma solução completa construída com Strapi 5.x CMS para gerenciamento de jogos, categorias, plataformas, desenvolvedores e publicadores.
 
 ## 🌟 Características
 
@@ -20,6 +21,9 @@
 - 📊 **Relacionamentos complexos** entre entidades
 - 🔄 **Webhooks** para integrações
 - 📈 **Escalável** e pronto para produção
+- 🛡️ **TypeScript** com configurações otimizadas
+- 🧪 **Testes** configurados com Jest
+- 🎨 **ESLint + Prettier** para qualidade de código
 
 ## 🏗️ Arquitetura
 
@@ -38,6 +42,7 @@ rootgames-api/
 ├── 📁 database/             # Migrações e dados
 ├── 📁 docs/                 # 📚 Documentação completa
 ├── 📁 public/               # Arquivos públicos
+├── 📁 scripts/              # Scripts de automação
 └── 📁 patches/              # Patches personalizados
 ```
 
@@ -64,9 +69,9 @@ rootgames-api/
 
 ### **Pré-requisitos**
 
-- **Node.js**: 16.x - 20.x (recomendado: 18.x LTS)
-- **Yarn**: Gerenciador de pacotes
-- **PostgreSQL**: 12+ (recomendado: 15+)
+- **Node.js**: 20.x - 24.x (recomendado: 20.x LTS)
+- **Yarn**: 1.22+ (gerenciador de pacotes)
+- **PostgreSQL**: 12+ (recomendado: 16+)
 - **Git**: Controle de versão
 
 ### **Instalação**
@@ -97,7 +102,7 @@ yarn develop
 sudo -u postgres psql
 
 # Crie usuário e banco de dados
-CREATE USER rootgames WITH PASSWORD 'rootgames';
+CREATE USER rootgames WITH PASSWORD 'rootgames123';
 CREATE DATABASE rootgames OWNER rootgames;
 GRANT ALL PRIVILEGES ON DATABASE rootgames TO rootgames;
 
@@ -114,7 +119,7 @@ DATABASE_HOST=127.0.0.1
 DATABASE_PORT=5432
 DATABASE_NAME=rootgames
 DATABASE_USERNAME=rootgames
-DATABASE_PASSWORD=rootgames
+DATABASE_PASSWORD=rootgames123
 DATABASE_SSL=false
 
 # App Configuration
@@ -219,19 +224,55 @@ GET /api/games?filters[release_date][$gte]=2024-01-01&filters[platforms][name][$
 
 ## 🛠️ Comandos Úteis
 
+### **Desenvolvimento**
 ```bash
-# Desenvolvimento
 yarn develop          # Iniciar servidor de desenvolvimento
 yarn build           # Construir para produção
 yarn start           # Iniciar servidor de produção
+yarn dev             # Alias para develop
+yarn prod            # Alias para start
+```
 
-# Manutenção
-yarn strapi info     # Informações do sistema
-yarn strapi cache:clean  # Limpar cache
-yarn strapi admin:create-user  # Criar usuário admin
+### **Banco de Dados**
+```bash
+yarn db:backup       # Backup do banco
+yarn db:restore      # Restaurar backup
+yarn db:seed         # Popular com dados de teste
+yarn db:migrate      # Executar migrações
+```
 
-# Banco de dados
-yarn strapi database:backup    # Backup do banco
+### **Administração**
+```bash
+yarn admin:create    # Criar usuário admin
+yarn admin:list      # Listar usuários admin
+yarn info            # Informações do sistema
+yarn version         # Versão do Strapi
+```
+
+### **Qualidade de Código**
+```bash
+yarn lint            # Verificar código
+yarn lint:fix        # Corrigir problemas automaticamente
+yarn format          # Formatar código
+yarn type-check      # Verificar tipos TypeScript
+```
+
+### **Testes**
+```bash
+yarn test            # Executar testes
+yarn test:watch      # Testes em modo watch
+yarn test:coverage   # Testes com cobertura
+yarn test:e2e        # Testes end-to-end
+```
+
+### **Manutenção**
+```bash
+yarn clean           # Limpar arquivos temporários
+yarn clean:all       # Limpeza completa
+yarn backup          # Backup do projeto
+yarn deploy          # Deploy seguro
+yarn health          # Verificar saúde do sistema
+yarn monitor         # Monitorar sistema
 ```
 
 ## 🔧 Configurações Avançadas
@@ -284,6 +325,10 @@ module.exports = [
 - [x] Editor rico CKEditor
 - [x] Relacionamentos entre entidades
 - [x] Documentação completa
+- [x] TypeScript configurado
+- [x] ESLint + Prettier
+- [x] Scripts de automação
+- [x] Configurações otimizadas
 
 ### **🔄 Em Desenvolvimento**
 - [ ] Sistema de usuários avançado
@@ -308,13 +353,13 @@ module.exports = [
 sudo systemctl status postgresql
 
 # Testar conexão
-PGPASSWORD=rootgames psql -h 127.0.0.1 -U rootgames -d rootgames
+PGPASSWORD=rootgames123 psql -h 127.0.0.1 -U rootgames -d rootgames
 ```
 
 #### **Erro de Compilação TypeScript**
 ```bash
 # Limpar cache
-rm -rf .cache dist
+yarn clean
 yarn develop
 ```
 
@@ -390,6 +435,7 @@ Consulte o [🗺️ ROADMAP_2025.md](./ROADMAP_2025.md) para detalhes completos 
 - **Documente** novas funcionalidades
 - Mantenha **testes atualizados**
 - Use **conventional commits**
+- Execute `yarn lint` e `yarn format` antes de commitar
 
 ### **Reportando Bugs**
 
