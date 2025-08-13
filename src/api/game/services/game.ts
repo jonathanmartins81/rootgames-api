@@ -132,7 +132,7 @@ async function optimizeAndUploadImage(imageUrl: string, gameSlug: string, field:
 
 async function createGames(products: any[]): Promise<void> {
   await Promise.all(
-    products.map(async (product) => {
+    products.map(async product => {
       const item = await getByName(product.title, gameService);
 
       if (!item) {

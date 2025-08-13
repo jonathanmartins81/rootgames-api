@@ -9,7 +9,8 @@
 [![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen?style=for-the-badge)](https://github.com/jonathanmartins81/rootgames-api)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Errors-0-brightgreen?style=for-the-badge)](https://github.com/jonathanmartins81/rootgames-api)
 
-> **🎯 API Headless para Catálogo de Jogos** - Uma solução completa construída com Strapi 5.x CMS para gerenciamento de jogos, categorias, plataformas, desenvolvedores e publicadores.
+> **🎯 API Headless para Catálogo de Jogos** - Uma solução completa construída com Strapi 5.x CMS
+> para gerenciamento de jogos, categorias, plataformas, desenvolvedores e publicadores.
 
 ## 🌟 Características
 
@@ -30,6 +31,7 @@
 - ✅ **Zero erros TypeScript**
 - 🚀 **Sistema de Qualidade** completo (ESLint, Prettier, Commitlint, Husky)
 - 🖼️ **Otimização de Imagens** automática (Sharp + Imagemin)
+- 🧪 **Sistema de Testes** completo (Vitest + Playwright + Percy + axe-core)
 
 ## 🏗️ Arquitetura
 
@@ -300,6 +302,186 @@ yarn images:thumbnails # Gerar thumbnails de diferentes tamanhos
 yarn images:webp     # Converter imagens para WebP
 ```
 
+### **Testes e Qualidade**
+
+```bash
+yarn test           # Executar testes unitários (Vitest)
+yarn test:ui        # Interface visual dos testes
+yarn test:coverage  # Relatório de cobertura
+yarn test:e2e       # Testes end-to-end (Playwright)
+yarn test:e2e:ui    # Interface visual dos testes E2E
+yarn test:visual    # Testes visuais (Percy)
+yarn test:accessibility # Testes de acessibilidade
+yarn test:all       # Executar todos os testes
+```
+
+## 🧪 Sistema de Testes e Qualidade
+
+### **🛠️ Ferramentas Implementadas**
+
+- **Vitest 3.2.4**: Testes unitários e de integração
+- **Playwright 1.54.2**: Testes end-to-end
+- **Percy**: Testes de regressão visual
+- **axe-core**: Testes de acessibilidade
+- **ESLint 9.32.0**: Linting avançado
+- **Prettier 3.6.2**: Formatação de código
+
+### **📋 Tipos de Testes**
+
+#### **Testes Unitários (Vitest)**
+
+- Testes de utilitários e serviços
+- Mocks completos do Strapi
+- Cobertura de código > 80%
+- Interface visual para debug
+
+#### **Testes E2E (Playwright)**
+
+- Testes de API endpoints
+- Testes do painel administrativo
+- Testes de GraphQL
+- Múltiplos navegadores (Chrome, Firefox, Safari)
+- Testes mobile e tablet
+
+#### **Testes Visuais (Percy)**
+
+- Regressão visual automática
+- Comparação de screenshots
+- Testes responsivos
+- Modo escuro/claro
+
+#### **Testes de Acessibilidade (axe-core)**
+
+- Conformidade WCAG 2.1 AA
+- Navegação por teclado
+- Contraste de cores
+- Estrutura de headings
+- Alt text para imagens
+
+### **🔧 Configuração de Testes**
+
+#### **Vitest (Unit Tests)**
+
+```typescript
+// vitest.config.ts
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: 'node',
+    coverage: {
+      provider: 'v8',
+      thresholds: {
+        global: {
+          branches: 80,
+          functions: 80,
+          lines: 80,
+          statements: 80,
+        },
+      },
+    },
+  },
+});
+```
+
+#### **Playwright (E2E Tests)**
+
+```typescript
+// playwright.config.ts
+export default defineConfig({
+  testDir: './tests/e2e',
+  projects: [
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
+    { name: 'webkit', use: { ...devices['Desktop Safari'] } },
+  ],
+  webServer: {
+    command: 'yarn develop',
+    url: 'http://localhost:1337',
+  },
+});
+```
+
+### **📊 Relatórios e Métricas**
+
+#### **Cobertura de Código**
+
+```bash
+yarn test:coverage
+# Gera relatório HTML em ./coverage/index.html
+```
+
+#### **Relatórios E2E**
+
+```bash
+yarn test:e2e
+# Gera relatórios em ./test-results/
+```
+
+#### **Testes de Acessibilidade**
+
+```bash
+yarn test:accessibility
+# Verifica conformidade WCAG 2.1 AA
+```
+
+### **🚀 Integração Contínua**
+
+#### **Git Hooks**
+
+- Pre-commit: Lint + Format + Unit Tests
+- Commit-msg: Validação de mensagens
+- Pre-push: Todos os testes
+
+#### **Scripts de Qualidade**
+
+```bash
+yarn quality        # Lint + Format + Type Check
+yarn quality:fix    # Corrigir problemas automaticamente
+yarn test:all       # Todos os testes
+```
+
+### **📝 Exemplos de Testes**
+
+#### **Teste Unitário (Vitest)**
+
+```typescript
+import { describe, it, expect } from 'vitest';
+import ImageOptimizer from '@/utils/imageOptimizer';
+
+describe('ImageOptimizer', () => {
+  it('should optimize image with default options', async () => {
+    const result = await ImageOptimizer.optimizeWithSharp('input.jpg', 'output.jpg');
+
+    expect(result.compressionRatio).toBeGreaterThan(0);
+    expect(result.format).toBe('jpeg');
+  });
+});
+```
+
+#### **Teste E2E (Playwright)**
+
+```typescript
+import { test, expect } from '@playwright/test';
+
+test('should return games list', async ({ request }) => {
+  const response = await request.get('/api/games');
+  expect([200, 403]).toContain(response.status());
+});
+```
+
+#### **Teste de Acessibilidade**
+
+```typescript
+import { test, expect } from '@playwright/test';
+import { AxeBuilder } from '@axe-core/playwright';
+
+test('admin panel should be accessible', async ({ page }) => {
+  await page.goto('/admin');
+  const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+  expect(accessibilityScanResults.violations).toEqual([]);
+});
+```
+
 ## 🖼️ Sistema de Otimização de Imagens
 
 ### **🛠️ Ferramentas Implementadas**
@@ -339,10 +521,18 @@ yarn images:webp     # Converter imagens para WebP
 import ImageOptimizer, { ImagePresets } from './src/utils/imageOptimizer';
 
 // Otimizar uma imagem
-const result = await ImageOptimizer.optimizeWithSharp('input.jpg', 'output.jpg', ImagePresets.gameCard);
+const result = await ImageOptimizer.optimizeWithSharp(
+  'input.jpg',
+  'output.jpg',
+  ImagePresets.gameCard
+);
 
 // Gerar múltiplos formatos
-const formats = await ImageOptimizer.createMultipleFormats('input.jpg', './output/', ImagePresets.webp);
+const formats = await ImageOptimizer.createMultipleFormats(
+  'input.jpg',
+  './output/',
+  ImagePresets.webp
+);
 
 // Gerar thumbnails
 const thumbnails = await ImageOptimizer.generateThumbnails('input.jpg', './thumbnails/', [
@@ -402,7 +592,9 @@ chore: update dependencies
 
 ```javascript
 // config/database.js
-module.exports = ({ env }) => ({ settings: { cache: { enabled: true, type: 'redis', max: 32767, ttl: 3600000 } } });
+module.exports = ({ env }) => ({
+  settings: { cache: { enabled: true, type: 'redis', max: 32767, ttl: 3600000 } },
+});
 ```
 
 ### **Rate Limiting**
@@ -567,7 +759,8 @@ Consulte o [🗺️ ROADMAP_2025.md](./ROADMAP_2025.md) para detalhes completos 
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a **MIT License** - veja o arquivo [LICENSE](LICENSE) para detalhes.
+Este projeto está licenciado sob a **MIT License** - veja o arquivo [LICENSE](LICENSE) para
+detalhes.
 
 ## 🙏 Agradecimentos
 
@@ -582,7 +775,8 @@ Este projeto está licenciado sob a **MIT License** - veja o arquivo [LICENSE](L
 
 - **📚 Documentação**: [docs/](./docs/)
 - **🐛 Issues**: [GitHub Issues](https://github.com/jonathanmartins81/rootgames-api/issues)
-- **💬 Discussões**: [GitHub Discussions](https://github.com/jonathanmartins81/rootgames-api/discussions)
+- **💬 Discussões**:
+  [GitHub Discussions](https://github.com/jonathanmartins81/rootgames-api/discussions)
 
 ### **Comunidade Strapi**
 
@@ -594,11 +788,10 @@ Este projeto está licenciado sob a **MIT License** - veja o arquivo [LICENSE](L
 
 ## ⭐ Se este projeto te ajudou, considere dar uma estrela!
 
-**RootGames API** - Transformando a gestão de catálogos de jogos com tecnologia moderna e código aberto! 🎮✨
+**RootGames API** - Transformando a gestão de catálogos de jogos com tecnologia moderna e código
+aberto! 🎮✨
 
 ---
 
-_Última atualização: Agosto 2025_
-_Versão: 1.0.0_
-_Status: Q1 2025 Concluído, Q2 2025 em Andamento_
+_Última atualização: Agosto 2025_ _Versão: 1.0.0_ _Status: Q1 2025 Concluído, Q2 2025 em Andamento_
 _Mantido com ❤️ pela comunidade_

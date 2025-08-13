@@ -20,12 +20,24 @@ export default [
         module: 'readonly',
         require: 'readonly',
         process: 'readonly',
+        global: 'readonly',
         // Browser globals
         document: 'readonly',
         window: 'readonly',
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
         FormData: 'readonly',
+        fetch: 'readonly',
+        // Vitest globals
+        vi: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        test: 'readonly',
+        expect: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly',
       },
     },
     plugins: { '@typescript-eslint': typescript, prettier: prettier },
@@ -52,9 +64,15 @@ export default [
   },
   { files: ['src/admin/**/*.{js,ts,tsx}'], rules: { 'no-undef': 'off', '@typescript-eslint/no-unused-vars': 'warn' } },
   {
-    files: ['types/generated/**/*.d.ts'],
-    rules: { '@typescript-eslint/no-unused-vars': 'off' },
+    files: ['tests/**/*.{js,ts,tsx}'],
+    rules: {
+      'no-undef': 'off',
+      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-explicit-any': 'off',
+      'no-console': 'off',
+    },
   },
+  { files: ['types/generated/**/*.d.ts'], rules: { '@typescript-eslint/no-unused-vars': 'off' } },
   {
     ignores: [
       'node_modules/**',
