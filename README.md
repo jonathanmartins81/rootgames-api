@@ -29,6 +29,7 @@
 - 🔧 **Build otimizado** (20.94s)
 - ✅ **Zero erros TypeScript**
 - 🚀 **Sistema de Qualidade** completo (ESLint, Prettier, Commitlint, Husky)
+- 🖼️ **Otimização de Imagens** automática (Sharp + Imagemin)
 
 ## 🏗️ Arquitetura
 
@@ -289,6 +290,72 @@ yarn backup          # Backup do projeto
 yarn deploy          # Deploy seguro
 yarn health          # Verificar saúde do sistema
 yarn monitor         # Monitorar sistema
+```
+
+### **Otimização de Imagens**
+
+```bash
+yarn images:optimize # Otimizar todas as imagens em public/uploads
+yarn images:thumbnails # Gerar thumbnails de diferentes tamanhos
+yarn images:webp     # Converter imagens para WebP
+```
+
+## 🖼️ Sistema de Otimização de Imagens
+
+### **🛠️ Ferramentas Implementadas**
+
+- **Sharp**: Processamento e redimensionamento de imagens
+- **Imagemin**: Compressão adicional e otimização
+- **WebP/AVIF**: Conversão para formatos modernos
+- **Thumbnails**: Geração automática de múltiplos tamanhos
+
+### **📋 Funcionalidades**
+
+#### **Otimização Automática**
+
+- Compressão inteligente mantendo qualidade
+- Redimensionamento automático
+- Conversão para WebP e AVIF
+- Geração de thumbnails
+
+#### **Presets Configurados**
+
+- **Thumbnail**: 150x150px (85% qualidade)
+- **Game Card**: 300x200px (90% qualidade)
+- **Hero**: 1200x600px (85% qualidade)
+- **Gallery**: 800x600px (90% qualidade)
+- **Avatar**: 100x100px (90% qualidade)
+
+#### **Formatos Suportados**
+
+- JPEG/PNG → WebP/AVIF
+- Compressão inteligente
+- Múltiplas versões por imagem
+- Otimização automática no upload
+
+### **🔧 Uso Programático**
+
+```typescript
+import ImageOptimizer, { ImagePresets } from './src/utils/imageOptimizer';
+
+// Otimizar uma imagem
+const result = await ImageOptimizer.optimizeWithSharp('input.jpg', 'output.jpg', ImagePresets.gameCard);
+
+// Gerar múltiplos formatos
+const formats = await ImageOptimizer.createMultipleFormats('input.jpg', './output/', ImagePresets.webp);
+
+// Gerar thumbnails
+const thumbnails = await ImageOptimizer.generateThumbnails('input.jpg', './thumbnails/', [
+  { width: 150, height: 150, suffix: '_thumb' },
+  { width: 300, height: 200, suffix: '_card' },
+]);
+```
+
+### **🌐 API Endpoints**
+
+```bash
+# Otimizar imagens existentes
+POST /api/games/optimize-images
 ```
 
 ## 🚀 Sistema de Qualidade de Código

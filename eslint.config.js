@@ -19,11 +19,13 @@ export default [
         __dirname: 'readonly',
         module: 'readonly',
         require: 'readonly',
+        process: 'readonly',
         // Browser globals
         document: 'readonly',
         window: 'readonly',
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
+        FormData: 'readonly',
       },
     },
     plugins: { '@typescript-eslint': typescript, prettier: prettier },
@@ -34,8 +36,6 @@ export default [
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-empty-object-type': 'warn',
-      '@typescript-eslint/prefer-namespace-keyword': 'warn',
       'no-console': 'warn',
       'prefer-const': 'error',
       'no-var': 'error',
@@ -53,7 +53,7 @@ export default [
   { files: ['src/admin/**/*.{js,ts,tsx}'], rules: { 'no-undef': 'off', '@typescript-eslint/no-unused-vars': 'warn' } },
   {
     files: ['types/generated/**/*.d.ts'],
-    rules: { '@typescript-eslint/no-empty-object-type': 'off', '@typescript-eslint/prefer-namespace-keyword': 'off' },
+    rules: { '@typescript-eslint/no-unused-vars': 'off' },
   },
   {
     ignores: [
