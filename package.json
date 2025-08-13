@@ -68,6 +68,7 @@
     "monitor": "./scripts/monitor.sh"
   },
   "dependencies": {
+    "@ckeditor/strapi-plugin-ckeditor": "^1.1.1",
     "@strapi/plugin-graphql": "^5.21.0",
     "@strapi/plugin-users-permissions": "^5.21.0",
     "@strapi/strapi": "^5.21.0",
