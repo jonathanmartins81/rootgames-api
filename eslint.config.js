@@ -72,7 +72,10 @@ export default [
       'no-console': 'off',
     },
   },
-  { files: ['types/generated/**/*.d.ts'], rules: { '@typescript-eslint/no-unused-vars': 'off' } },
+  {
+    files: ['types/generated/**/*.d.ts'],
+    rules: { '@typescript-eslint/no-unused-vars': 'off', '@typescript-eslint/ban-types': 'off' },
+  },
   {
     ignores: [
       'node_modules/**',

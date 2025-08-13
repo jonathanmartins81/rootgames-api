@@ -35,19 +35,10 @@ export default defineConfig({
         '**/*.config.{js,ts}',
         '**/setup.{js,ts}',
       ],
-      thresholds: {
-        global: {
-          branches: 80,
-          functions: 80,
-          lines: 80,
-          statements: 80,
-        },
-      },
+      thresholds: { global: { branches: 80, functions: 80, lines: 80, statements: 80 } },
     },
     reporters: ['verbose', 'html'],
-    outputFile: {
-      html: './coverage/index.html',
-    },
+    outputFile: { html: './coverage/index.html' },
   },
   resolve: {
     alias: {

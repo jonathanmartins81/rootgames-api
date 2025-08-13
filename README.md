@@ -370,14 +370,7 @@ export default defineConfig({
     environment: 'node',
     coverage: {
       provider: 'v8',
-      thresholds: {
-        global: {
-          branches: 80,
-          functions: 80,
-          lines: 80,
-          statements: 80,
-        },
-      },
+      thresholds: { global: { branches: 80, functions: 80, lines: 80, statements: 80 } },
     },
   },
 });
@@ -394,10 +387,7 @@ export default defineConfig({
     { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
     { name: 'webkit', use: { ...devices['Desktop Safari'] } },
   ],
-  webServer: {
-    command: 'yarn develop',
-    url: 'http://localhost:1337',
-  },
+  webServer: { command: 'yarn develop', url: 'http://localhost:1337' },
 });
 ```
 

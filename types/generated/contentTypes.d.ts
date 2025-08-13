@@ -864,7 +864,7 @@ export interface PluginUsersPermissionsUser extends Struct.CollectionTypeSchema 
 }
 
 declare module '@strapi/strapi' {
-  export namespace Public {
+  export module Public {
     export interface ContentTypeSchemas {
       'admin::api-token': AdminApiToken;
       'admin::api-token-permission': AdminApiTokenPermission;

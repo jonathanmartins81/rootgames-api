@@ -3,6 +3,7 @@
  */
 import { factories } from '@strapi/strapi';
 import axios from 'axios';
+import FormData from 'form-data';
 import { promises as fs } from 'fs';
 import { JSDOM } from 'jsdom';
 import path from 'path';
