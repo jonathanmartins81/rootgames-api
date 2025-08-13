@@ -1,5 +1,6 @@
 root = true
 
+# Configurações padrão para todos os arquivos
 [*]
 indent_style = space
 indent_size = 2
@@ -7,10 +8,81 @@ end_of_line = lf
 charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
+max_line_length = 120
 
-[{package.json,*.yml}]
+# Arquivos de configuração e dados
+[{package.json,package-lock.json,yarn.lock,*.yml,*.yaml,*.json,.env*,.gitignore,.editorconfig}]
 indent_style = space
 indent_size = 2
 
+# Arquivos Markdown (preservar espaços em branco)
 [*.md]
 trim_trailing_whitespace = false
+max_line_length = off
+
+# Arquivos TypeScript/JavaScript
+[{*.ts,*.tsx,*.js,*.jsx,*.mjs,*.cjs}]
+indent_style = space
+indent_size = 2
+max_line_length = 120
+
+# Arquivos de configuração Strapi
+[{config/**/*.ts,config/**/*.js,src/**/*.ts,src/**/*.js}]
+indent_style = space
+indent_size = 2
+max_line_length = 120
+
+# Arquivos de schema Strapi
+[{src/api/**/content-types/**/*.json,src/api/**/schema.json}]
+indent_style = space
+indent_size = 2
+
+# Arquivos de teste
+[{*.test.ts,*.test.js,*.spec.ts,*.spec.js,__tests__/**/*,tests/**/*}]
+indent_style = space
+indent_size = 2
+max_line_length = 120
+
+# Arquivos de documentação
+[{docs/**/*.md,docs/**/*.txt,README*.md}]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# Arquivos de configuração de build
+[{webpack.config.*,tsconfig.json,babel.config.*,.babelrc*,eslintrc.*,prettierrc.*}]
+indent_style = space
+indent_size = 2
+
+# Arquivos de script
+[{scripts/**/*.sh,scripts/**/*.bash,scripts/**/*.zsh}]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+
+# Arquivos de banco de dados
+[{database/**/*.sql,migrations/**/*.sql}]
+indent_style = space
+indent_size = 2
+max_line_length = off
+
+# Arquivos de template/HTML
+[{*.html,*.htm,*.xml,*.svg}]
+indent_style = space
+indent_size = 2
+max_line_length = 120
+
+# Arquivos de estilo
+[{*.css,*.scss,*.sass,*.less}]
+indent_style = space
+indent_size = 2
+max_line_length = 120
+
+# Arquivos de configuração Docker
+[{Dockerfile*,docker-compose*.yml,docker-compose*.yaml}]
+indent_style = space
+indent_size = 2
+
+# Arquivos de configuração CI/CD
+[{.github/**/*,.gitlab-ci.yml,.travis.yml,circle.yml}]
+indent_style = space
+indent_size = 2

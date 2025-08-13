@@ -10,6 +10,9 @@
 | **[EXAMPLES.md](./EXAMPLES.md)** | Exemplos práticos e casos de uso | 490 |
 | **[DEPENDENCIES_UPDATE_PLAN.md](./DEPENDENCIES_UPDATE_PLAN.md)** | Plano de atualização de dependências | 200 |
 | **[STRAPI_UPDATE_OPTIONS.md](./STRAPI_UPDATE_OPTIONS.md)** | Opções de atualização do Strapi | 300 |
+| **[STRAPI_5_MIGRATION_PREP.md](./STRAPI_5_MIGRATION_PREP.md)** | Preparação para migração Strapi 5.x | 450 |
+| **[PACKAGE_JSON_LTS_UPDATE_2025.md](./PACKAGE_JSON_LTS_UPDATE_2025.md)** | Atualizações LTS de agosto 2025 | 180 |
+| **[STRAPI_5X_LTS_OPTIMIZATION_STRATEGY.md](./STRAPI_5X_LTS_OPTIMIZATION_STRATEGY.md)** | Estratégia de otimização LTS 2025 | 250 |
 
 ---
 
@@ -43,13 +46,14 @@
 ### **Para DevOps/Infraestrutura**
 1. **[STRAPI_CONFIGURATION.md](./STRAPI_CONFIGURATION.md)** - Configuração de produção
 2. **[EXAMPLES.md](./EXAMPLES.md)** - Scripts de monitoramento
+3. **[STRAPI_5_MIGRATION_PREP.md](./STRAPI_5_MIGRATION_PREP.md)** - Migração para Strapi 5.x
 
 ---
 
 ## 📊 **Estatísticas da Documentação**
 
-- **Total de Páginas**: 2.190 linhas
-- **Arquivos**: 6 documentos principais
+- **Total de Páginas**: 2.640 linhas
+- **Arquivos**: 7 documentos principais
 - **Exemplos de Código**: 50+ exemplos
 - **Scripts Práticos**: 10+ scripts
 - **Casos de Uso**: 15+ cenários
