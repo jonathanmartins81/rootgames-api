@@ -7,10 +7,12 @@ Bem-vindo à documentação completa do projeto **RootGames API**! Esta pasta co
 ## 📋 Índice da Documentação
 
 ### 🚀 **Configuração e Setup**
+
 - **[Configuração do Strapi](./STRAPI_CONFIGURATION.md)** - Guia completo de instalação e configuração
 - **[Documentação da API](./API_DOCUMENTATION.md)** - Endpoints, exemplos e funcionalidades
 
 ### 📖 **Documentação Adicional**
+
 - **[Roadmap 2025](../ROADMAP_2025.md)** - Planejamento e objetivos para 2025
 - **[README Principal](../README.md)** - Visão geral do projeto
 
@@ -19,6 +21,7 @@ Bem-vindo à documentação completa do projeto **RootGames API**! Esta pasta co
 ## 🎯 **Início Rápido**
 
 ### **1. Configuração Inicial**
+
 ```bash
 # Clone o repositório
 git clone <repository-url>
@@ -39,11 +42,13 @@ yarn develop
 ```
 
 ### **2. Acessos Principais**
+
 - **Admin Panel**: http://localhost:1337/admin
 - **API REST**: http://localhost:1337/api
 - **GraphQL**: http://localhost:1337/graphql
 
 ### **3. Primeiros Passos**
+
 1. Acesse o Admin Panel
 2. Crie seu usuário administrador
 3. Configure as permissões da API
@@ -76,6 +81,7 @@ rootgames-api/
 ## 📊 **Modelo de Dados**
 
 ### **Entidades Principais**
+
 - **Games** - Jogos do catálogo
 - **Categories** - Categorias/gêneros
 - **Platforms** - Plataformas (PC, PS5, Xbox, etc.)
@@ -83,6 +89,7 @@ rootgames-api/
 - **Publishers** - Publicadores
 
 ### **Relacionamentos**
+
 - Games ↔ Categories: Many-to-Many
 - Games ↔ Platforms: Many-to-Many
 - Games ↔ Developers: Many-to-Many
@@ -93,6 +100,7 @@ rootgames-api/
 ## 🚀 **Funcionalidades Principais**
 
 ### **✅ Implementadas**
+
 - ✅ API REST completa
 - ✅ API GraphQL
 - ✅ Sistema de upload de mídia
@@ -102,12 +110,14 @@ rootgames-api/
 - ✅ Editor rico CKEditor
 
 ### **🔄 Em Desenvolvimento**
+
 - 🔄 Sistema de usuários avançado
 - 🔄 Reviews e avaliações
 - 🔄 Wishlist e favoritos
 - 🔄 Notificações
 
 ### **📋 Planejadas**
+
 - 📋 Integração multi-loja
 - 📋 Sistema de preços dinâmicos
 - 📋 Analytics e relatórios
@@ -118,6 +128,7 @@ rootgames-api/
 ## 🔐 **Segurança**
 
 ### **Configurações de Produção**
+
 - Use HTTPS sempre
 - Configure chaves seguras
 - Implemente rate limiting
@@ -125,6 +136,7 @@ rootgames-api/
 - Faça backups regulares
 
 ### **Autenticação**
+
 - Tokens de API para aplicações
 - JWT para usuários
 - Roles e permissões granulares
@@ -134,6 +146,7 @@ rootgames-api/
 ## 🐛 **Suporte e Troubleshooting**
 
 ### **Problemas Comuns**
+
 1. **Erro de conexão com PostgreSQL**
    - Verifique se o serviço está rodando
    - Confirme as credenciais no .env
@@ -148,6 +161,7 @@ rootgames-api/
    - Confirme as configurações do pg_hba.conf
 
 ### **Logs Úteis**
+
 ```bash
 # Logs do Strapi
 tail -f .tmp/logs/strapi.log
@@ -164,11 +178,13 @@ sudo journalctl -f
 ## 📞 **Contato e Suporte**
 
 ### **Recursos**
+
 - **Documentação Oficial**: [docs.strapi.io](https://docs.strapi.io/)
 - **Fórum Strapi**: [forum.strapi.io](https://forum.strapi.io/)
 - **Discord Strapi**: [discord.strapi.io](https://discord.strapi.io/)
 
 ### **Comunidade**
+
 - **GitHub Issues**: Para reportar bugs
 - **Pull Requests**: Para contribuições
 - **Discussions**: Para discussões gerais
@@ -178,6 +194,7 @@ sudo journalctl -f
 ## 📝 **Contribuindo**
 
 ### **Como Contribuir**
+
 1. Fork o repositório
 2. Crie uma branch para sua feature
 3. Faça suas alterações
@@ -185,6 +202,7 @@ sudo journalctl -f
 5. Submeta um Pull Request
 
 ### **Padrões de Código**
+
 - Use TypeScript
 - Siga as convenções do Strapi
 - Documente novas funcionalidades
@@ -206,8 +224,8 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](../LICENSE) para
 
 ---
 
-*Última atualização: Agosto 2025*
-*Versão da Documentação: 1.0.0*
+_Última atualização: Agosto 2025_
+_Versão da Documentação: 1.0.0_
 
 ---
 

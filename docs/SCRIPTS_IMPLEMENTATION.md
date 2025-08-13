@@ -49,18 +49,18 @@ PGPASSWORD="$DB_PASS" pg_dump \
 
 if [ $? -eq 0 ]; then
   echo "✅ Backup criado: $BACKUP_FILE"
-  
+
   # Comprimir backup
   gzip "$BACKUP_FILE"
   echo "📦 Backup comprimido: $BACKUP_FILE.gz"
-  
+
   # Remover backups antigos
   find "$BACKUP_DIR" -name "*.sql.gz" -mtime +$RETENTION_DAYS -delete
   echo "🗑️ Backups antigos removidos"
-  
+
   # Criar link simbólico para o backup mais recente
   ln -sf "$BACKUP_FILE.gz" "$BACKUP_DIR/backup_latest.sql.gz"
-  
+
   echo "✅ Backup concluído com sucesso!"
 else
   echo "❌ Erro ao criar backup"
@@ -148,10 +148,10 @@ echo "🔍 Verificando saúde da aplicação..."
 check_endpoint() {
   local endpoint="$1"
   local description="$2"
-  
+
   for i in $(seq 1 $RETRIES); do
     echo "  Verificando $description... (tentativa $i/$RETRIES)"
-    
+
     if curl -s -f --max-time $TIMEOUT "$API_URL$endpoint" > /dev/null; then
       echo "  ✅ $description: OK"
       return 0
@@ -234,12 +234,12 @@ if ./scripts/health-check.sh; then
   echo "✅ Deploy concluído com sucesso!"
 else
   echo "❌ Deploy falhou!"
-  
+
   if [ "$ROLLBACK_ON_FAILURE" = "true" ]; then
     echo "🔄 Iniciando rollback automático..."
     ./scripts/rollback.sh
   fi
-  
+
   exit 1
 fi
 ```
@@ -258,19 +258,19 @@ module.exports = ({ env }) => ({
   rateLimiting: env.bool('FEATURE_RATE_LIMITING', false),
   advancedLogging: env.bool('FEATURE_ADVANCED_LOGGING', false),
   healthChecks: env.bool('FEATURE_HEALTH_CHECKS', true),
-  
+
   // Q2 2025 - Expansão de Funcionalidades
   advancedAuth: env.bool('FEATURE_ADVANCED_AUTH', false),
   reviews: env.bool('FEATURE_REVIEWS', false),
   wishlist: env.bool('FEATURE_WISHLIST', false),
   notifications: env.bool('FEATURE_NOTIFICATIONS', false),
   social: env.bool('FEATURE_SOCIAL', false),
-  
+
   // Q3 2025 - Integração e Automação
   multiStore: env.bool('FEATURE_MULTI_STORE', false),
   autoSync: env.bool('FEATURE_AUTO_SYNC', false),
   priceTracking: env.bool('FEATURE_PRICE_TRACKING', false),
-  
+
   // Q4 2025 - Escalabilidade e Inovação
   microservices: env.bool('FEATURE_MICROSERVICES', false),
   aiRecommendations: env.bool('FEATURE_AI_RECOMMENDATIONS', false),
@@ -285,26 +285,26 @@ module.exports = ({ env }) => ({
 module.exports = (config, { strapi }) => {
   return async (ctx, next) => {
     const features = require('../../config/features');
-    
+
     // Adicionar features ao contexto
     ctx.features = features;
-    
+
     // Verificar se feature está habilitada para rota específica
     const checkFeature = (featureName) => {
       if (!features[featureName]) {
         ctx.throw(404, `Feature ${featureName} não está habilitada`);
       }
     };
-    
+
     // Verificar features baseado na rota
     if (ctx.path.startsWith('/api/reviews') && !features.reviews) {
       checkFeature('reviews');
     }
-    
+
     if (ctx.path.startsWith('/api/wishlist') && !features.wishlist) {
       checkFeature('wishlist');
     }
-    
+
     await next();
   };
 };
@@ -327,7 +327,7 @@ module.exports = ({ env }) => ({
       requests: env.bool('LOG_REQUESTS', true),
     },
   },
-  
+
   // Configuração customizada do Winston
   customLogger: winston.createLogger({
     level: env('LOG_LEVEL', 'info'),
@@ -337,12 +337,12 @@ module.exports = ({ env }) => ({
       winston.format.json()
     ),
     transports: [
-      new winston.transports.File({ 
-        filename: '.tmp/logs/error.log', 
-        level: 'error' 
+      new winston.transports.File({
+        filename: '.tmp/logs/error.log',
+        level: 'error',
       }),
-      new winston.transports.File({ 
-        filename: '.tmp/logs/combined.log' 
+      new winston.transports.File({
+        filename: '.tmp/logs/combined.log',
       }),
     ],
   }),
@@ -369,7 +369,7 @@ module.exports = {
       alert: true,
     },
   },
-  
+
   // Métricas de negócio
   business: {
     activeUsers: {
@@ -385,7 +385,7 @@ module.exports = {
       alert: true,
     },
   },
-  
+
   // Métricas de features
   features: {
     reviews: {
@@ -413,7 +413,7 @@ module.exports = ({ env }) => ({
   errorThreshold: env.int('ERROR_THRESHOLD', 5), // 5% de erro
   responseTimeThreshold: env.int('RESPONSE_TIME_THRESHOLD', 1000), // 1 segundo
   memoryThreshold: env.int('MEMORY_THRESHOLD', 80), // 80% de memória
-  
+
   // Canais de notificação
   channels: {
     slack: {
@@ -429,7 +429,7 @@ module.exports = ({ env }) => ({
       webhook: env('DISCORD_WEBHOOK_URL'),
     },
   },
-  
+
   // Configurações de notificação
   notification: {
     cooldown: env.int('ALERT_COOLDOWN', 300000), // 5 minutos
@@ -450,7 +450,7 @@ module.exports = (config, { strapi }) => {
   return async (ctx, next) => {
     const startTime = Date.now();
     const requestId = Math.random().toString(36).substr(2, 9);
-    
+
     // Log da requisição
     strapi.log.info(`Request started`, {
       id: requestId,
@@ -459,10 +459,10 @@ module.exports = (config, { strapi }) => {
       ip: ctx.ip,
       userAgent: ctx.headers['user-agent'],
     });
-    
+
     try {
       await next();
-      
+
       // Verificar performance
       const responseTime = Date.now() - startTime;
       if (responseTime > 1000) {
@@ -472,14 +472,13 @@ module.exports = (config, { strapi }) => {
           path: ctx.path,
         });
       }
-      
+
       // Log de sucesso
       strapi.log.info(`Request completed`, {
         id: requestId,
         status: ctx.status,
         responseTime,
       });
-      
     } catch (error) {
       // Log detalhado do erro
       strapi.log.error(`Request failed`, {
@@ -489,12 +488,12 @@ module.exports = (config, { strapi }) => {
         path: ctx.path,
         method: ctx.method,
       });
-      
+
       // Verificar se é erro crítico
       if (isCriticalError(error)) {
         await triggerRollback();
       }
-      
+
       throw error;
     }
   };
@@ -502,22 +501,15 @@ module.exports = (config, { strapi }) => {
 
 // Função para verificar erro crítico
 function isCriticalError(error) {
-  const criticalErrors = [
-    'ECONNREFUSED',
-    'ENOTFOUND',
-    'ETIMEDOUT',
-    'ECONNRESET',
-  ];
-  
-  return criticalErrors.some(criticalError => 
-    error.message.includes(criticalError)
-  );
+  const criticalErrors = ['ECONNREFUSED', 'ENOTFOUND', 'ETIMEDOUT', 'ECONNRESET'];
+
+  return criticalErrors.some((criticalError) => error.message.includes(criticalError));
 }
 
 // Função para trigger de rollback
 async function triggerRollback() {
   strapi.log.error('Critical error detected, triggering rollback...');
-  
+
   // Executar script de rollback
   const { exec } = require('child_process');
   exec('./scripts/rollback.sh', (error, stdout, stderr) => {
@@ -543,102 +535,102 @@ module.exports = ({ strapi }) => ({
       memory: await this.checkMemory(),
       features: await this.checkFeatures(),
     };
-    
-    const allHealthy = Object.values(checks).every(check => check.status === 'healthy');
-    
+
+    const allHealthy = Object.values(checks).every((check) => check.status === 'healthy');
+
     return {
       status: allHealthy ? 'healthy' : 'unhealthy',
       checks,
       timestamp: new Date().toISOString(),
     };
   },
-  
+
   // Verificar banco de dados
   async checkDatabase() {
     try {
       await strapi.db.connection.raw('SELECT 1');
       return { status: 'healthy' };
     } catch (error) {
-      return { 
-        status: 'unhealthy', 
-        error: error.message 
+      return {
+        status: 'unhealthy',
+        error: error.message,
       };
     }
   },
-  
+
   // Verificar API
   async checkAPI() {
     try {
       const response = await fetch('http://localhost:1337/api/games?limit=1');
-      return response.ok ? 
-        { status: 'healthy' } : 
-        { status: 'unhealthy', error: `HTTP ${response.status}` };
+      return response.ok ? { status: 'healthy' } : { status: 'unhealthy', error: `HTTP ${response.status}` };
     } catch (error) {
-      return { 
-        status: 'unhealthy', 
-        error: error.message 
+      return {
+        status: 'unhealthy',
+        error: error.message,
       };
     }
   },
-  
+
   // Verificar uso de memória
   async checkMemory() {
     const usage = process.memoryUsage();
     const memoryUsage = (usage.heapUsed / usage.heapTotal) * 100;
-    
+
     return {
       status: memoryUsage < 80 ? 'healthy' : 'warning',
       usage: memoryUsage,
       threshold: 80,
     };
   },
-  
+
   // Verificar features
   async checkFeatures() {
     const features = require('../../config/features');
-    const enabledFeatures = Object.keys(features).filter(key => features[key]);
-    
+    const enabledFeatures = Object.keys(features).filter((key) => features[key]);
+
     return {
       status: 'healthy',
       enabled: enabledFeatures,
       total: Object.keys(features).length,
     };
   },
-  
+
   // Enviar alerta
   async sendAlert(alert) {
     const alertConfig = require('../../config/alerts');
-    
+
     if (alertConfig.channels.slack.enabled) {
       await this.sendSlackAlert(alert);
     }
-    
+
     if (alertConfig.channels.email.enabled) {
       await this.sendEmailAlert(alert);
     }
-    
+
     if (alertConfig.channels.discord.enabled) {
       await this.sendDiscordAlert(alert);
     }
   },
-  
+
   // Enviar alerta para Slack
   async sendSlackAlert(alert) {
     const alertConfig = require('../../config/alerts');
-    
+
     const message = {
       text: `🚨 Alerta RootGames API`,
-      attachments: [{
-        color: 'danger',
-        fields: [
-          { title: 'Tipo', value: alert.type, short: true },
-          { title: 'Severidade', value: alert.severity, short: true },
-          { title: 'Mensagem', value: alert.message },
-          { title: 'Timestamp', value: new Date().toISOString() },
-        ],
-      }],
+      attachments: [
+        {
+          color: 'danger',
+          fields: [
+            { title: 'Tipo', value: alert.type, short: true },
+            { title: 'Severidade', value: alert.severity, short: true },
+            { title: 'Mensagem', value: alert.message },
+            { title: 'Timestamp', value: new Date().toISOString() },
+          ],
+        },
+      ],
     };
-    
+
     try {
       await fetch(alertConfig.channels.slack.webhook, {
         method: 'POST',
@@ -677,32 +669,32 @@ echo "💾 Criando backup..."
 case $VERSION in
   "1.1.0")
     echo "📦 Migrando para v1.1.0..."
-    
+
     # Adicionar Redis cache
     if [ "$FEATURE_REDIS_CACHE" = "true" ]; then
       echo "  Configurando Redis cache..."
       # Comandos específicos
     fi
-    
+
     # Adicionar rate limiting
     if [ "$FEATURE_RATE_LIMITING" = "true" ]; then
       echo "  Configurando rate limiting..."
       # Comandos específicos
     fi
-    
+
     ;;
-    
+
   "1.2.0")
     echo "📦 Migrando para v1.2.0..."
-    
+
     # Adicionar sistema de reviews
     if [ "$FEATURE_REVIEWS" = "true" ]; then
       echo "  Configurando sistema de reviews..."
       # Comandos específicos
     fi
-    
+
     ;;
-    
+
   *)
     echo "❌ Versão não suportada: $VERSION"
     exit 1
@@ -870,20 +862,20 @@ mkdir -p ./logs
 
 while true; do
   echo "$(date): Verificando saúde..." >> "$LOG_FILE"
-  
+
   if ./scripts/health-check.sh >> "$LOG_FILE" 2>&1; then
     echo "$(date): ✅ Sistema saudável" >> "$LOG_FILE"
   else
     echo "$(date): ❌ Problema detectado!" >> "$LOG_FILE"
-    
+
     # Enviar alerta
     ./scripts/notify.sh "Problema detectado no sistema RootGames API"
-    
+
     # Tentar auto-recovery
     echo "$(date): 🔄 Tentando auto-recovery..." >> "$LOG_FILE"
     pm2 restart rootgames-api
   fi
-  
+
   sleep $CHECK_INTERVAL
 done
 ```
@@ -933,6 +925,7 @@ echo "✅ Notificação enviada!"
 ## [1.1.0] - 2025-01-15
 
 ### Added
+
 - Redis cache implementation
 - Rate limiting middleware
 - Health check endpoints
@@ -940,23 +933,28 @@ echo "✅ Notificação enviada!"
 - Feature flags system
 
 ### Changed
+
 - Improved query performance
 - Enhanced error handling
 - Updated documentation
 
 ### Deprecated
+
 - Old auth middleware (will be removed in 1.2.0)
 - Basic logging (will be replaced by Winston in 1.2.0)
 
 ### Removed
+
 - None
 
 ### Fixed
+
 - Memory leak in game service
 - Database connection issues
 - Response time degradation
 
 ### Security
+
 - Added input validation
 - Implemented rate limiting
 - Enhanced error messages (no sensitive data)
@@ -964,6 +962,7 @@ echo "✅ Notificação enviada!"
 ## [1.0.0] - 2024-12-01
 
 ### Added
+
 - Initial release
 - Basic CRUD operations
 - Admin panel
@@ -972,15 +971,17 @@ echo "✅ Notificação enviada!"
 
 ### **2. Template de Migration Guide**
 
-```markdown
+````markdown
 # docs/migrations/v1.0-to-v1.1.md
 
 # Migração de v1.0 para v1.1
 
 ## Visão Geral
+
 Esta migração adiciona funcionalidades de cache, rate limiting e monitoramento sem quebrar compatibilidade.
 
 ## Pré-requisitos
+
 - Backup completo do banco de dados
 - Node.js 18+ instalado
 - Redis (opcional, para cache)
@@ -988,16 +989,20 @@ Esta migração adiciona funcionalidades de cache, rate limiting e monitoramento
 ## Passos da Migração
 
 ### 1. Backup
+
 ```bash
 ./scripts/backup.sh
 ```
+````
 
 ### 2. Atualizar Dependências
+
 ```bash
 yarn install
 ```
 
 ### 3. Configurar Variáveis de Ambiente
+
 ```env
 # Novas variáveis
 FEATURE_REDIS_CACHE=false
@@ -1007,31 +1012,39 @@ LOG_LEVEL=info
 ```
 
 ### 4. Executar Migração
+
 ```bash
 ./scripts/migrate.sh 1.1.0 1.0.0
 ```
 
 ### 5. Verificar Saúde
+
 ```bash
 ./scripts/health-check.sh
 ```
 
 ## Breaking Changes
+
 - Nenhuma mudança que quebra compatibilidade
 
 ## Rollback
+
 Se necessário, execute:
+
 ```bash
 ./scripts/rollback-version.sh 1.0.0 1.1.0
 ```
 
 ## Troubleshooting
+
 - **Erro de Redis**: Desabilite com `FEATURE_REDIS_CACHE=false`
 - **Rate limiting muito restritivo**: Ajuste com `RATE_LIMIT_MAX=1000`
 - **Logs muito verbosos**: Ajuste com `LOG_LEVEL=warn`
+
 ```
 
 ---
 
 *Última atualização: Agosto 2025*
 *Versão dos Scripts: 1.0.0*
+```

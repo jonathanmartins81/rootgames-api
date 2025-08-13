@@ -9,17 +9,20 @@ Este documento explica como configurar e executar o projeto RootGames API usando
 ## 🛠️ Pré-requisitos
 
 ### **Sistema Operacional**
+
 - Linux (recomendado: Fedora, Ubuntu, CentOS)
 - macOS
 - Windows (WSL2 recomendado)
 
 ### **Software Necessário**
+
 - **Node.js**: Versão 16.x - 20.x (recomendado: 18.x LTS)
 - **Yarn**: Gerenciador de pacotes
 - **PostgreSQL**: Versão 12+ (recomendado: 15+)
 - **Git**: Controle de versão
 
 ### **Verificação de Versões**
+
 ```bash
 node --version    # Deve ser >= 16.0.0 e <= 20.x.x
 yarn --version    # Qualquer versão recente
@@ -34,6 +37,7 @@ git --version     # Qualquer versão recente
 ### **1. Instalação do PostgreSQL**
 
 **Fedora/RHEL/CentOS:**
+
 ```bash
 sudo dnf install postgresql postgresql-server postgresql-contrib
 sudo postgresql-setup --initdb
@@ -42,6 +46,7 @@ sudo systemctl start postgresql
 ```
 
 **Ubuntu/Debian:**
+
 ```bash
 sudo apt update
 sudo apt install postgresql postgresql-contrib
@@ -223,6 +228,7 @@ Após a primeira execução, o Strapi criará automaticamente:
 ### **1. Configuração de Upload**
 
 **config/plugins.ts:**
+
 ```typescript
 export default ({ env }) => ({
   upload: {
@@ -239,6 +245,7 @@ export default ({ env }) => ({
 ### **2. Configuração de CORS**
 
 **config/middlewares.ts:**
+
 ```typescript
 export default [
   'strapi::errors',
@@ -270,6 +277,7 @@ export default [
 ### **3. Configuração de Cache**
 
 **config/database.ts:**
+
 ```typescript
 export default ({ env }) => ({
   connection: {
@@ -333,6 +341,7 @@ PGPASSWORD=rootgames pg_dump -h 127.0.0.1 -U rootgames rootgames > backup_$DATE.
 ### **Problemas Comuns**
 
 **1. Erro de Conexão com PostgreSQL:**
+
 ```bash
 # Verificar se o serviço está rodando
 sudo systemctl status postgresql
@@ -345,6 +354,7 @@ PGPASSWORD=rootgames psql -h 127.0.0.1 -U rootgames -d rootgames
 ```
 
 **2. Erro de Permissões:**
+
 ```bash
 # Verificar permissões do diretório
 ls -la /var/lib/pgsql/data/
@@ -355,6 +365,7 @@ sudo chmod 700 /var/lib/pgsql/data/
 ```
 
 **3. Erro de Memória:**
+
 ```bash
 # Aumentar memória do Node.js
 export NODE_OPTIONS="--max-old-space-size=4096"
@@ -362,6 +373,7 @@ yarn develop
 ```
 
 **4. Erro de Compilação TypeScript:**
+
 ```bash
 # Limpar cache
 rm -rf .cache dist
@@ -386,16 +398,19 @@ sudo journalctl -f
 ## 📚 Recursos Adicionais
 
 ### **Documentação Oficial**
+
 - [Strapi Documentation](https://docs.strapi.io/)
 - [Strapi Admin Customization](https://docs.strapi.io/dev-docs/admin-customization)
 - [Strapi API Documentation](https://docs.strapi.io/dev-docs/api)
 
 ### **Comunidade**
+
 - [Strapi Forum](https://forum.strapi.io/)
 - [Strapi Discord](https://discord.strapi.io/)
 - [GitHub Issues](https://github.com/strapi/strapi/issues)
 
 ### **Ferramentas Úteis**
+
 - [Strapi CLI](https://docs.strapi.io/dev-docs/cli)
 - [Strapi Plugin Development](https://docs.strapi.io/dev-docs/plugins-development)
 - [Strapi Deployment](https://docs.strapi.io/dev-docs/deployment)
@@ -413,5 +428,5 @@ sudo journalctl -f
 
 ---
 
-*Última atualização: Agosto 2025*
-*Versão do Strapi: 4.12.5*
+_Última atualização: Agosto 2025_
+_Versão do Strapi: 4.12.5_

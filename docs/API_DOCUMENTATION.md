@@ -18,11 +18,13 @@ A RootGames API é uma API RESTful e GraphQL para gerenciamento de catálogo de 
 ## 🎮 Endpoints de Jogos
 
 ### **Listar Jogos**
+
 ```http
 GET /api/games
 ```
 
 **Parâmetros de Query:**
+
 - `pagination[page]`: Número da página (padrão: 1)
 - `pagination[pageSize]`: Itens por página (padrão: 25, máximo: 100)
 - `sort`: Campo para ordenação (ex: `name:asc`, `price:desc`)
@@ -30,11 +32,13 @@ GET /api/games
 - `populate`: Relacionamentos para incluir
 
 **Exemplo:**
+
 ```bash
 curl "http://localhost:1337/api/games?populate=*&sort=name:asc&pagination[pageSize]=10"
 ```
 
 **Resposta:**
+
 ```json
 {
   "data": [
@@ -80,27 +84,32 @@ curl "http://localhost:1337/api/games?populate=*&sort=name:asc&pagination[pageSi
 ```
 
 ### **Buscar Jogo por ID**
+
 ```http
 GET /api/games/{id}
 ```
 
 **Exemplo:**
+
 ```bash
 curl "http://localhost:1337/api/games/1?populate=*"
 ```
 
 ### **Criar Novo Jogo**
+
 ```http
 POST /api/games
 ```
 
 **Headers:**
+
 ```
 Authorization: Bearer YOUR_API_TOKEN
 Content-Type: application/json
 ```
 
 **Body:**
+
 ```json
 {
   "data": {
@@ -119,11 +128,13 @@ Content-Type: application/json
 ```
 
 ### **Atualizar Jogo**
+
 ```http
 PUT /api/games/{id}
 ```
 
 ### **Deletar Jogo**
+
 ```http
 DELETE /api/games/{id}
 ```
@@ -133,26 +144,31 @@ DELETE /api/games/{id}
 ## 🏷️ Endpoints de Categorias
 
 ### **Listar Categorias**
+
 ```http
 GET /api/categories
 ```
 
 **Exemplo:**
+
 ```bash
 curl "http://localhost:1337/api/categories?populate=games"
 ```
 
 ### **Buscar Categoria por ID**
+
 ```http
 GET /api/categories/{id}
 ```
 
 ### **Criar Categoria**
+
 ```http
 POST /api/categories
 ```
 
 **Body:**
+
 ```json
 {
   "data": {
@@ -167,21 +183,25 @@ POST /api/categories
 ## 🎯 Endpoints de Plataformas
 
 ### **Listar Plataformas**
+
 ```http
 GET /api/platforms
 ```
 
 ### **Buscar Plataforma por ID**
+
 ```http
 GET /api/platforms/{id}
 ```
 
 ### **Criar Plataforma**
+
 ```http
 POST /api/platforms
 ```
 
 **Body:**
+
 ```json
 {
   "data": {
@@ -196,21 +216,25 @@ POST /api/platforms
 ## 👨‍💻 Endpoints de Desenvolvedores
 
 ### **Listar Desenvolvedores**
+
 ```http
 GET /api/developers
 ```
 
 ### **Buscar Desenvolvedor por ID**
+
 ```http
 GET /api/developers/{id}
 ```
 
 ### **Criar Desenvolvedor**
+
 ```http
 POST /api/developers
 ```
 
 **Body:**
+
 ```json
 {
   "data": {
@@ -225,21 +249,25 @@ POST /api/developers
 ## 📢 Endpoints de Publicadores
 
 ### **Listar Publicadores**
+
 ```http
 GET /api/publishers
 ```
 
 ### **Buscar Publicador por ID**
+
 ```http
 GET /api/publishers/{id}
 ```
 
 ### **Criar Publicador**
+
 ```http
 POST /api/publishers
 ```
 
 **Body:**
+
 ```json
 {
   "data": {
@@ -254,17 +282,20 @@ POST /api/publishers
 ## 🔄 Funcionalidade de Populate
 
 ### **Endpoint de Populate**
+
 ```http
 POST /api/games/populate
 ```
 
 **Headers:**
+
 ```
 Authorization: Bearer YOUR_API_TOKEN
 Content-Type: application/json
 ```
 
 **Body (opcional):**
+
 ```json
 {
   "limit": 50,
@@ -274,12 +305,14 @@ Content-Type: application/json
 
 **Descrição:**
 Este endpoint importa automaticamente jogos da API da GOG, incluindo:
+
 - Informações básicas do jogo
 - Descrições e classificação etária
 - Imagens de capa e galeria
 - Categorias, plataformas, desenvolvedores e publicadores
 
 **Exemplo:**
+
 ```bash
 curl -X POST "http://localhost:1337/api/games/populate" \
   -H "Authorization: Bearer YOUR_API_TOKEN" \
@@ -292,6 +325,7 @@ curl -X POST "http://localhost:1337/api/games/populate" \
 ## 🔍 Filtros e Busca
 
 ### **Filtros por Preço**
+
 ```bash
 # Jogos com preço maior que $50
 GET /api/games?filters[price][$gt]=50
@@ -301,6 +335,7 @@ GET /api/games?filters[price][$gte]=20&filters[price][$lte]=100
 ```
 
 ### **Filtros por Data**
+
 ```bash
 # Jogos lançados em 2024
 GET /api/games?filters[release_date][$gte]=2024-01-01&filters[release_date][$lte]=2024-12-31
@@ -310,6 +345,7 @@ GET /api/games?filters[release_date][$gte]=2024-12-01
 ```
 
 ### **Filtros por Categoria**
+
 ```bash
 # Jogos da categoria RPG
 GET /api/games?filters[categories][name][$eq]=RPG
@@ -319,6 +355,7 @@ GET /api/games?filters[categories][name][$in][]=RPG&filters[categories][name][$i
 ```
 
 ### **Filtros por Plataforma**
+
 ```bash
 # Jogos para PC
 GET /api/games?filters[platforms][name][$eq]=PC
@@ -328,6 +365,7 @@ GET /api/games?filters[platforms][name][$in][]=PC&filters[platforms][name][$in][
 ```
 
 ### **Busca por Nome**
+
 ```bash
 # Busca por nome do jogo
 GET /api/games?filters[name][$containsi]=witcher
@@ -338,6 +376,7 @@ GET /api/games?filters[name][$containsi]=witcher
 ## 📊 Ordenação
 
 ### **Ordenação Simples**
+
 ```bash
 # Por nome (A-Z)
 GET /api/games?sort=name:asc
@@ -350,6 +389,7 @@ GET /api/games?sort=release_date:desc
 ```
 
 ### **Ordenação Múltipla**
+
 ```bash
 # Por categoria e depois por nome
 GET /api/games?sort=categories.name:asc,name:asc
@@ -360,6 +400,7 @@ GET /api/games?sort=categories.name:asc,name:asc
 ## 🔐 Autenticação
 
 ### **Tokens de API**
+
 Para endpoints protegidos, use tokens de API:
 
 1. **Criar Token:**
@@ -369,12 +410,14 @@ Para endpoints protegidos, use tokens de API:
    - Configure permissões e expiração
 
 2. **Usar Token:**
+
 ```bash
 curl -H "Authorization: Bearer YOUR_API_TOKEN" \
   "http://localhost:1337/api/games"
 ```
 
 ### **JWT para Usuários**
+
 Para autenticação de usuários:
 
 ```bash
@@ -396,9 +439,11 @@ curl -H "Authorization: Bearer JWT_TOKEN" \
 ## 📡 GraphQL
 
 ### **Schema GraphQL**
+
 Acesse o GraphQL Playground em: `http://localhost:1337/graphql`
 
 ### **Exemplo de Query**
+
 ```graphql
 query GetGames {
   games {
@@ -429,6 +474,7 @@ query GetGames {
 ```
 
 ### **Exemplo de Mutation**
+
 ```graphql
 mutation CreateGame($data: GameInput!) {
   createGame(data: $data) {
@@ -444,6 +490,7 @@ mutation CreateGame($data: GameInput!) {
 ```
 
 **Variables:**
+
 ```json
 {
   "data": {
@@ -459,6 +506,7 @@ mutation CreateGame($data: GameInput!) {
 ## 📁 Upload de Arquivos
 
 ### **Upload de Imagem**
+
 ```bash
 curl -X POST "http://localhost:1337/api/upload" \
   -H "Authorization: Bearer YOUR_API_TOKEN" \
@@ -469,6 +517,7 @@ curl -X POST "http://localhost:1337/api/upload" \
 ```
 
 ### **Upload Múltiplo**
+
 ```bash
 curl -X POST "http://localhost:1337/api/upload" \
   -H "Authorization: Bearer YOUR_API_TOKEN" \
@@ -497,6 +546,7 @@ curl -X POST "http://localhost:1337/api/upload" \
 ## 📝 Exemplos Práticos
 
 ### **Script para Popular Banco**
+
 ```bash
 #!/bin/bash
 
@@ -514,6 +564,7 @@ echo "População concluída!"
 ```
 
 ### **Script para Backup**
+
 ```bash
 #!/bin/bash
 
@@ -531,6 +582,7 @@ echo "Backup criado: backup_$DATE.sql"
 Para permitir acesso de outros domínios, configure o CORS:
 
 **config/middlewares.ts:**
+
 ```typescript
 export default [
   'strapi::errors',
@@ -539,8 +591,8 @@ export default [
     config: {
       enabled: true,
       headers: '*',
-      origin: ['http://localhost:3000', 'https://yourdomain.com']
-    }
+      origin: ['http://localhost:3000', 'https://yourdomain.com'],
+    },
   },
   // ... outros middlewares
 ];
@@ -551,16 +603,18 @@ export default [
 ## 📊 Monitoramento
 
 ### **Health Check**
+
 ```bash
 curl "http://localhost:1337/_health"
 ```
 
 ### **Informações do Sistema**
+
 ```bash
 curl "http://localhost:1337/admin/information"
 ```
 
 ---
 
-*Última atualização: Agosto 2025*
-*Versão da API: 1.0.0*
+_Última atualização: Agosto 2025_
+_Versão da API: 1.0.0_
