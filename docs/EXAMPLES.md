@@ -87,11 +87,11 @@ response=$(curl -s -X POST "$API_URL/api/games/populate" \
 
 if [[ $response == *"Finished populating games"* ]]; then
   echo "✅ População concluída com sucesso!"
-  
+
   # Contar jogos criados
   games_count=$(curl -s "$API_URL/api/games?pagination[pageSize]=1" | \
     jq -r '.meta.pagination.total')
-  
+
   echo "📊 Total de jogos no catálogo: $games_count"
 else
   echo "❌ Erro na população: $response"
@@ -127,11 +127,11 @@ PGPASSWORD=$DB_PASS pg_dump -h $DB_HOST -p $DB_PORT -U $DB_USER $DB_NAME > $BACK
 
 if [ $? -eq 0 ]; then
   echo "✅ Backup criado: $BACKUP_FILE"
-  
+
   # Comprimir backup
   gzip $BACKUP_FILE
   echo "📦 Backup comprimido: $BACKUP_FILE.gz"
-  
+
   # Remover backups antigos
   find $BACKUP_DIR -name "*.sql.gz" -mtime +$RETENTION_DAYS -delete
   echo "🗑️ Backups antigos removidos"
@@ -161,7 +161,7 @@ if [ $health_response -eq 200 ]; then
   echo "$(date): ✅ API está funcionando normalmente" >> $LOG_FILE
 else
   echo "$(date): ❌ API com problemas - Status: $health_response" >> $LOG_FILE
-  
+
   # Enviar alerta por email
   echo "API RootGames com problemas - Status: $health_response" | \
     mail -s "Alerta API RootGames" $ALERT_EMAIL
@@ -187,8 +187,8 @@ const GameStore = () => {
   useEffect(() => {
     // Buscar jogos com filtros
     fetch('/api/games?populate=*&sort=price:asc&filters[price][$lt]=50')
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         setGames(data.data);
         setLoading(false);
       });
@@ -196,7 +196,7 @@ const GameStore = () => {
 
   return (
     <div>
-      {games.map(game => (
+      {games.map((game) => (
         <GameCard key={game.id} game={game} />
       ))}
     </div>
@@ -211,14 +211,14 @@ const GameStore = () => {
 const getRecommendedGames = async (userId) => {
   // Buscar histórico do usuário
   const userHistory = await getUserHistory(userId);
-  
+
   // Buscar jogos similares
   const recommendations = await fetch(
     `${API_URL}/api/games?` +
-    `filters[categories][id][$in]=${userHistory.categories.join(',')}&` +
-    `populate=*&sort=rating:desc&pagination[pageSize]=10`
-  ).then(res => res.json());
-  
+      `filters[categories][id][$in]=${userHistory.categories.join(',')}&` +
+      `populate=*&sort=rating:desc&pagination[pageSize]=10`
+  ).then((res) => res.json());
+
   return recommendations.data;
 };
 ```
@@ -230,28 +230,32 @@ const getRecommendedGames = async (userId) => {
 const { Client, GatewayIntentBits } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-client.on('interactionCreate', async interaction => {
+client.on('interactionCreate', async (interaction) => {
   if (interaction.commandName === 'game') {
     const gameName = interaction.options.getString('name');
-    
+
     // Buscar jogo na API
-    const response = await fetch(
-      `${API_URL}/api/games?filters[name][$containsi]=${gameName}&populate=*`
-    );
+    const response = await fetch(`${API_URL}/api/games?filters[name][$containsi]=${gameName}&populate=*`);
     const data = await response.json();
-    
+
     if (data.data.length > 0) {
       const game = data.data[0];
       await interaction.reply({
-        embeds: [{
-          title: game.attributes.name,
-          description: game.attributes.short_description,
-          fields: [
-            { name: 'Preço', value: `$${game.attributes.price}`, inline: true },
-            { name: 'Categorias', value: game.attributes.categories.data.map(c => c.attributes.name).join(', '), inline: true }
-          ],
-          image: { url: `${API_URL}${game.attributes.cover.data.attributes.url}` }
-        }]
+        embeds: [
+          {
+            title: game.attributes.name,
+            description: game.attributes.short_description,
+            fields: [
+              { name: 'Preço', value: `$${game.attributes.price}`, inline: true },
+              {
+                name: 'Categorias',
+                value: game.attributes.categories.data.map((c) => c.attributes.name).join(', '),
+                inline: true,
+              },
+            ],
+            image: { url: `${API_URL}${game.attributes.cover.data.attributes.url}` },
+          },
+        ],
       });
     }
   }
@@ -292,13 +296,13 @@ module.exports = {
   'game.created': {
     url: 'https://your-webhook-url.com/game-created',
     headers: {
-      'Authorization': 'Bearer webhook-token',
+      Authorization: 'Bearer webhook-token',
     },
   },
   'game.updated': {
     url: 'https://your-webhook-url.com/game-updated',
     headers: {
-      'Authorization': 'Bearer webhook-token',
+      Authorization: 'Bearer webhook-token',
     },
   },
 };
@@ -340,13 +344,13 @@ const GamesList = () => {
 
   useEffect(() => {
     fetch('http://localhost:1337/api/games?populate=*&sort=name:asc')
-      .then(response => response.json())
-      .then(data => setGames(data.data));
+      .then((response) => response.json())
+      .then((data) => setGames(data.data));
   }, []);
 
   const renderGame = ({ item }) => (
     <View style={styles.gameCard}>
-      <Image 
+      <Image
         source={{ uri: `http://localhost:1337${item.attributes.cover.data.attributes.url}` }}
         style={styles.gameImage}
       />
@@ -355,13 +359,7 @@ const GamesList = () => {
     </View>
   );
 
-  return (
-    <FlatList
-      data={games}
-      renderItem={renderGame}
-      keyExtractor={item => item.id.toString()}
-    />
-  );
+  return <FlatList data={games} renderItem={renderGame} keyExtractor={(item) => item.id.toString()} />;
 };
 ```
 
@@ -416,9 +414,9 @@ module.exports = (config, { strapi }) => {
     const start = Date.now();
     await next();
     const duration = Date.now() - start;
-    
+
     strapi.log.info(`Request to ${ctx.url} took ${duration}ms`);
-    
+
     if (duration > 1000) {
       strapi.log.warn(`Slow request detected: ${ctx.url} (${duration}ms)`);
     }
@@ -439,13 +437,13 @@ const steamApi = require('steam-api');
 class SteamIntegration {
   async syncGames() {
     const steamGames = await steamApi.getTopGames();
-    
+
     for (const steamGame of steamGames) {
       // Verificar se já existe na nossa API
       const existingGame = await strapi.entityService.findMany('api::game.game', {
-        filters: { name: steamGame.name }
+        filters: { name: steamGame.name },
       });
-      
+
       if (!existingGame.length) {
         // Criar novo jogo
         await strapi.entityService.create('api::game.game', {
@@ -453,7 +451,7 @@ class SteamIntegration {
             name: steamGame.name,
             price: steamGame.price,
             // ... outros campos
-          }
+          },
         });
       }
     }
@@ -470,14 +468,14 @@ const twitchApi = require('twitch-api');
 class TwitchIntegration {
   async getGameStreams(gameName) {
     const game = await strapi.entityService.findMany('api::game.game', {
-      filters: { name: gameName }
+      filters: { name: gameName },
     });
-    
+
     if (game.length > 0) {
       const streams = await twitchApi.getStreamsByGame(game[0].name);
       return streams;
     }
-    
+
     return [];
   }
 }
@@ -485,5 +483,5 @@ class TwitchIntegration {
 
 ---
 
-*Última atualização: Agosto 2025*
-*Versão dos Exemplos: 1.0.0*
+_Última atualização: Agosto 2025_
+_Versão dos Exemplos: 1.0.0_

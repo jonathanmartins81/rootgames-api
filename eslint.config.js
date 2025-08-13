@@ -9,18 +9,24 @@ export default [
     files: ['**/*.{ts,tsx,js,jsx}'],
     languageOptions: {
       parser: typescriptParser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        ecmaFeatures: {
-          jsx: true,
-        },
+      parserOptions: { ecmaVersion: 'latest', sourceType: 'module', ecmaFeatures: { jsx: true } },
+      globals: {
+        // Strapi globals
+        strapi: 'readonly',
+        // Node.js globals
+        console: 'readonly',
+        Buffer: 'readonly',
+        __dirname: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
+        // Browser globals
+        document: 'readonly',
+        window: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
       },
     },
-    plugins: {
-      '@typescript-eslint': typescript,
-      prettier: prettier,
-    },
+    plugins: { '@typescript-eslint': typescript, prettier: prettier },
     rules: {
       ...typescript.configs.recommended.rules,
       'prettier/prettier': 'error',
@@ -28,16 +34,26 @@ export default [
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-empty-object-type': 'warn',
+      '@typescript-eslint/prefer-namespace-keyword': 'warn',
       'no-console': 'warn',
       'prefer-const': 'error',
       'no-var': 'error',
+      'no-undef': 'error',
     },
   },
   {
-    files: ['**/*.config.{js,ts}', 'config/**/*.{js,ts}'],
+    files: ['**/*.config.{js,ts}', 'config/**/*.{js,ts}', '.strapi/**/*.{js,ts}'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+      'no-undef': 'off',
+      '@typescript-eslint/no-unused-vars': 'warn',
     },
+  },
+  { files: ['src/admin/**/*.{js,ts,tsx}'], rules: { 'no-undef': 'off', '@typescript-eslint/no-unused-vars': 'warn' } },
+  {
+    files: ['types/generated/**/*.d.ts'],
+    rules: { '@typescript-eslint/no-empty-object-type': 'off', '@typescript-eslint/prefer-namespace-keyword': 'off' },
   },
   {
     ignores: [
@@ -50,6 +66,7 @@ export default [
       'logs/**',
       '*.log',
       'backups/**',
+      '.strapi/client/**',
     ],
   },
 ];

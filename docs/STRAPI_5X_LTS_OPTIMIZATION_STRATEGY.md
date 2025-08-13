@@ -1,8 +1,8 @@
 # 🚀 Estratégia de Otimização Strapi 5.x + LTS 2025
 
-*Versão do Documento: 1.0.0*  
-*Data: 12 de Agosto de 2025*  
-*Status: 🎯 ESTRATÉGIA DEFINIDA*
+_Versão do Documento: 1.0.0_  
+_Data: 12 de Agosto de 2025_  
+_Status: 🎯 ESTRATÉGIA DEFINIDA_
 
 ## 🎯 **Visão Geral da Estratégia**
 
@@ -11,12 +11,14 @@ Esta estratégia visa otimizar completamente o projeto **rootgames-api** para St
 ## 📊 **Análise da Situação Atual**
 
 ### **✅ Pontos Fortes**
+
 - Strapi 5.21.0 já migrado e funcionando
 - React 18.3.1 estável e compatível
 - Build funcionando (~20 segundos)
 - Documentação completa
 
 ### **🎯 Oportunidades de Melhoria**
+
 - React 19.1.1 (versão LTS mais recente)
 - Node.js 22.x (LTS ativa até 2026)
 - NPM 9.8.x (última versão estável)
@@ -25,24 +27,28 @@ Esta estratégia visa otimizar completamente o projeto **rootgames-api** para St
 ## 🗓️ **Cronograma de Implementação**
 
 ### **Fase 1: Preparação (Dia 1)**
+
 - [ ] Backup completo do sistema
 - [ ] Criação de branch de desenvolvimento
 - [ ] Análise de compatibilidade React 19
 - [ ] Preparação de ambiente de teste
 
 ### **Fase 2: Atualização Node.js (Dia 1-2)**
+
 - [ ] Atualização para Node.js 22.x
 - [ ] Atualização do NPM para 9.8.x
 - [ ] Testes de compatibilidade
 - [ ] Ajustes de engines
 
 ### **Fase 3: Migração React 19 (Dia 2-3)**
+
 - [ ] Atualização React para 19.1.1
 - [ ] Atualização React DOM para 19.1.1
 - [ ] Testes de compatibilidade Strapi
 - [ ] Resolução de peer dependencies
 
 ### **Fase 4: Otimizações Finais (Dia 3)**
+
 - [ ] Atualização React Router DOM
 - [ ] Otimizações de performance
 - [ ] Testes completos
@@ -68,6 +74,7 @@ yarn --version
 ### **2. Atualização Node.js**
 
 #### **Opção A: Atualização Direta (Recomendada)**
+
 ```bash
 # Instalar Node.js 22.x
 curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
@@ -79,6 +86,7 @@ npm --version   # Deve mostrar 9.x.x ou superior
 ```
 
 #### **Opção B: Usando NVM (Desenvolvimento)**
+
 ```bash
 # Instalar Node.js 22.x via NVM
 nvm install 22
@@ -87,6 +95,7 @@ nvm alias default 22
 ```
 
 ### **3. Atualização NPM**
+
 ```bash
 # Atualizar NPM para última versão
 npm install -g npm@latest
@@ -98,6 +107,7 @@ npm --version  # Deve mostrar 9.8.x ou superior
 ### **4. Atualização React 19**
 
 #### **Passo 1: Preparação**
+
 ```bash
 # Backup do package.json atual
 cp package.json package.json.backup
@@ -107,6 +117,7 @@ yarn list --depth=0 | grep react
 ```
 
 #### **Passo 2: Atualização Gradual**
+
 ```json
 {
   "dependencies": {
@@ -122,6 +133,7 @@ yarn list --depth=0 | grep react
 ```
 
 #### **Passo 3: Instalação e Testes**
+
 ```bash
 # Limpar cache
 yarn cache clean
@@ -141,6 +153,7 @@ yarn develop
 #### **Problemas Esperados e Soluções**
 
 **1. Peer Dependencies Warnings**
+
 ```bash
 # Solução: Forçar resolução
 yarn install --force
@@ -155,6 +168,7 @@ yarn install --force
 ```
 
 **2. Strapi Compatibility**
+
 ```bash
 # Verificar compatibilidade
 yarn strapi info
@@ -171,18 +185,21 @@ yarn strapi info
 ## 📈 **Métricas de Sucesso**
 
 ### **Performance**
+
 - [ ] Build time < 25 segundos
 - [ ] Startup time < 10 segundos
 - [ ] Memory usage otimizado
 - [ ] Bundle size reduzido
 
 ### **Compatibilidade**
+
 - [ ] Strapi 5.x funcionando 100%
 - [ ] React 19 sem warnings críticos
 - [ ] Node.js 22.x estável
 - [ ] Todas as funcionalidades operacionais
 
 ### **Qualidade**
+
 - [ ] Zero erros críticos
 - [ ] Warnings mínimos e aceitáveis
 - [ ] Testes passando
@@ -191,6 +208,7 @@ yarn strapi info
 ## 🛡️ **Planos de Contingência**
 
 ### **Rollback Rápido**
+
 ```bash
 # Se algo der errado
 git checkout main
@@ -200,6 +218,7 @@ yarn build
 ```
 
 ### **Ambiente de Teste**
+
 ```bash
 # Criar ambiente isolado
 docker run -it --rm node:22-alpine sh
@@ -207,6 +226,7 @@ docker run -it --rm node:22-alpine sh
 ```
 
 ### **Migração Gradual**
+
 - Manter React 18 se React 19 causar problemas
 - Usar Node.js 20 se 22.x não estiver disponível
 - Implementar feature flags para funcionalidades críticas
@@ -214,12 +234,14 @@ docker run -it --rm node:22-alpine sh
 ## 📋 **Checklist de Validação**
 
 ### **Pré-Implementação**
+
 - [ ] Backup completo realizado
 - [ ] Branch de desenvolvimento criado
 - [ ] Ambiente de teste preparado
 - [ ] Documentação atualizada
 
 ### **Durante Implementação**
+
 - [ ] Node.js 22.x instalado e funcionando
 - [ ] NPM 9.8.x atualizado
 - [ ] React 19.1.1 instalado
@@ -227,6 +249,7 @@ docker run -it --rm node:22-alpine sh
 - [ ] Testes passando
 
 ### **Pós-Implementação**
+
 - [ ] Performance validada
 - [ ] Compatibilidade confirmada
 - [ ] Documentação finalizada
@@ -236,12 +259,14 @@ docker run -it --rm node:22-alpine sh
 ## 🔗 **Referências e Recursos**
 
 ### **Documentação Oficial**
+
 - [Node.js 22 LTS](https://nodejs.org/en/blog/release/v22.0.0/)
 - [React 19 Release](https://react.dev/blog/2024/04/25/react-19)
 - [Strapi 5.x Docs](https://docs.strapi.io)
 - [NPM Latest](https://www.npmjs.com/package/npm)
 
 ### **Ferramentas Úteis**
+
 - [Node Version Manager](https://github.com/nvm-sh/nvm)
 - [React DevTools](https://react.dev/learn/react-developer-tools)
 - [Strapi Admin](https://docs.strapi.io/dev-docs/admin-panel-customization)
@@ -249,6 +274,7 @@ docker run -it --rm node:22-alpine sh
 ## 📝 **Notas de Implementação**
 
 ### **Comandos Úteis**
+
 ```bash
 # Verificar versões
 node --version && npm --version && yarn --version
@@ -264,6 +290,7 @@ yarn build && yarn start
 ```
 
 ### **Logs Importantes**
+
 ```bash
 # Logs do Strapi
 yarn develop 2>&1 | tee strapi.log

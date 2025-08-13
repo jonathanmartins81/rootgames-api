@@ -1,9 +1,9 @@
 export default {
   routes: [
     {
-      method: "POST",
-      path: "/games/populate",
-      handler: "game.populate",
+      method: 'POST',
+      path: '/games/populate',
+      handler: 'game.populate',
     },
   ],
 };

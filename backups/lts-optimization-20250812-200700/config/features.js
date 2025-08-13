@@ -188,7 +188,7 @@ function isFeatureEnabled(featureName, features) {
  * @returns {string[]}
  */
 function getEnabledFeatures(features) {
-  return Object.keys(features).filter(key => features[key] === true);
+  return Object.keys(features).filter((key) => features[key] === true);
 }
 
 /**
@@ -197,7 +197,7 @@ function getEnabledFeatures(features) {
  * @returns {string[]}
  */
 function getDisabledFeatures(features) {
-  return Object.keys(features).filter(key => features[key] === false);
+  return Object.keys(features).filter((key) => features[key] === false);
 }
 
 /**
@@ -206,18 +206,14 @@ function getDisabledFeatures(features) {
  * @returns {object}
  */
 function checkCriticalFeatures(features) {
-  const criticalFeatures = [
-    'healthChecks',
-    'autoBackup',
-    'featureRollbackEnabled'
-  ];
+  const criticalFeatures = ['healthChecks', 'autoBackup', 'featureRollbackEnabled'];
 
-  const missingFeatures = criticalFeatures.filter(feature => !features[feature]);
+  const missingFeatures = criticalFeatures.filter((feature) => !features[feature]);
 
   return {
     allEnabled: missingFeatures.length === 0,
     missingFeatures,
-    criticalFeatures
+    criticalFeatures,
   };
 }
 
@@ -238,7 +234,7 @@ function generateFeatureReport(features) {
     enabledFeatures: enabled,
     disabledFeatures: disabled,
     criticalFeatures: critical,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   };
 }
 
@@ -248,5 +244,5 @@ module.exports.utils = {
   getEnabledFeatures,
   getDisabledFeatures,
   checkCriticalFeatures,
-  generateFeatureReport
+  generateFeatureReport,
 };

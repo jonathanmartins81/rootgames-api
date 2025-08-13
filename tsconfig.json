@@ -45,12 +45,7 @@
     },
 
     // Tipos incluídos
-    "types": [
-      "node",
-      "@types/react",
-      "@strapi/strapi",
-      "jest"
-    ],
+    "types": ["node", "@types/react", "@strapi/strapi", "jest"],
 
     // Configurações de performance
     "incremental": true,

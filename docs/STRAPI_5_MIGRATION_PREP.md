@@ -9,11 +9,13 @@ Este documento detalha a preparação completa para migração do Strapi 4.25.23
 ## 📊 **Situação Atual (Agosto 2025)**
 
 ### **Versão Atual**
+
 - **Strapi**: 4.25.23
 - **Node.js**: 20.19.4 ✅ (compatível com Strapi 5.x)
 - **Status**: Estável e funcional
 
 ### **Funcionalidades Críticas**
+
 - ✅ API REST completa
 - ✅ GraphQL funcional
 - ✅ Sistema de upload
@@ -26,16 +28,19 @@ Este documento detalha a preparação completa para migração do Strapi 4.25.23
 ## 🚨 **Breaking Changes Identificados**
 
 ### **1. Plugin i18n Removido**
+
 - **Antes**: `@strapi/plugin-i18n` separado
 - **Depois**: Funcionalidade integrada ao core
 - **Impacto**: Configurações podem precisar de ajustes
 
 ### **2. Estrutura de Plugins**
+
 - **Antes**: Plugins separados
 - **Depois**: Alguns plugins integrados ao core
 - **Impacto**: Configurações de plugins podem mudar
 
 ### **3. Admin Panel**
+
 - **Antes**: Interface atual
 - **Depois**: Nova interface (possíveis mudanças)
 - **Impacto**: Customizações podem quebrar
@@ -45,6 +50,7 @@ Este documento detalha a preparação completa para migração do Strapi 4.25.23
 ## 🛠️ **Preparação do Ambiente de Staging**
 
 ### **1. Criar Branch de Staging**
+
 ```bash
 # Criar branch para migração
 git checkout -b staging-strapi-5-migration
@@ -54,6 +60,7 @@ git status
 ```
 
 ### **2. Configurar Ambiente de Staging**
+
 ```bash
 # Criar arquivo .env.staging
 cp .env .env.staging
@@ -64,6 +71,7 @@ echo "DATABASE_NAME=rootgames_staging" >> .env.staging
 ```
 
 ### **3. Banco de Dados de Staging**
+
 ```bash
 # Criar banco de staging
 sudo -u postgres psql -c "CREATE DATABASE rootgames_staging OWNER rootgames;"
@@ -77,6 +85,7 @@ PGPASSWORD=rootgames pg_restore -h 127.0.0.1 -U rootgames -d rootgames_staging .
 ## 🔍 **Análise de Impacto Detalhada**
 
 ### **1. Análise de Código Customizado**
+
 ```bash
 # Verificar arquivos customizados
 find src/ -name "*.js" -o -name "*.ts" | grep -v node_modules
@@ -89,6 +98,7 @@ grep -r "custom" config/
 ```
 
 ### **2. Análise de Dependências**
+
 ```bash
 # Verificar dependências que podem conflitar
 yarn list --depth=0
@@ -98,6 +108,7 @@ yarn check --verify-tree
 ```
 
 ### **3. Análise de Configurações**
+
 ```bash
 # Verificar middlewares customizados
 cat config/middlewares.ts
@@ -114,6 +125,7 @@ cat config/plugins.ts
 ## 📋 **Checklist de Preparação**
 
 ### **Pré-Migração**
+
 - [ ] **Backup completo** do sistema atual
 - [ ] **Ambiente de staging** configurado
 - [ ] **Banco de dados** de staging criado
@@ -123,14 +135,16 @@ cat config/plugins.ts
 - [ ] **Rollback plan** preparado
 
 ### **Durante Migração**
+
 - [ ] **Migração em staging** primeiro
 - [ ] **Testes extensivos** de funcionalidades
-- [ ] **Verificação de performance** 
+- [ ] **Verificação de performance**
 - [ ] **Testes de integração**
 - [ ] **Validação de dados**
 - [ ] **Testes de admin panel**
 
 ### **Pós-Migração**
+
 - [ ] **Health checks** completos
 - [ ] **Testes de funcionalidades** críticas
 - [ ] **Verificação de performance**
@@ -143,6 +157,7 @@ cat config/plugins.ts
 ## 🚀 **Procedimento de Migração**
 
 ### **1. Comando Oficial de Migração**
+
 ```bash
 # Backup antes da migração
 ./scripts/backup.sh
@@ -156,6 +171,7 @@ yarn develop
 ```
 
 ### **2. Migração Manual (Alternativa)**
+
 ```bash
 # Atualizar dependências principais
 yarn add @strapi/strapi@^5.21.0
@@ -171,6 +187,7 @@ yarn add react-router-dom@^6.0.0 styled-components@^6.0.0
 ```
 
 ### **3. Ajustes Pós-Migração**
+
 ```bash
 # Verificar configurações
 yarn strapi config:dump
@@ -185,6 +202,7 @@ yarn strapi config:dump
 ## 🧪 **Testes de Validação**
 
 ### **1. Testes de Funcionalidades**
+
 ```bash
 # Testar API REST
 curl http://localhost:1337/api/games?limit=1
@@ -203,6 +221,7 @@ curl -X POST http://localhost:1337/api/upload \
 ```
 
 ### **2. Testes de Admin Panel**
+
 - [ ] Login no admin panel
 - [ ] Criação de conteúdo
 - [ ] Edição de conteúdo
@@ -211,6 +230,7 @@ curl -X POST http://localhost:1337/api/upload \
 - [ ] Funcionalidades de i18n
 
 ### **3. Testes de Performance**
+
 ```bash
 # Health check
 ./scripts/health-check.sh
@@ -227,6 +247,7 @@ ps aux | grep strapi
 ## 🛡️ **Procedimentos de Segurança**
 
 ### **1. Backup Automático**
+
 ```bash
 # Backup antes da migração
 ./scripts/backup.sh
@@ -238,6 +259,7 @@ git push origin staging-strapi-5-migration
 ```
 
 ### **2. Rollback Automático**
+
 ```bash
 # Se a migração falhar
 ./scripts/rollback.sh
@@ -250,6 +272,7 @@ yarn install
 ```
 
 ### **3. Monitoramento Contínuo**
+
 ```bash
 # Iniciar monitoramento
 ./scripts/start-monitoring.sh
@@ -263,24 +286,28 @@ yarn install
 ## 📅 **Cronograma de Migração**
 
 ### **Semana 1: Preparação**
+
 - [ ] Configurar ambiente de staging
 - [ ] Análise completa de impacto
 - [ ] Implementar testes automatizados
 - [ ] Preparar scripts de migração
 
 ### **Semana 2: Migração em Staging**
+
 - [ ] Executar migração em staging
 - [ ] Testes extensivos
 - [ ] Ajustes e correções
 - [ ] Validação completa
 
 ### **Semana 3: Testes e Validação**
+
 - [ ] Testes de usuários
 - [ ] Testes de performance
 - [ ] Validação de dados
 - [ ] Documentação atualizada
 
 ### **Semana 4: Deploy em Produção**
+
 - [ ] Backup final
 - [ ] Migração em produção
 - [ ] Monitoramento pós-deploy
@@ -291,6 +318,7 @@ yarn install
 ## 🔧 **Scripts de Migração**
 
 ### **1. Script de Preparação**
+
 ```bash
 #!/bin/bash
 # scripts/prepare-strapi5-migration.sh
@@ -312,6 +340,7 @@ echo "✅ Preparação concluída!"
 ```
 
 ### **2. Script de Migração**
+
 ```bash
 #!/bin/bash
 # scripts/migrate-strapi5.sh
@@ -332,6 +361,7 @@ echo "✅ Migração concluída!"
 ```
 
 ### **3. Script de Validação**
+
 ```bash
 #!/bin/bash
 # scripts/validate-strapi5.sh
@@ -355,11 +385,13 @@ echo "✅ Validação concluída!"
 ## 📚 **Recursos e Documentação**
 
 ### **Documentação Oficial**
+
 - [Strapi 5.x Migration Guide](https://docs.strapi.io/dev-docs/migration-guides)
 - [Breaking Changes v4 to v5](https://docs.strapi.io/dev-docs/migration-guides/migration-guide-4.x-to-v5.0.0)
 - [Strapi 5.x Documentation](https://docs.strapi.io/)
 
 ### **Comunidade**
+
 - [Strapi Forum](https://forum.strapi.io/)
 - [Strapi Discord](https://discord.strapi.io/)
 - [GitHub Issues](https://github.com/strapi/strapi/issues)
@@ -369,18 +401,21 @@ echo "✅ Validação concluída!"
 ## 🎯 **Próximos Passos**
 
 ### **Imediato (Esta Semana)**
+
 1. **Configurar ambiente de staging**
 2. **Criar banco de dados de staging**
 3. **Implementar testes automatizados**
 4. **Análise completa de impacto**
 
 ### **Curto Prazo (Próximas 2 Semanas)**
+
 1. **Executar migração em staging**
 2. **Testes extensivos**
 3. **Ajustes e correções**
 4. **Validação completa**
 
 ### **Médio Prazo (1 Mês)**
+
 1. **Deploy em produção**
 2. **Monitoramento pós-deploy**
 3. **Documentação atualizada**
@@ -388,6 +423,6 @@ echo "✅ Validação concluída!"
 
 ---
 
-*Última atualização: Agosto 2025*
-*Versão do Documento: 1.0.0*
-*Próxima revisão: Setembro 2025*
+_Última atualização: Agosto 2025_
+_Versão do Documento: 1.0.0_
+_Próxima revisão: Setembro 2025_

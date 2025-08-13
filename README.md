@@ -28,6 +28,7 @@
 - 🎨 **ESLint + Prettier** para qualidade de código
 - 🔧 **Build otimizado** (20.94s)
 - ✅ **Zero erros TypeScript**
+- 🚀 **Sistema de Qualidade** completo (ESLint, Prettier, Commitlint, Husky)
 
 ## 🏗️ Arquitetura
 
@@ -261,9 +262,12 @@ yarn version         # Versão do Strapi
 ### **Qualidade de Código**
 
 ```bash
-yarn lint            # Verificar código
-yarn lint:fix        # Corrigir problemas automaticamente
-yarn format          # Formatar código
+yarn quality         # Executar todas as verificações de qualidade
+yarn quality:fix     # Corrigir problemas automaticamente
+yarn lint            # Verificar código com ESLint
+yarn lint:fix        # Corrigir problemas ESLint
+yarn format          # Formatar código com Prettier
+yarn format:check    # Verificar formatação
 yarn type-check      # Verificar tipos TypeScript
 ```
 
@@ -286,6 +290,44 @@ yarn deploy          # Deploy seguro
 yarn health          # Verificar saúde do sistema
 yarn monitor         # Monitorar sistema
 ```
+
+## 🚀 Sistema de Qualidade de Código
+
+### **🛠️ Ferramentas Implementadas**
+
+- **ESLint**: Linting de código JavaScript/TypeScript
+- **Prettier**: Formatação automática de código
+- **Commitlint**: Validação de mensagens de commit
+- **Husky**: Git hooks para automação
+- **Lint-staged**: Linting apenas em arquivos modificados
+
+### **📋 Padrões de Commit**
+
+O projeto segue o padrão **Conventional Commits**:
+
+```bash
+# Formatos válidos:
+feat: add new user authentication system
+fix: resolve database connection issue
+docs: update API documentation
+style: format code according to standards
+refactor: improve game service performance
+test: add unit tests for user service
+chore: update dependencies
+```
+
+### **🔧 Hooks Automáticos**
+
+- **Pre-commit**: Executa linting e formatação automaticamente
+- **Commit-msg**: Valida formato da mensagem de commit
+- **Lint-staged**: Processa apenas arquivos modificados
+
+### **⚙️ Configurações**
+
+- **`.prettierrc.json`**: Regras de formatação
+- **`eslint.config.js`**: Regras de linting
+- **`commitlint.config.js`**: Regras de commit
+- **`.lintstagedrc.js`**: Configuração de lint-staged
 
 ## 🔧 Configurações Avançadas
 
