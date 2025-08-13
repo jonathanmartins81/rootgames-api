@@ -20,7 +20,7 @@
 - 🔐 **Autenticação robusta** com JWT e tokens de API
 - 📱 **Painel administrativo** customizado
 - 🌍 **Suporte a internacionalização** (i18n)
-- ✨ **Editor rico CKEditor** para descrições
+- ✨ **Editor rico CKEditor 5** para descrições (configurado e funcionando)
 - 📊 **Relacionamentos complexos** entre entidades
 - 🔄 **Webhooks** para integrações
 - 📈 **Escalável** e pronto para produção
@@ -32,6 +32,7 @@
 - 🚀 **Sistema de Qualidade** completo (ESLint, Prettier, Commitlint, Husky)
 - 🖼️ **Otimização de Imagens** automática (Sharp + Imagemin)
 - 🧪 **Sistema de Testes** completo (Vitest + Playwright + Percy + axe-core)
+- 📝 **CKEditor 5** - Editor de texto rico oficial integrado
 
 ## 🏗️ Arquitetura
 
