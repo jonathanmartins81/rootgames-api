@@ -49,8 +49,7 @@
       "node",
       "@types/react",
       "@strapi/strapi",
-      "jest",
-      "supertest"
+      "jest"
     ],
 
     // Configurações de performance
@@ -60,7 +59,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": false
   },
 
   "include": [
@@ -89,7 +88,13 @@
     "src/plugins/**",
     "coverage/",
     "*.min.js",
-    "*.bundle.js"
+    "*.bundle.js",
+    "logs/**/*",
+    "*.log",
+    "*.json.log",
+    "metrics/**/*",
+    "monitor_stats.json",
+    "backups/**/*"
   ],
 
   "ts-node": {
@@ -100,9 +105,5 @@
     "files": true
   },
 
-  "references": [
-    {
-      "path": "./src/admin"
-    }
-  ]
+  "references": []
 }
