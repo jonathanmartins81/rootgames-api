@@ -6,7 +6,9 @@ _Status: ✅ ATUALIZADO E TESTADO_
 
 ## 🎯 Resumo Executivo
 
-Este documento registra as atualizações LTS (Long Term Support) aplicadas ao `package.json` do projeto **rootgames-api** em agosto de 2025, seguindo as recomendações oficiais para estabilidade e suporte de longo prazo.
+Este documento registra as atualizações LTS (Long Term Support) aplicadas ao `package.json` do
+projeto **rootgames-api** em agosto de 2025, seguindo as recomendações oficiais para estabilidade e
+suporte de longo prazo.
 
 ## 📊 Versões Atualizadas
 

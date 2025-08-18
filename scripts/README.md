@@ -1,8 +1,149 @@
-# 🛡️ Scripts de Proteção - RootGames API
+# 🛡️ Scripts de Automação - RootGames API
 
-Este diretório contém scripts essenciais para garantir a segurança e estabilidade da aplicação RootGames API durante atualizações e operações.
+Este diretório contém scripts para automação de tarefas relacionadas ao projeto RootGames API.
 
-## 📋 Scripts Disponíveis
+## 🚀 Workflow de Diagnóstico Sequencial
+
+O projeto agora inclui um sistema completo de diagnósticos sequenciais para análise e monitoramento
+do projeto:
+
+### 📋 Sequência de Diagnósticos
+
+1. **`1_pre-diagnostico.sh`** - Preparação e verificação de dependências
+2. **`2_diagnostico-sistema.sh`** - Análise do sistema e infraestrutura
+3. **`3_diagnostico-aplicacao.sh`** - Diagnóstico da aplicação Strapi
+4. **`4_diagnostico-performance.sh`** - Análise de performance e otimização
+5. **`5_diagnostico-seguranca.sh`** - Auditoria de segurança
+6. **`6_backup-verificacao.sh`** - Backup e verificação de integridade
+7. **`7_relatorio-final.sh`** - Relatório consolidado e recomendações
+
+### 🎯 Execução Completa
+
+Para executar toda a sequência de diagnósticos:
+
+```bash
+./scripts/executar-diagnostico-completo.sh
+```
+
+Este script mestre:
+
+- Executa todas as 7 etapas em ordem sequencial
+- Verifica dependências antes de cada etapa
+- Gera relatórios JSON estruturados
+- Cria sumário executivo em Markdown
+- Calcula score geral do projeto
+- Fornece recomendações automatizadas
+
+### 📊 Relatórios Gerados
+
+Os relatórios são salvos em `/reports/`:
+
+- `relatorio_final_*.json` - Dados completos consolidados
+- `sumario_executivo_*.md` - Resumo executivo
+- Relatórios individuais de cada etapa
+
+### 🔧 Execução Individual
+
+Cada script pode ser executado independentemente:
+
+```bash
+./scripts/1_pre-diagnostico.sh
+./scripts/2_diagnostico-sistema.sh
+# ... e assim por diante
+```
+
+## 🚀 Novos Scripts Avançados (Agosto 2025)
+
+### 🔍 **diagnostico-completo.sh** - Diagnóstico Completo do Sistema
+
+**Descrição**: Script avançado de diagnóstico que analisa todos os aspectos do projeto.
+
+**Uso**:
+
+```bash
+./scripts/diagnostico-completo.sh
+```
+
+**Funcionalidades**:
+
+- ✅ Análise completa do sistema operacional
+- ✅ Verificação do ambiente Node.js e dependências
+- ✅ Validação do projeto Strapi e configurações
+- ✅ Teste de conectividade com banco de dados
+- ✅ Verificação de endpoints da API
+- ✅ Análise de performance e recursos
+- ✅ Auditoria de segurança
+- ✅ Relatório em JSON com métricas detalhadas
+- ✅ Recomendações automáticas de melhorias
+
+**Saída**: Relatório salvo em `reports/diagnostico_YYYYMMDD_HHMMSS.json`
+
+---
+
+### 📊 **monitor-avancado.sh** - Monitoramento Inteligente
+
+**Descrição**: Sistema de monitoramento em tempo real com alertas inteligentes.
+
+**Uso**:
+
+```bash
+# Iniciar monitoramento
+./scripts/monitor-avancado.sh start
+
+# Iniciar com output detalhado
+./scripts/monitor-avancado.sh start --verbose
+
+# Ver status atual
+./scripts/monitor-avancado.sh status
+
+# Parar monitoramento
+./scripts/monitor-avancado.sh stop
+```
+
+**Funcionalidades**:
+
+- ✅ Monitoramento de CPU, memória e disco
+- ✅ Verificação contínua da API e banco de dados
+- ✅ Análise de logs de erro em tempo real
+- ✅ Alertas inteligentes com cooldown
+- ✅ Integração com webhooks (Slack/Discord)
+- ✅ Métricas salvas em JSON para análise
+- ✅ Histórico de alertas e métricas
+- ✅ Thresholds configuráveis
+
+**Configurações**:
+
+```bash
+export MONITOR_INTERVAL=60
+export CPU_THRESHOLD=80
+export MEMORY_THRESHOLD=85
+export RESPONSE_TIME_THRESHOLD=2000
+export MONITOR_WEBHOOK_URL="https://hooks.slack.com/..."
+```
+
+---
+
+### ⚙️ **setup-scripts.sh** - Configuração Automática
+
+**Descrição**: Configura automaticamente todos os scripts e dependências.
+
+**Uso**:
+
+```bash
+./scripts/setup-scripts.sh
+```
+
+**Funcionalidades**:
+
+- ✅ Configuração automática de permissões
+- ✅ Criação de diretórios necessários
+- ✅ Verificação de dependências
+- ✅ Configuração inicial do .env
+- ✅ Validação do ambiente
+
+---
+
+## 📋 Scripts Disponíveis (Legados Melhorados)
 
 ### 🔄 **backup.sh** - Backup Automático
 
@@ -429,8 +570,8 @@ export BACKUP_FILE="./backups/backup_latest.sql"
 - ✅ Rollback completo (se disponível)
 - ✅ Reinstalação de dependências
 - ✅ Teste de rollback
-- ✅ Geração de relatório de rollback
-  **Descrição**: Rollback específico e seguro da migração Strapi 5.x.
+- ✅ Geração de relatório de rollback **Descrição**: Rollback específico e seguro da migração Strapi
+  5.x.
 
 **Uso**:
 
@@ -717,5 +858,121 @@ ps aux | grep strapi
 
 ---
 
-_Última atualização: Agosto 2025_
-_Versão dos Scripts: 1.0.0_
+## 🔧 Configuração Rápida
+
+### 1. **Configuração Inicial**
+
+```bash
+# Executar configuração automática
+./scripts/setup-scripts.sh
+
+# Executar diagnóstico inicial
+./scripts/diagnostico-completo.sh
+```
+
+### 2. **Iniciar Monitoramento**
+
+```bash
+# Monitoramento básico
+./scripts/monitor-avancado.sh start
+
+# Monitoramento com detalhes
+./scripts/monitor-avancado.sh start --verbose
+```
+
+### 3. **Verificação de Saúde**
+
+```bash
+# Health check completo
+./scripts/health-check-improved.sh
+
+# Backup automático
+./scripts/backup-improved.sh
+```
+
+---
+
+## 📊 Estrutura de Arquivos Gerados
+
+```
+logs/
+├── diagnostico_detalhado_YYYYMMDD_HHMMSS.log
+├── metrics_realtime.json
+├── metrics_history_YYYY-MM-DD.json
+├── alerts_history.json
+└── YYYY-MM-DD.log
+
+reports/
+├── diagnostico_YYYYMMDD_HHMMSS.json
+└── diagnostico_YYYYMMDD_HHMMSS.html
+
+backups/
+├── backup_YYYYMMDD_HHMMSS.sql
+└── config_backup_YYYYMMDD_HHMMSS.tar.gz
+```
+
+---
+
+## 🎯 Melhorias da Versão 2.0.0
+
+### **Novos Recursos**
+
+- 🔍 **Diagnóstico Completo**: Análise abrangente do sistema
+- 📊 **Monitoramento Inteligente**: Alertas com cooldown e thresholds
+- ⚙️ **Setup Automático**: Configuração simplificada
+- 📄 **Relatórios JSON**: Dados estruturados para análise
+- 🔒 **Auditoria de Segurança**: Verificação de permissões e configurações
+
+### **Melhorias Técnicas**
+
+- 🚀 **Performance**: Scripts otimizados e mais rápidos
+- 🛡️ **Segurança**: Validação rigorosa e sanitização
+- 📋 **Logs Estruturados**: Melhor rastreabilidade
+- 🔄 **Retry Logic**: Maior confiabilidade
+- 🎨 **UI/UX**: Output mais limpo e informativo
+
+### **Compatibilidade**
+
+- ✅ **Strapi 5.21.0**: Totalmente compatível
+- ✅ **Node.js 20+**: Suporte às versões LTS
+- ✅ **PostgreSQL**: Otimizado para banco principal
+- ✅ **Linux/macOS**: Multiplataforma
+
+---
+
+## 🆘 Solução de Problemas
+
+### **Script não executa**
+
+```bash
+# Verificar permissões
+ls -la scripts/
+
+# Corrigir permissões
+chmod +x scripts/*.sh
+```
+
+### **Dependências ausentes**
+
+```bash
+# Ubuntu/Debian
+sudo apt update && sudo apt install -y curl jq bc postgresql-client
+
+# macOS
+brew install curl jq bc postgresql
+```
+
+### **Problemas de conectividade**
+
+```bash
+# Verificar configurações
+cat .env
+
+# Testar conexão manual
+psql -h localhost -p 5432 -U rootgames -d rootgames
+```
+
+---
+
+_Última atualização: Agosto 2025_ _Versão dos Scripts: 2.0.0_ _Sistema desenvolvido com base nas
+memórias do projeto e melhores práticas_

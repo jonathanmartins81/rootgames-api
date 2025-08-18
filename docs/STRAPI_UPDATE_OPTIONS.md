@@ -2,7 +2,9 @@
 
 ## 🎯 Visão Geral
 
-Este documento apresenta as opções de atualização do Strapi baseado nas informações mais recentes de **agosto de 2025**. O projeto está atualmente no **Strapi 4.12.5** e precisa de uma decisão estratégica sobre o caminho de atualização.
+Este documento apresenta as opções de atualização do Strapi baseado nas informações mais recentes de
+**agosto de 2025**. O projeto está atualmente no **Strapi 4.12.5** e precisa de uma decisão
+estratégica sobre o caminho de atualização.
 
 ---
 
@@ -290,6 +292,4 @@ Novembro 2025: Deploy em produção
 
 ---
 
-_Última atualização: Agosto 2025_
-_Versão do Documento: 1.0.0_
-_Próxima revisão: Setembro 2025_
+_Última atualização: Agosto 2025_ _Versão do Documento: 1.0.0_ _Próxima revisão: Setembro 2025_

@@ -140,9 +140,9 @@
 
 ## 🎉 **Agradecimentos**
 
-Esta documentação foi criada para facilitar o uso e desenvolvimento da **RootGames API**. Mantenha-a atualizada para o benefício de toda a comunidade!
+Esta documentação foi criada para facilitar o uso e desenvolvimento da **RootGames API**. Mantenha-a
+atualizada para o benefício de toda a comunidade!
 
 ---
 
-_Última atualização: Agosto 2025_
-_Versão do Índice: 1.0.0_
+_Última atualização: Agosto 2025_ _Versão do Índice: 1.0.0_

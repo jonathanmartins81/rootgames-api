@@ -4,74 +4,96 @@
   "info": {
     "singularName": "game",
     "pluralName": "games",
-    "displayName": "game",
-    "description": ""
+    "displayName": "Game",
+    "description": "Catálogo de jogos com editor rico nativo do Strapi"
   },
   "options": {
     "draftAndPublish": false
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "unique": true,
+      "maxLength": 255
     },
     "slug": {
       "type": "uid",
-      "targetField": "name"
+      "targetField": "name",
+      "required": true
     },
     "short_description": {
-      "type": "text"
+      "type": "text",
+      "maxLength": 500,
+      "required": false
     },
     "description": {
-      "type": "richtext"
+      "type": "richtext",
+      "required": false
     },
     "price": {
       "type": "decimal",
-      "required": true
+      "required": true,
+      "min": 0,
+      "max": 9999.99
     },
     "release_date": {
-      "type": "date"
+      "type": "date",
+      "required": false
     },
     "rating": {
       "type": "enumeration",
-      "enum": ["BR0", "BR10", "BR12", "BR14", "BR16", "BR18"]
+      "enum": ["BR0", "BR10", "BR12", "BR14", "BR16", "BR18"],
+      "default": "BR0",
+      "required": false
     },
     "cover": {
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images", "videos", "audios", "files"]
+      "allowedTypes": ["images"],
+      "allowedMimeTypes": ["image/jpeg", "image/png", "image/webp"]
     },
     "gallery": {
       "type": "media",
       "multiple": true,
       "required": false,
-      "allowedTypes": ["images", "files", "videos", "audios"]
+      "allowedTypes": ["images"],
+      "allowedMimeTypes": ["image/jpeg", "image/png", "image/webp"],
+      "maxFiles": 10
     },
     "categories": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::category.category",
-      "inversedBy": "games"
+      "inversedBy": "games",
+      "required": false
     },
     "platforms": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::platform.platform",
-      "inversedBy": "games"
+      "inversedBy": "games",
+      "required": false
     },
     "developers": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::developer.developer",
-      "inversedBy": "games"
+      "inversedBy": "games",
+      "required": false
     },
     "publisher": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::publisher.publisher",
-      "inversedBy": "games"
+      "inversedBy": "games",
+      "required": false
     }
   }
 }

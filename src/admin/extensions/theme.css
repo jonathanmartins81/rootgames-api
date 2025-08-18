@@ -1,0 +1,331 @@
+/* 🎮 RootGames - Tema Moderno para Gaming */
+
+/* ==========================================================================
+   VARIÁVEIS CSS PERSONALIZADAS
+   ========================================================================== */
+:root {
+  /* Cores principais do tema gaming */
+  --gaming-primary: #8b5cf6; /* Roxo vibrante - cor principal */
+  --gaming-secondary: #f231a5; /* Rosa neon - cor secundária */
+  --gaming-accent: #0ea5e9; /* Azul ciano - cor de destaque */
+  --gaming-success: #10b981; /* Verde esmeralda - sucesso */
+  --gaming-warning: #f59e0b; /* Laranja âmbar - aviso */
+  --gaming-danger: #ef4444; /* Vermelho vibrante - erro */
+
+  /* Cores de fundo */
+  --gaming-dark: #0f0f23; /* Fundo escuro principal */
+  --gaming-darker: #1a1a2e; /* Fundo escuro secundário */
+  --gaming-light: #f3f4f6; /* Fundo claro */
+
+  /* Gradientes especiais */
+  --gaming-gradient: linear-gradient(135deg, #8b5cf6 0%, #f231a5 100%); /* Gradiente principal */
+  --gaming-gradient-dark: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); /* Gradiente escuro */
+}
+
+/* ==========================================================================
+   TEMA ESCURO MODERNO
+   ========================================================================== */
+[data-theme='dark'] {
+  --gaming-bg-primary: var(--gaming-dark); /* Fundo principal escuro */
+  --gaming-bg-secondary: var(--gaming-darker); /* Fundo secundário escuro */
+  --gaming-text-primary: #ffffff; /* Texto principal branco */
+  --gaming-text-secondary: #e5e7eb; /* Texto secundário cinza claro */
+  --gaming-border: #374151; /* Bordas cinza escuro */
+}
+
+/* ==========================================================================
+   TEMA CLARO MODERNO
+   ========================================================================== */
+[data-theme='light'] {
+  --gaming-bg-primary: #ffffff; /* Fundo principal branco */
+  --gaming-bg-secondary: #f9fafb; /* Fundo secundário cinza muito claro */
+  --gaming-text-primary: #111827; /* Texto principal preto */
+  --gaming-text-secondary: #6b7280; /* Texto secundário cinza */
+  --gaming-border: #e5e7eb; /* Bordas cinza claro */
+}
+
+/* ==========================================================================
+   ESTILOS GLOBAIS
+   ========================================================================== */
+body {
+  /* Fonte moderna e legível */
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  background: var(--gaming-bg-primary); /* Fundo dinâmico */
+  color: var(--gaming-text-primary); /* Texto dinâmico */
+  transition: all 0.3s ease; /* Transição suave */
+}
+
+/* ==========================================================================
+   HEADER E NAVEGAÇÃO
+   ========================================================================== */
+[data-testid='main-header'] {
+  background: var(--gaming-gradient-dark) !important; /* Gradiente escuro */
+  border-bottom: 2px solid var(--gaming-primary) !important; /* Borda colorida */
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15) !important; /* Sombra sutil */
+}
+
+/* Logo e Branding */
+[data-testid='main-nav-brand'] {
+  background: var(--gaming-gradient) !important; /* Gradiente no texto */
+  -webkit-background-clip: text !important; /* Clip para texto */
+  -webkit-text-fill-color: transparent !important; /* Texto transparente */
+  background-clip: text !important; /* Clip para texto (padrão) */
+  font-weight: 700 !important; /* Peso da fonte */
+  font-size: 1.5rem !important; /* Tamanho da fonte */
+}
+
+/* ==========================================================================
+   BOTÕES PRIMÁRIOS
+   ========================================================================== */
+button[data-testid='button-primary'],
+button[type='submit'] {
+  background: var(--gaming-gradient) !important; /* Gradiente vibrante */
+  border: none !important; /* Sem borda */
+  border-radius: 12px !important; /* Bordas arredondadas */
+  padding: 12px 24px !important; /* Padding generoso */
+  font-weight: 600 !important; /* Peso da fonte */
+  transition: all 0.3s ease !important; /* Transição suave */
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important; /* Sombra colorida */
+}
+
+/* Efeito hover nos botões */
+button[data-testid='button-primary']:hover,
+button[type='submit']:hover {
+  transform: translateY(-2px) !important; /* Elevação sutil */
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4) !important; /* Sombra aumentada */
+}
+
+/* ==========================================================================
+   CARDS E CONTAINERS
+   ========================================================================== */
+[data-testid='card'],
+.card {
+  background: var(--gaming-bg-secondary) !important; /* Fundo secundário */
+  border: 1px solid var(--gaming-border) !important; /* Borda sutil */
+  border-radius: 16px !important; /* Bordas muito arredondadas */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important; /* Sombra suave */
+  transition: all 0.3s ease !important; /* Transição suave */
+}
+
+/* Efeito hover nos cards */
+[data-testid='card']:hover,
+.card:hover {
+  transform: translateY(-4px) !important; /* Elevação maior */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important; /* Sombra aumentada */
+}
+
+/* ==========================================================================
+   INPUTS E FORMULÁRIOS
+   ========================================================================== */
+input[type='text'],
+input[type='email'],
+input[type='password'],
+textarea,
+select {
+  background: var(--gaming-bg-secondary) !important; /* Fundo secundário */
+  border: 2px solid var(--gaming-border) !important; /* Borda dupla */
+  border-radius: 12px !important; /* Bordas arredondadas */
+  padding: 12px 16px !important; /* Padding generoso */
+  transition: all 0.3s ease !important; /* Transição suave */
+  font-size: 14px !important; /* Tamanho da fonte */
+}
+
+/* Estados de foco nos inputs */
+input[type='text']:focus,
+input[type='email']:focus,
+input[type='password']:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--gaming-primary) !important; /* Borda colorida */
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1) !important; /* Glow sutil */
+  outline: none !important; /* Remove outline padrão */
+}
+
+/* ==========================================================================
+   SIDEBAR
+   ========================================================================== */
+[data-testid='sidebar'] {
+  background: var(--gaming-gradient-dark) !important; /* Gradiente escuro */
+  border-right: 2px solid var(--gaming-primary) !important; /* Borda colorida */
+}
+
+/* Links de Navegação */
+[data-testid='sidebar-nav-link'] {
+  border-radius: 12px !important; /* Bordas arredondadas */
+  margin: 4px 8px !important; /* Margem interna */
+  transition: all 0.3s ease !important; /* Transição suave */
+}
+
+/* Efeito hover nos links */
+[data-testid='sidebar-nav-link']:hover {
+  background: rgba(139, 92, 246, 0.1) !important; /* Fundo sutil */
+  transform: translateX(4px) !important; /* Movimento lateral */
+}
+
+/* Link ativo */
+[data-testid='sidebar-nav-link'].active {
+  background: var(--gaming-gradient) !important; /* Gradiente vibrante */
+  color: white !important; /* Texto branco */
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important; /* Sombra colorida */
+}
+
+/* ==========================================================================
+   TABELAS
+   ========================================================================== */
+table {
+  border-radius: 12px !important; /* Bordas arredondadas */
+  overflow: hidden !important; /* Esconde overflow */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important; /* Sombra suave */
+}
+
+/* Cabeçalhos das tabelas */
+th {
+  background: var(--gaming-gradient-dark) !important; /* Gradiente escuro */
+  color: white !important; /* Texto branco */
+  font-weight: 600 !important; /* Peso da fonte */
+  padding: 16px !important; /* Padding generoso */
+}
+
+/* Células das tabelas */
+td {
+  padding: 16px !important; /* Padding generoso */
+  border-bottom: 1px solid var(--gaming-border) !important; /* Borda inferior */
+}
+
+/* ==========================================================================
+   BADGES E STATUS
+   ========================================================================== */
+[data-testid='badge'] {
+  border-radius: 20px !important; /* Bordas muito arredondadas */
+  padding: 4px 12px !important; /* Padding horizontal */
+  font-weight: 600 !important; /* Peso da fonte */
+  font-size: 12px !important; /* Tamanho pequeno */
+}
+
+/* ==========================================================================
+   ANIMAÇÕES
+   ========================================================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* Invisível */
+    transform: translateY(20px); /* Movimento para baixo */
+  }
+  to {
+    opacity: 1; /* Visível */
+    transform: translateY(0); /* Posição normal */
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1); /* Tamanho normal */
+  }
+  50% {
+    transform: scale(1.05); /* Tamanho aumentado */
+  }
+}
+
+/* Aplicar animações aos cards */
+[data-testid='card'],
+.card {
+  animation: fadeIn 0.6s ease-out; /* Animação de entrada */
+}
+
+/* Estados de loading */
+[data-testid='loading'] {
+  background: var(--gaming-gradient) !important; /* Gradiente vibrante */
+  animation: pulse 2s infinite !important; /* Animação pulsante */
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* Cards em mobile */
+  [data-testid='card'],
+  .card {
+    margin: 8px !important; /* Margem reduzida */
+    border-radius: 12px !important; /* Bordas arredondadas */
+  }
+
+  /* Botões em mobile */
+  button[data-testid='button-primary'],
+  button[type='submit'] {
+    width: 100% !important; /* Largura total */
+    margin: 8px 0 !important; /* Margem vertical */
+  }
+}
+
+/* ==========================================================================
+   SCROLLBAR PERSONALIZADA
+   ========================================================================== */
+::-webkit-scrollbar {
+  width: 8px; /* Largura da scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gaming-bg-secondary); /* Fundo da track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gaming-gradient); /* Gradiente no thumb */
+  border-radius: 4px; /* Bordas arredondadas */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gaming-primary); /* Cor sólida no hover */
+}
+
+/* ==========================================================================
+   EFEITOS ESPECIAIS PARA GAMING
+   ========================================================================== */
+.gaming-glow {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3) !important; /* Glow roxo */
+}
+
+.gaming-text-glow {
+  text-shadow: 0 0 10px rgba(139, 92, 246, 0.5) !important; /* Glow no texto */
+}
+
+/* ==========================================================================
+   TEMA PARA PÁGINAS DE AUTENTICAÇÃO
+   ========================================================================== */
+.auth-page {
+  background: var(--gaming-gradient-dark) !important; /* Gradiente escuro */
+  min-height: 100vh !important; /* Altura total */
+  display: flex !important; /* Layout flexível */
+  align-items: center !important; /* Centralização vertical */
+  justify-content: center !important; /* Centralização horizontal */
+}
+
+.auth-container {
+  background: var(--gaming-bg-secondary) !important; /* Fundo secundário */
+  border-radius: 20px !important; /* Bordas muito arredondadas */
+  padding: 40px !important; /* Padding generoso */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important; /* Sombra profunda */
+  max-width: 400px !important; /* Largura máxima */
+  width: 100% !important; /* Largura total */
+}
+
+/* ==========================================================================
+   MELHORIAS PARA O EDITOR RICO
+   ========================================================================== */
+.ck-editor__editable {
+  border-radius: 12px !important; /* Bordas arredondadas */
+  border: 2px solid var(--gaming-border) !important; /* Borda dupla */
+  min-height: 200px !important; /* Altura mínima */
+}
+
+.ck-toolbar {
+  border-radius: 12px 12px 0 0 !important; /* Bordas arredondadas no topo */
+  background: var(--gaming-bg-secondary) !important; /* Fundo secundário */
+  border: 2px solid var(--gaming-border) !important; /* Borda dupla */
+  border-bottom: none !important; /* Sem borda inferior */
+}

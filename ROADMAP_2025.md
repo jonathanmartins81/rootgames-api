@@ -2,7 +2,8 @@
 
 ## 📋 Visão Geral
 
-Este roadmap define os objetivos, funcionalidades e melhorias planejadas para o projeto RootGames API em 2025, organizados por trimestres e prioridades.
+Este roadmap define os objetivos, funcionalidades e melhorias planejadas para o projeto RootGames
+API em 2025, organizados por trimestres e prioridades.
 
 ---
 
@@ -380,7 +381,9 @@ Este roadmap define os objetivos, funcionalidades e melhorias planejadas para o 
 
 ## 🎉 **Conclusão**
 
-Este roadmap representa uma visão ambiciosa mas realista para o crescimento e evolução da RootGames API em 2025. O foco está em criar uma plataforma robusta, escalável e inovadora que se torne referência no mercado de catálogos de jogos.
+Este roadmap representa uma visão ambiciosa mas realista para o crescimento e evolução da RootGames
+API em 2025. O foco está em criar uma plataforma robusta, escalável e inovadora que se torne
+referência no mercado de catálogos de jogos.
 
 **Status Atual:**
 

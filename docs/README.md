@@ -1,6 +1,7 @@
 # 📚 Documentação - RootGames API
 
-Bem-vindo à documentação completa do projeto **RootGames API**! Esta pasta contém toda a documentação necessária para configurar, usar e manter a API.
+Bem-vindo à documentação completa do projeto **RootGames API**! Esta pasta contém toda a
+documentação necessária para configurar, usar e manter a API.
 
 ---
 
@@ -8,7 +9,8 @@ Bem-vindo à documentação completa do projeto **RootGames API**! Esta pasta co
 
 ### 🚀 **Configuração e Setup**
 
-- **[Configuração do Strapi](./STRAPI_CONFIGURATION.md)** - Guia completo de instalação e configuração
+- **[Configuração do Strapi](./STRAPI_CONFIGURATION.md)** - Guia completo de instalação e
+  configuração
 - **[Documentação da API](./API_DOCUMENTATION.md)** - Endpoints, exemplos e funcionalidades
 
 ### 📖 **Documentação Adicional**
@@ -107,7 +109,7 @@ rootgames-api/
 - ✅ Importação automática da GOG
 - ✅ Painel administrativo customizado
 - ✅ Sistema de permissões
-- ✅ Editor rico CKEditor
+- ✅ Editor de texto simples
 
 ### **🔄 Em Desenvolvimento**
 
@@ -224,9 +226,9 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](../LICENSE) para
 
 ---
 
-_Última atualização: Agosto 2025_
-_Versão da Documentação: 1.0.0_
+_Última atualização: Agosto 2025_ _Versão da Documentação: 1.0.0_
 
 ---
 
-**💡 Dica**: Mantenha esta documentação atualizada conforme o projeto evolui. Documentação boa é essencial para o sucesso do projeto!
+**💡 Dica**: Mantenha esta documentação atualizada conforme o projeto evolui. Documentação boa é
+essencial para o sucesso do projeto!

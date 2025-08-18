@@ -1,6 +1,7 @@
 # 💡 Exemplos Práticos - RootGames API
 
-Este documento contém exemplos práticos de uso da API, scripts úteis e casos de uso reais para o projeto RootGames.
+Este documento contém exemplos práticos de uso da API, scripts úteis e casos de uso reais para o
+projeto RootGames.
 
 ---
 
@@ -187,8 +188,8 @@ const GameStore = () => {
   useEffect(() => {
     // Buscar jogos com filtros
     fetch('/api/games?populate=*&sort=price:asc&filters[price][$lt]=50')
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         setGames(data.data);
         setLoading(false);
       });
@@ -196,7 +197,7 @@ const GameStore = () => {
 
   return (
     <div>
-      {games.map((game) => (
+      {games.map(game => (
         <GameCard key={game.id} game={game} />
       ))}
     </div>
@@ -208,7 +209,7 @@ const GameStore = () => {
 
 ```javascript
 // Backend - Node.js
-const getRecommendedGames = async (userId) => {
+const getRecommendedGames = async userId => {
   // Buscar histórico do usuário
   const userHistory = await getUserHistory(userId);
 
@@ -217,7 +218,7 @@ const getRecommendedGames = async (userId) => {
     `${API_URL}/api/games?` +
       `filters[categories][id][$in]=${userHistory.categories.join(',')}&` +
       `populate=*&sort=rating:desc&pagination[pageSize]=10`
-  ).then((res) => res.json());
+  ).then(res => res.json());
 
   return recommendations.data;
 };
@@ -230,12 +231,14 @@ const getRecommendedGames = async (userId) => {
 const { Client, GatewayIntentBits } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-client.on('interactionCreate', async (interaction) => {
+client.on('interactionCreate', async interaction => {
   if (interaction.commandName === 'game') {
     const gameName = interaction.options.getString('name');
 
     // Buscar jogo na API
-    const response = await fetch(`${API_URL}/api/games?filters[name][$containsi]=${gameName}&populate=*`);
+    const response = await fetch(
+      `${API_URL}/api/games?filters[name][$containsi]=${gameName}&populate=*`
+    );
     const data = await response.json();
 
     if (data.data.length > 0) {
@@ -249,7 +252,7 @@ client.on('interactionCreate', async (interaction) => {
               { name: 'Preço', value: `$${game.attributes.price}`, inline: true },
               {
                 name: 'Categorias',
-                value: game.attributes.categories.data.map((c) => c.attributes.name).join(', '),
+                value: game.attributes.categories.data.map(c => c.attributes.name).join(', '),
                 inline: true,
               },
             ],
@@ -344,8 +347,8 @@ const GamesList = () => {
 
   useEffect(() => {
     fetch('http://localhost:1337/api/games?populate=*&sort=name:asc')
-      .then((response) => response.json())
-      .then((data) => setGames(data.data));
+      .then(response => response.json())
+      .then(data => setGames(data.data));
   }, []);
 
   const renderGame = ({ item }) => (
@@ -359,7 +362,9 @@ const GamesList = () => {
     </View>
   );
 
-  return <FlatList data={games} renderItem={renderGame} keyExtractor={(item) => item.id.toString()} />;
+  return (
+    <FlatList data={games} renderItem={renderGame} keyExtractor={item => item.id.toString()} />
+  );
 };
 ```
 
@@ -483,5 +488,4 @@ class TwitchIntegration {
 
 ---
 
-_Última atualização: Agosto 2025_
-_Versão dos Exemplos: 1.0.0_
+_Última atualização: Agosto 2025_ _Versão dos Exemplos: 1.0.0_

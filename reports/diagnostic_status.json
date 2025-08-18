@@ -1,0 +1,45 @@
+{
+  "sequence_start": "2025-08-17T23:58:37-03:00",
+  "current_step": 7,
+  "total_steps": 7,
+  "status": "running",
+  "steps": {
+    "1": {
+      "name": "pre-diagnostico",
+      "status": "completed",
+      "start": "2025-08-17T23:58:37-03:00",
+      "end": "2025-08-17T23:58:37-03:00"
+    },
+    "2": {
+      "name": "diagnostico-sistema",
+      "status": "running",
+      "start": "2025-08-17T23:58:39-03:00"
+    },
+    "3": {
+      "name": "diagnostico-aplicacao",
+      "status": "running",
+      "start": "2025-08-17T23:58:42-03:00"
+    },
+    "4": {
+      "name": "diagnostico-performance",
+      "status": "running",
+      "start": "2025-08-17T23:58:45-03:00"
+    },
+    "5": {
+      "name": "diagnostico-seguranca",
+      "status": "running",
+      "start": "2025-08-17T23:58:48-03:00"
+    },
+    "6": {
+      "name": "backup-verificacao",
+      "status": "completed",
+      "start": "2025-08-17T23:58:50-03:00",
+      "end": "2025-08-17T23:58:51-03:00"
+    },
+    "7": {
+      "name": "relatorio-final",
+      "status": "running",
+      "start": "2025-08-17T23:58:53-03:00"
+    }
+  }
+}

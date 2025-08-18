@@ -2,7 +2,8 @@
 
 ## 📋 Visão Geral
 
-Este documento contém scripts práticos, configurações e implementações concretas para executar a estratégia de atualizações seguras definida no `UPDATE_STRATEGY.md`.
+Este documento contém scripts práticos, configurações e implementações concretas para executar a
+estratégia de atualizações seguras definida no `UPDATE_STRATEGY.md`.
 
 ---
 
@@ -290,7 +291,7 @@ module.exports = (config, { strapi }) => {
     ctx.features = features;
 
     // Verificar se feature está habilitada para rota específica
-    const checkFeature = (featureName) => {
+    const checkFeature = featureName => {
       if (!features[featureName]) {
         ctx.throw(404, `Feature ${featureName} não está habilitada`);
       }
@@ -503,7 +504,7 @@ module.exports = (config, { strapi }) => {
 function isCriticalError(error) {
   const criticalErrors = ['ECONNREFUSED', 'ENOTFOUND', 'ETIMEDOUT', 'ECONNRESET'];
 
-  return criticalErrors.some((criticalError) => error.message.includes(criticalError));
+  return criticalErrors.some(criticalError => error.message.includes(criticalError));
 }
 
 // Função para trigger de rollback
@@ -536,7 +537,7 @@ module.exports = ({ strapi }) => ({
       features: await this.checkFeatures(),
     };
 
-    const allHealthy = Object.values(checks).every((check) => check.status === 'healthy');
+    const allHealthy = Object.values(checks).every(check => check.status === 'healthy');
 
     return {
       status: allHealthy ? 'healthy' : 'unhealthy',
@@ -562,7 +563,9 @@ module.exports = ({ strapi }) => ({
   async checkAPI() {
     try {
       const response = await fetch('http://localhost:1337/api/games?limit=1');
-      return response.ok ? { status: 'healthy' } : { status: 'unhealthy', error: `HTTP ${response.status}` };
+      return response.ok
+        ? { status: 'healthy' }
+        : { status: 'unhealthy', error: `HTTP ${response.status}` };
     } catch (error) {
       return {
         status: 'unhealthy',
@@ -586,7 +589,7 @@ module.exports = ({ strapi }) => ({
   // Verificar features
   async checkFeatures() {
     const features = require('../../config/features');
-    const enabledFeatures = Object.keys(features).filter((key) => features[key]);
+    const enabledFeatures = Object.keys(features).filter(key => features[key]);
 
     return {
       status: 'healthy',
@@ -978,7 +981,8 @@ echo "✅ Notificação enviada!"
 
 ## Visão Geral
 
-Esta migração adiciona funcionalidades de cache, rate limiting e monitoramento sem quebrar compatibilidade.
+Esta migração adiciona funcionalidades de cache, rate limiting e monitoramento sem quebrar
+compatibilidade.
 
 ## Pré-requisitos
 

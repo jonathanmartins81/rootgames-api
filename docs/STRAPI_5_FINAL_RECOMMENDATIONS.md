@@ -2,7 +2,8 @@
 
 ## ✅ **Migração Concluída com Sucesso**
 
-A migração para Strapi 5.21.0 foi **concluída com sucesso total**. Este documento contém as recomendações finais para otimização e uso em produção.
+A migração para Strapi 5.21.0 foi **concluída com sucesso total**. Este documento contém as
+recomendações finais para otimização e uso em produção.
 
 ---
 

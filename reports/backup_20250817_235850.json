@@ -1,0 +1,36 @@
+{
+  "timestamp": "2025-08-17T23:58:51-03:00",
+  "step": 6,
+  "step_name": "backup-verificacao",
+  "backup_info": {
+    "oldest_backup": "rootgames_backup_20250812_175531.sql",
+    "logs_backup_file": "/home/jonathan/Workspace/Development/rootgames/rootgames-api/backups/logs_backup_20250817_235851.tar.gz",
+    "recovery_plan_file": "/home/jonathan/Workspace/Development/rootgames/rootgames-api/backups/recovery_plan_20250817_235851.md",
+    "config_backup_success": "true",
+    "db_backup_valid": "true",
+    "logs_backup_success": "true",
+    "config_backup_file": "/home/jonathan/Workspace/Development/rootgames/rootgames-api/backups/config_backup_20250817_235850.tar.gz",
+    "db_backup_file": "/home/jonathan/Workspace/Development/rootgames/rootgames-api/backups/db_backup_20250817_235850.sql",
+    "config_backup_readable": "true",
+    "newest_backup": "logs_backup_20250817_235851.tar.gz",
+    "db_backup_success": "true"
+  },
+  "metrics": {
+    "config_files_count": "6",
+    "db_backup_duration": "0",
+    "log_files_backed_up": "11",
+    "total_existing_backups": "15",
+    "disk_usage": "59",
+    "db_backup_size": "380K",
+    "db_backup_lines": "5901",
+    "available_space": "98G",
+    "logs_backup_size": "16K",
+    "deleted_old_backups": "0",
+    "backup_dir_total_size": "4,1M",
+    "config_backup_size": "288K",
+    "estimated_size": "1,3G"
+  },
+  "issues": {
+    "db_backup_corrupted": "Backup do banco pode estar corrompido"
+  }
+}

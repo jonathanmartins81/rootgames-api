@@ -2,7 +2,9 @@
 
 ## 🌐 Visão Geral da API
 
-A RootGames API é uma API RESTful e GraphQL para gerenciamento de catálogo de jogos, construída com Strapi CMS. Oferece funcionalidades completas para CRUD de jogos, categorias, plataformas, desenvolvedores e publicadores.
+A RootGames API é uma API RESTful e GraphQL para gerenciamento de catálogo de jogos, construída com
+Strapi CMS. Oferece funcionalidades completas para CRUD de jogos, categorias, plataformas,
+desenvolvedores e publicadores.
 
 ---
 
@@ -303,8 +305,7 @@ Content-Type: application/json
 }
 ```
 
-**Descrição:**
-Este endpoint importa automaticamente jogos da API da GOG, incluindo:
+**Descrição:** Este endpoint importa automaticamente jogos da API da GOG, incluindo:
 
 - Informações básicas do jogo
 - Descrições e classificação etária
@@ -616,5 +617,4 @@ curl "http://localhost:1337/admin/information"
 
 ---
 
-_Última atualização: Agosto 2025_
-_Versão da API: 1.0.0_
+_Última atualização: Agosto 2025_ _Versão da API: 1.0.0_

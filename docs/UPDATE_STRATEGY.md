@@ -2,7 +2,8 @@
 
 ## 📋 Visão Geral
 
-Este documento define uma estratégia robusta para implementar as funcionalidades do ROADMAP_2025.md de forma segura, minimizando riscos de quebra da aplicação e garantindo estabilidade contínua.
+Este documento define uma estratégia robusta para implementar as funcionalidades do ROADMAP_2025.md
+de forma segura, minimizando riscos de quebra da aplicação e garantindo estabilidade contínua.
 
 ---
 
@@ -111,7 +112,7 @@ SENTRY_ENABLED=false
 ```javascript
 // Implementação com fallback
 const cache = {
-  get: async (key) => {
+  get: async key => {
     try {
       return await redis.get(key);
     } catch (error) {
@@ -392,7 +393,7 @@ module.exports = {
     const features = require('./features');
     return {
       status: 'healthy',
-      features: Object.keys(features).filter((key) => features[key]),
+      features: Object.keys(features).filter(key => features[key]),
     };
   },
 };
@@ -630,7 +631,8 @@ Se necessário, execute: `./scripts/rollback-v1.0.sh`
 
 ## 🎯 Conclusão
 
-Esta estratégia garante que o ROADMAP_2025.md seja implementado de forma segura e controlada, minimizando riscos e mantendo a estabilidade da aplicação RootGames API.
+Esta estratégia garante que o ROADMAP_2025.md seja implementado de forma segura e controlada,
+minimizando riscos e mantendo a estabilidade da aplicação RootGames API.
 
 **Próximos passos:**
 
@@ -642,6 +644,4 @@ Esta estratégia garante que o ROADMAP_2025.md seja implementado de forma segura
 
 ---
 
-_Última atualização: Agosto 2025_
-_Versão da Estratégia: 1.0.0_
-_Próxima revisão: Janeiro 2025_
+_Última atualização: Agosto 2025_ _Versão da Estratégia: 1.0.0_ _Próxima revisão: Janeiro 2025_

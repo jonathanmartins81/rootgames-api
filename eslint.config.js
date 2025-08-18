@@ -72,6 +72,8 @@ export default [
       'no-console': 'off',
     },
   },
+  { files: ['src/utils/**/*.{js,ts}'], rules: { 'no-console': 'warn', '@typescript-eslint/no-explicit-any': 'warn' } },
+  { files: ['src/api/**/*.{js,ts}'], rules: { 'no-console': 'warn', '@typescript-eslint/no-explicit-any': 'warn' } },
   {
     files: ['types/generated/**/*.d.ts'],
     rules: { '@typescript-eslint/no-unused-vars': 'off', '@typescript-eslint/ban-types': 'off' },

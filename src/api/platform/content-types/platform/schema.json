@@ -4,27 +4,68 @@
   "info": {
     "singularName": "platform",
     "pluralName": "platforms",
-    "displayName": "platform",
-    "description": ""
+    "displayName": "Platform",
+    "description": "Plataformas de jogos"
   },
   "options": {
     "draftAndPublish": false
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "unique": true,
+      "maxLength": 100
     },
     "slug": {
       "type": "uid",
-      "targetField": "name"
+      "targetField": "name",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "maxLength": 500,
+      "required": false
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"],
+      "allowedMimeTypes": ["image/jpeg", "image/png", "image/webp"]
+    },
+    "company": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100
+    },
+    "release_year": {
+      "type": "integer",
+      "required": false,
+      "min": 1970,
+      "max": 2030
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "required": false
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 0,
+      "required": false
     },
     "games": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::game.game",
-      "mappedBy": "platforms"
+      "mappedBy": "platforms",
+      "required": false
     }
   }
 }

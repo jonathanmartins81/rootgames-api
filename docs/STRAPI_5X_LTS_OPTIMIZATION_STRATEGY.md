@@ -6,7 +6,9 @@ _Status: 🎯 ESTRATÉGIA DEFINIDA_
 
 ## 🎯 **Visão Geral da Estratégia**
 
-Esta estratégia visa otimizar completamente o projeto **rootgames-api** para Strapi 5.x com as versões LTS mais recentes de agosto de 2025, incluindo React 19, Node.js 22, e todas as dependências atualizadas.
+Esta estratégia visa otimizar completamente o projeto **rootgames-api** para Strapi 5.x com as
+versões LTS mais recentes de agosto de 2025, incluindo React 19, Node.js 22, e todas as dependências
+atualizadas.
 
 ## 📊 **Análise da Situação Atual**
 

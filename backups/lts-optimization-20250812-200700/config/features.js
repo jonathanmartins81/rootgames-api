@@ -188,7 +188,7 @@ function isFeatureEnabled(featureName, features) {
  * @returns {string[]}
  */
 function getEnabledFeatures(features) {
-  return Object.keys(features).filter((key) => features[key] === true);
+  return Object.keys(features).filter(key => features[key] === true);
 }
 
 /**
@@ -197,7 +197,7 @@ function getEnabledFeatures(features) {
  * @returns {string[]}
  */
 function getDisabledFeatures(features) {
-  return Object.keys(features).filter((key) => features[key] === false);
+  return Object.keys(features).filter(key => features[key] === false);
 }
 
 /**
@@ -208,7 +208,7 @@ function getDisabledFeatures(features) {
 function checkCriticalFeatures(features) {
   const criticalFeatures = ['healthChecks', 'autoBackup', 'featureRollbackEnabled'];
 
-  const missingFeatures = criticalFeatures.filter((feature) => !features[feature]);
+  const missingFeatures = criticalFeatures.filter(feature => !features[feature]);
 
   return {
     allEnabled: missingFeatures.length === 0,

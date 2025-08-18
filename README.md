@@ -20,19 +20,19 @@
 - 🔐 **Autenticação robusta** com JWT e tokens de API
 - 📱 **Painel administrativo** customizado
 - 🌍 **Suporte a internacionalização** (i18n)
-- ✨ **Editor rico CKEditor 5** para descrições (configurado e funcionando)
+- 🖊️ **CKEditor 5** para descrições (editor rico completo e funcional)
 - 📊 **Relacionamentos complexos** entre entidades
 - 🔄 **Webhooks** para integrações
 - 📈 **Escalável** e pronto para produção
 - 🛡️ **TypeScript** com configurações otimizadas
-- 🧪 **Testes** configurados com Jest
+- 🧪 **Testes** configurados com Vitest
 - 🎨 **ESLint + Prettier** para qualidade de código
 - 🔧 **Build otimizado** (20.94s)
 - ✅ **Zero erros TypeScript**
 - 🚀 **Sistema de Qualidade** completo (ESLint, Prettier, Commitlint, Husky)
 - 🖼️ **Otimização de Imagens** automática (Sharp + Imagemin)
 - 🧪 **Sistema de Testes** completo (Vitest + Playwright + Percy + axe-core)
-- 📝 **CKEditor 5** - Editor de texto rico oficial integrado
+- 🖊️ **CKEditor 5** - Editor de texto rico completo para descrições de jogos
 
 ## 🏗️ Arquitetura
 
@@ -618,7 +618,7 @@ module.exports = [
 - [x] Importação automática da GOG
 - [x] Painel administrativo customizado
 - [x] Sistema de permissões
-- [x] Editor rico CKEditor
+- [x] Editor rico CKEditor 5
 - [x] Relacionamentos entre entidades
 - [x] Documentação completa
 - [x] TypeScript configurado

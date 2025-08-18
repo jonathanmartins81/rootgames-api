@@ -1,251 +1,297 @@
-import { promises as fs } from 'fs';
-import imagemin from 'imagemin';
-import imageminGifsicle from 'imagemin-gifsicle';
-import imageminMozjpeg from 'imagemin-mozjpeg';
-import imageminPngquant from 'imagemin-pngquant';
-import imageminSvgo from 'imagemin-svgo';
-import imageminWebp from 'imagemin-webp';
+/**
+ * 🖼️ RootGames - Utilitário de Otimização de Imagens
+ *
+ * Este arquivo contém utilitários para otimização e processamento de imagens:
+ * - Otimização com Sharp (principal)
+ * - Geração de múltiplos formatos
+ * - Criação de thumbnails
+ * - Processamento em lote
+ * - Validação de imagens
+ *
+ * @author Jonathan Martins
+ * @version 1.0.0
+ * @since 2025
+ */
+
+import fs from 'fs/promises';
 import path from 'path';
 import sharp from 'sharp';
 
+/**
+ * ⚙️ Interface - Opções de Otimização de Imagem
+ *
+ * Define todas as opções disponíveis para otimização de imagens
+ */
 export interface ImageOptimizationOptions {
-  quality?: number;
-  width?: number;
-  height?: number | undefined;
-  format?: 'jpeg' | 'png' | 'webp' | 'avif';
-  fit?: 'cover' | 'contain' | 'fill' | 'inside' | 'outside';
-  position?: 'top' | 'right top' | 'right' | 'right bottom' | 'bottom' | 'left bottom' | 'left' | 'left top' | 'center';
-  background?: string;
-  blur?: number;
-  sharpen?: number;
-  grayscale?: boolean;
-  flip?: boolean;
-  flop?: boolean;
-  rotate?: number;
-  tint?: string;
-  negate?: boolean;
-  normalize?: boolean;
-  median?: number;
-  modulate?: { brightness?: number; saturation?: number; hue?: number };
+  quality?: number; // Qualidade da imagem (0-100)
+  width?: number; // Largura desejada
+  height?: number | undefined; // Altura desejada
+  format?: 'jpeg' | 'png' | 'webp' | 'avif'; // Formato de saída
+  fit?: 'cover' | 'contain' | 'fill' | 'inside' | 'outside'; // Modo de redimensionamento
+  position?: 'top' | 'right top' | 'right' | 'right bottom' | 'bottom' | 'left bottom' | 'left' | 'left top' | 'center'; // Posição do crop
+  background?: string; // Cor de fundo para transparência
+  blur?: number; // Intensidade do blur
+  sharpen?: number; // Intensidade do sharpen
+  grayscale?: boolean; // Converter para escala de cinza
+  flip?: boolean; // Inverter verticalmente
+  flop?: boolean; // Inverter horizontalmente
+  rotate?: number; // Rotação em graus
+  tint?: string; // Cor de tint
+  negate?: boolean; // Negativar cores
+  normalize?: boolean; // Normalizar histograma
+  median?: number; // Filtro mediano
+  modulate?: {
+    // Modulação de cores
+    brightness?: number;
+    saturation?: number;
+    hue?: number;
+  };
 }
 
+/**
+ * 📊 Interface - Resultado da Otimização
+ *
+ * Resultado detalhado do processo de otimização
+ */
 export interface OptimizationResult {
-  originalSize: number;
-  optimizedSize: number;
-  compressionRatio: number;
-  format: string;
-  dimensions: { width: number; height: number };
-  path: string;
-  webpPath?: string;
-  avifPath?: string;
+  originalSize: number; // Tamanho original em bytes
+  optimizedSize: number; // Tamanho otimizado em bytes
+  compressionRatio: number; // Percentual de compressão
+  format: string; // Formato final
+  dimensions: { width: number; height: number }; // Dimensões finais
+  path: string; // Caminho do arquivo otimizado
+  webpPath?: string; // Caminho da versão WebP (se gerada)
+  avifPath?: string; // Caminho da versão AVIF (se gerada)
 }
 
+/**
+ * 🖼️ Classe - Otimizador de Imagens
+ *
+ * Classe principal para otimização e processamento de imagens
+ */
 export class ImageOptimizer {
+  // Opções padrão para otimização
   private static readonly DEFAULT_OPTIONS: ImageOptimizationOptions = {
-    quality: 80,
-    format: 'jpeg',
-    fit: 'cover',
-    position: 'center',
+    quality: 85, // Qualidade padrão
+    format: 'jpeg', // Formato padrão
+    fit: 'cover', // Modo de redimensionamento padrão
   };
 
   /**
-   * Otimiza uma imagem com Sharp
+   * 🔧 Método - Otimização com Sharp
+   *
+   * Otimiza imagem usando a biblioteca Sharp (mais rápida e eficiente)
+   *
+   * @param inputPath - Caminho da imagem de entrada
+   * @param outputPath - Caminho da imagem de saída
+   * @param options - Opções de otimização
+   * @returns Promise com resultado da otimização
    */
   static async optimizeWithSharp(
     inputPath: string,
     outputPath: string,
     options: ImageOptimizationOptions = {}
   ): Promise<OptimizationResult> {
-    const opts = { ...this.DEFAULT_OPTIONS, ...options };
-    const inputBuffer = await fs.readFile(inputPath);
-    const originalStats = await fs.stat(inputPath);
+    try {
+      // eslint-disable-next-line no-console
+      console.log(`🖼️ Otimizando imagem: ${path.basename(inputPath)}`);
 
-    let sharpInstance = sharp(inputBuffer);
+      // Obter informações da imagem original
+      const originalStats = await fs.stat(inputPath);
+      const originalSize = originalStats.size;
 
-    // Aplicar transformações
-    if (opts.width || opts.height) {
-      sharpInstance = sharpInstance.resize(opts.width, opts.height, {
-        fit: opts.fit,
-        position: opts.position,
-        background: opts.background,
-      });
+      // Configurar pipeline do Sharp
+      let sharpInstance = sharp(inputPath);
+
+      // Aplicar redimensionamento se especificado
+      if (options.width || options.height) {
+        sharpInstance = sharpInstance.resize({
+          width: options.width,
+          height: options.height,
+          fit: options.fit || 'cover',
+          position: options.position || 'center',
+          background: options.background,
+        });
+      }
+
+      // Aplicar efeitos visuais
+      if (options.blur) {
+        sharpInstance = sharpInstance.blur(options.blur);
+      }
+
+      if (options.sharpen) {
+        sharpInstance = sharpInstance.sharpen(options.sharpen);
+      }
+
+      if (options.grayscale) {
+        sharpInstance = sharpInstance.grayscale();
+      }
+
+      if (options.flip) {
+        sharpInstance = sharpInstance.flip();
+      }
+
+      if (options.flop) {
+        sharpInstance = sharpInstance.flop();
+      }
+
+      if (options.rotate) {
+        sharpInstance = sharpInstance.rotate(options.rotate);
+      }
+
+      if (options.tint) {
+        sharpInstance = sharpInstance.tint(options.tint);
+      }
+
+      if (options.negate) {
+        sharpInstance = sharpInstance.negate();
+      }
+
+      if (options.normalize) {
+        sharpInstance = sharpInstance.normalize();
+      }
+
+      if (options.median) {
+        sharpInstance = sharpInstance.median(options.median);
+      }
+
+      if (options.modulate) {
+        sharpInstance = sharpInstance.modulate(options.modulate);
+      }
+
+      // Configurar formato de saída
+      const format = options.format || 'jpeg';
+      const quality = options.quality || 85;
+
+      switch (format) {
+        case 'jpeg':
+          sharpInstance = sharpInstance.jpeg({ quality });
+          break;
+        case 'png':
+          sharpInstance = sharpInstance.png({ quality });
+          break;
+        case 'webp':
+          sharpInstance = sharpInstance.webp({ quality });
+          break;
+        case 'avif':
+          sharpInstance = sharpInstance.avif({ quality });
+          break;
+        default:
+          sharpInstance = sharpInstance.jpeg({ quality });
+      }
+
+      // Processar e salvar imagem
+      await sharpInstance.toFile(outputPath);
+
+      // Obter estatísticas da imagem otimizada
+      const optimizedStats = await fs.stat(outputPath);
+      const optimizedSize = optimizedStats.size;
+
+      // Calcular taxa de compressão
+      const compressionRatio = ((originalSize - optimizedSize) / originalSize) * 100;
+
+      // Obter dimensões finais
+      const finalMetadata = await sharp(outputPath).metadata();
+      const finalDimensions = {
+        width: finalMetadata.width || 0,
+        height: finalMetadata.height || 0,
+      };
+
+      // eslint-disable-next-line no-console
+      console.log(`✅ Otimização concluída: ${compressionRatio.toFixed(1)}% de compressão`);
+
+      return {
+        originalSize,
+        optimizedSize,
+        compressionRatio,
+        format,
+        dimensions: finalDimensions,
+        path: outputPath,
+      };
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(`❌ Erro na otimização: ${error}`);
+      throw error;
     }
-
-    if (opts.blur) {
-      sharpInstance = sharpInstance.blur(opts.blur);
-    }
-
-    if (opts.sharpen) {
-      sharpInstance = sharpInstance.sharpen(opts.sharpen);
-    }
-
-    if (opts.grayscale) {
-      sharpInstance = sharpInstance.grayscale();
-    }
-
-    if (opts.flip) {
-      sharpInstance = sharpInstance.flip();
-    }
-
-    if (opts.flop) {
-      sharpInstance = sharpInstance.flop();
-    }
-
-    if (opts.rotate) {
-      sharpInstance = sharpInstance.rotate(opts.rotate);
-    }
-
-    if (opts.tint) {
-      sharpInstance = sharpInstance.tint(opts.tint);
-    }
-
-    if (opts.negate) {
-      sharpInstance = sharpInstance.negate();
-    }
-
-    if (opts.normalize) {
-      sharpInstance = sharpInstance.normalize();
-    }
-
-    if (opts.median) {
-      sharpInstance = sharpInstance.median(opts.median);
-    }
-
-    if (opts.modulate) {
-      sharpInstance = sharpInstance.modulate(opts.modulate);
-    }
-
-    // Aplicar formato e qualidade
-    let outputBuffer: Buffer;
-    let format: string;
-
-    switch (opts.format) {
-      case 'jpeg':
-        outputBuffer = await sharpInstance.jpeg({ quality: opts.quality }).toBuffer();
-        format = 'jpeg';
-        break;
-      case 'png':
-        outputBuffer = await sharpInstance.png({ quality: opts.quality }).toBuffer();
-        format = 'png';
-        break;
-      case 'webp':
-        outputBuffer = await sharpInstance.webp({ quality: opts.quality }).toBuffer();
-        format = 'webp';
-        break;
-      case 'avif':
-        outputBuffer = await sharpInstance.avif({ quality: opts.quality }).toBuffer();
-        format = 'avif';
-        break;
-      default:
-        outputBuffer = await sharpInstance.jpeg({ quality: opts.quality }).toBuffer();
-        format = 'jpeg';
-    }
-
-    // Obter dimensões
-    const metadata = await sharpInstance.metadata();
-
-    // Salvar arquivo otimizado
-    await fs.writeFile(outputPath, outputBuffer);
-
-    const optimizedStats = await fs.stat(outputPath);
-    const compressionRatio = ((originalStats.size - optimizedStats.size) / originalStats.size) * 100;
-
-    return {
-      originalSize: originalStats.size,
-      optimizedSize: optimizedStats.size,
-      compressionRatio,
-      format,
-      dimensions: { width: metadata.width || 0, height: metadata.height || 0 },
-      path: outputPath,
-    };
   }
 
   /**
-   * Otimiza uma imagem com Imagemin (compressão adicional)
-   */
-  static async optimizeWithImagemin(
-    inputPath: string,
-    outputPath: string,
-    options: ImageOptimizationOptions = {}
-  ): Promise<OptimizationResult> {
-    const opts = { ...this.DEFAULT_OPTIONS, ...options };
-    const originalStats = await fs.stat(inputPath);
-
-    const plugins = [];
-
-    // Adicionar plugins baseados no formato
-    if (opts.format === 'jpeg' || path.extname(inputPath).toLowerCase() === '.jpg') {
-      plugins.push(imageminMozjpeg({ quality: opts.quality }));
-    } else if (opts.format === 'png' || path.extname(inputPath).toLowerCase() === '.png') {
-      plugins.push(imageminPngquant({ quality: [opts.quality! / 100, opts.quality! / 100] }));
-    } else if (opts.format === 'webp' || path.extname(inputPath).toLowerCase() === '.webp') {
-      plugins.push(imageminWebp({ quality: opts.quality }));
-    } else if (path.extname(inputPath).toLowerCase() === '.gif') {
-      plugins.push(imageminGifsicle());
-    } else if (path.extname(inputPath).toLowerCase() === '.svg') {
-      plugins.push(imageminSvgo());
-    }
-
-    const files = await imagemin([inputPath], { destination: path.dirname(outputPath), plugins });
-
-    if (files.length === 0) {
-      throw new Error('Falha na otimização com Imagemin');
-    }
-
-    const optimizedStats = await fs.stat(outputPath);
-    const compressionRatio = ((originalStats.size - optimizedStats.size) / originalStats.size) * 100;
-
-    // Obter dimensões
-    const metadata = await sharp(outputPath).metadata();
-
-    return {
-      originalSize: originalStats.size,
-      optimizedSize: optimizedStats.size,
-      compressionRatio,
-      format: opts.format || path.extname(inputPath).substring(1),
-      dimensions: { width: metadata.width || 0, height: metadata.height || 0 },
-      path: outputPath,
-    };
-  }
-
-  /**
-   * Cria múltiplas versões de uma imagem (formato original + WebP + AVIF)
+   * 🔧 Método - Criar Múltiplos Formatos
+   *
+   * Gera versões da imagem em diferentes formatos (JPEG, WebP, AVIF)
+   *
+   * @param inputPath - Caminho da imagem de entrada
+   * @param outputDir - Diretório de saída
+   * @param options - Opções de otimização
+   * @returns Promise com resultado da otimização
    */
   static async createMultipleFormats(
     inputPath: string,
     outputDir: string,
     options: ImageOptimizationOptions = {}
   ): Promise<OptimizationResult> {
-    const opts = { ...this.DEFAULT_OPTIONS, ...options };
-    const filename = path.basename(inputPath, path.extname(inputPath));
-    const originalExt = path.extname(inputPath);
-
-    // Criar diretório se não existir
-    await fs.mkdir(outputDir, { recursive: true });
-
-    // Versão original otimizada
-    const originalOutputPath = path.join(outputDir, `${filename}${originalExt}`);
-    const result = await this.optimizeWithSharp(inputPath, originalOutputPath, opts);
-
-    // Versão WebP
-    const webpPath = path.join(outputDir, `${filename}.webp`);
-    await this.optimizeWithSharp(inputPath, webpPath, { ...opts, format: 'webp' });
-    result.webpPath = webpPath;
-
-    // Versão AVIF (se suportado)
     try {
-      const avifPath = path.join(outputDir, `${filename}.avif`);
-      await this.optimizeWithSharp(inputPath, avifPath, { ...opts, format: 'avif' });
-      result.avifPath = avifPath;
-    } catch (error) {
-      console.warn('AVIF não suportado, pulando...');
-    }
+      // eslint-disable-next-line no-console
+      console.log(`🖼️ Criando múltiplos formatos: ${path.basename(inputPath)}`);
 
-    return result;
+      // Garantir que o diretório de saída existe
+      await fs.mkdir(outputDir, { recursive: true });
+
+      // Nome base do arquivo
+      const baseName = path.basename(inputPath, path.extname(inputPath));
+
+      // Gerar versão JPEG
+      const jpegPath = path.join(outputDir, `${baseName}.jpg`);
+      const jpegResult = await this.optimizeWithSharp(inputPath, jpegPath, {
+        ...options,
+        format: 'jpeg',
+      });
+
+      // Gerar versão WebP
+      const webpPath = path.join(outputDir, `${baseName}.webp`);
+      await this.optimizeWithSharp(inputPath, webpPath, {
+        ...options,
+        format: 'webp',
+      });
+
+      // Gerar versão AVIF (se suportado)
+      let avifPath: string | undefined;
+      try {
+        avifPath = path.join(outputDir, `${baseName}.avif`);
+        await this.optimizeWithSharp(inputPath, avifPath, {
+          ...options,
+          format: 'avif',
+        });
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.warn(`⚠️ AVIF não suportado: ${error}`);
+      }
+
+      // eslint-disable-next-line no-console
+      console.log(`✅ Múltiplos formatos criados: JPEG, WebP${avifPath ? ', AVIF' : ''}`);
+
+      return {
+        ...jpegResult,
+        webpPath,
+        ...(avifPath && { avifPath }),
+      };
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(`❌ Erro ao criar múltiplos formatos: ${error}`);
+      throw error;
+    }
   }
 
   /**
-   * Gera thumbnails de diferentes tamanhos
+   * 🔧 Método - Gerar Thumbnails
+   *
+   * Cria thumbnails em diferentes tamanhos para uma imagem
+   *
+   * @param inputPath - Caminho da imagem de entrada
+   * @param outputDir - Diretório de saída
+   * @param sizes - Array com tamanhos desejados
+   * @param options - Opções de otimização
+   * @returns Promise com array de resultados
    */
   static async generateThumbnails(
     inputPath: string,
@@ -253,113 +299,208 @@ export class ImageOptimizer {
     sizes: Array<{ width: number; height?: number; suffix: string }>,
     options: ImageOptimizationOptions = {}
   ): Promise<Array<OptimizationResult>> {
-    const results: Array<OptimizationResult> = [];
+    try {
+      // eslint-disable-next-line no-console
+      console.log(`🖼️ Gerando thumbnails: ${path.basename(inputPath)}`);
 
-    await fs.mkdir(outputDir, { recursive: true });
+      // Garantir que o diretório de saída existe
+      await fs.mkdir(outputDir, { recursive: true });
 
-    for (const size of sizes) {
-      const filename = path.basename(inputPath, path.extname(inputPath));
-      const ext = path.extname(inputPath);
-      const outputPath = path.join(outputDir, `${filename}${size.suffix}${ext}`);
+      const results: Array<OptimizationResult> = [];
 
-      const result = await this.optimizeWithSharp(inputPath, outputPath, {
-        ...options,
-        width: size.width,
-        height: size.height || undefined,
-      });
+      // Gerar thumbnail para cada tamanho
+      for (const size of sizes) {
+        const outputPath = path.join(
+          outputDir,
+          `${path.basename(inputPath, path.extname(inputPath))}_${size.suffix}${path.extname(inputPath)}`
+        );
 
-      results.push(result);
+        const result = await this.optimizeWithSharp(inputPath, outputPath, {
+          ...options,
+          width: size.width,
+          height: size.height,
+        });
+
+        results.push(result);
+      }
+
+      // eslint-disable-next-line no-console
+      console.log(`✅ ${results.length} thumbnails gerados`);
+
+      return results;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(`❌ Erro ao gerar thumbnails: ${error}`);
+      throw error;
     }
-
-    return results;
   }
 
   /**
+   * 🔧 Método - Otimizar Diretório
+   *
    * Otimiza todas as imagens em um diretório
+   *
+   * @param inputDir - Diretório de entrada
+   * @param outputDir - Diretório de saída
+   * @param options - Opções de otimização
+   * @returns Promise com array de resultados
    */
   static async optimizeDirectory(
     inputDir: string,
     outputDir: string,
     options: ImageOptimizationOptions = {}
   ): Promise<Array<OptimizationResult>> {
-    const results: Array<OptimizationResult> = [];
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
+    try {
+      // eslint-disable-next-line no-console
+      console.log(`🖼️ Otimizando diretório: ${inputDir}`);
 
-    const files = await fs.readdir(inputDir);
-    const imageFiles = files.filter((file) => imageExtensions.includes(path.extname(file).toLowerCase()));
+      // Garantir que o diretório de saída existe
+      await fs.mkdir(outputDir, { recursive: true });
 
-    await fs.mkdir(outputDir, { recursive: true });
+      // Listar arquivos de imagem
+      const files = await fs.readdir(inputDir);
+      const imageFiles = files.filter(file => /\.(jpg|jpeg|png|webp|gif|bmp|tiff)$/i.test(file));
 
-    for (const file of imageFiles) {
-      const inputPath = path.join(inputDir, file);
-      const outputPath = path.join(outputDir, file);
+      const results: Array<OptimizationResult> = [];
 
-      try {
-        const result = await this.optimizeWithSharp(inputPath, outputPath, options);
-        results.push(result);
-        console.log(`✅ Otimizada: ${file} (${result.compressionRatio.toFixed(1)}% menor)`);
-      } catch (error) {
-        console.error(`❌ Erro ao otimizar ${file}:`, error);
+      // Otimizar cada imagem
+      for (const file of imageFiles) {
+        const inputPath = path.join(inputDir, file);
+        const outputPath = path.join(outputDir, file);
+
+        try {
+          const result = await this.optimizeWithSharp(inputPath, outputPath, options);
+          results.push(result);
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error(`❌ Erro ao otimizar ${file}: ${error}`);
+        }
       }
-    }
 
-    return results;
+      // eslint-disable-next-line no-console
+      console.log(`✅ ${results.length} imagens otimizadas`);
+
+      return results;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(`❌ Erro ao otimizar diretório: ${error}`);
+      throw error;
+    }
   }
 
   /**
-   * Obtém informações de uma imagem
+   * 🔍 Método - Obter Informações da Imagem
+   *
+   * Obtém informações detalhadas sobre uma imagem
+   *
+   * @param imagePath - Caminho da imagem
+   * @returns Promise com informações da imagem
    */
   static async getImageInfo(
     imagePath: string
   ): Promise<{ width: number; height: number; format: string; size: number; hasAlpha: boolean; hasProfile: boolean }> {
-    const stats = await fs.stat(imagePath);
-    const metadata = await sharp(imagePath).metadata();
+    try {
+      // Obter estatísticas do arquivo
+      const stats = await fs.stat(imagePath);
 
-    return {
-      width: metadata.width || 0,
-      height: metadata.height || 0,
-      format: metadata.format || 'unknown',
-      size: stats.size,
-      hasAlpha: metadata.hasAlpha || false,
-      hasProfile: metadata.hasProfile || false,
-    };
+      // Obter metadados da imagem
+      const metadata = await sharp(imagePath).metadata();
+
+      return {
+        width: metadata.width || 0,
+        height: metadata.height || 0,
+        format: metadata.format || 'unknown',
+        size: stats.size,
+        hasAlpha: metadata.hasAlpha || false,
+        hasProfile: metadata.hasProfile || false,
+      };
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(`❌ Erro ao obter informações da imagem: ${error}`);
+      throw error;
+    }
   }
 
   /**
-   * Verifica se uma imagem é válida
+   * ✅ Método - Validar Imagem
+   *
+   * Verifica se um arquivo é uma imagem válida
+   *
+   * @param imagePath - Caminho da imagem
+   * @returns Promise com boolean indicando se é válida
    */
   static async isValidImage(imagePath: string): Promise<boolean> {
     try {
       await sharp(imagePath).metadata();
       return true;
-    } catch {
+    } catch (error) {
       return false;
     }
   }
 }
 
-// Configurações predefinidas para diferentes casos de uso
+/**
+ * ⚙️ Configurações Predefinidas - Presets para diferentes casos de uso
+ *
+ * Configurações otimizadas para diferentes tipos de imagem e contextos
+ */
 export const ImagePresets = {
-  // Thumbnails
-  thumbnail: { width: 150, height: 150, quality: 85, format: 'jpeg' as const, fit: 'cover' as const },
+  // 📱 Thumbnails pequenos
+  thumbnail: {
+    width: 150,
+    height: 150,
+    quality: 85,
+    format: 'jpeg' as const,
+    fit: 'cover' as const,
+  },
 
-  // Cards de jogo
-  gameCard: { width: 300, height: 200, quality: 90, format: 'jpeg' as const, fit: 'cover' as const },
+  // 🎮 Cards de jogo
+  gameCard: {
+    width: 300,
+    height: 200,
+    quality: 90,
+    format: 'jpeg' as const,
+    fit: 'cover' as const,
+  },
 
-  // Hero images
-  hero: { width: 1200, height: 600, quality: 85, format: 'jpeg' as const, fit: 'cover' as const },
+  // 🖼️ Hero images (banners)
+  hero: {
+    width: 1200,
+    height: 600,
+    quality: 85,
+    format: 'jpeg' as const,
+    fit: 'cover' as const,
+  },
 
-  // Galeria
-  gallery: { width: 800, height: 600, quality: 90, format: 'jpeg' as const, fit: 'inside' as const },
+  // 🖼️ Galeria
+  gallery: {
+    width: 800,
+    height: 600,
+    quality: 90,
+    format: 'jpeg' as const,
+    fit: 'inside' as const,
+  },
 
-  // Avatar
-  avatar: { width: 100, height: 100, quality: 90, format: 'jpeg' as const, fit: 'cover' as const },
+  // 👤 Avatar
+  avatar: {
+    width: 100,
+    height: 100,
+    quality: 90,
+    format: 'jpeg' as const,
+    fit: 'cover' as const,
+  },
 
-  // WebP otimizado
-  webp: { quality: 80, format: 'webp' as const },
+  // 🌐 WebP otimizado
+  webp: {
+    quality: 80,
+    format: 'webp' as const,
+  },
 
-  // AVIF otimizado
-  avif: { quality: 75, format: 'avif' as const },
+  // 🆕 AVIF otimizado
+  avif: {
+    quality: 75,
+    format: 'avif' as const,
+  },
 };
 
 export default ImageOptimizer;

@@ -262,7 +262,8 @@ O `package.json` está **perfeitamente otimizado** para:
 
 ### **Recomendação Final**
 
-O arquivo está **pronto para produção** e pode ser usado com total confiança para desenvolvimento e deploy.
+O arquivo está **pronto para produção** e pode ser usado com total confiança para desenvolvimento e
+deploy.
 
 ---
 

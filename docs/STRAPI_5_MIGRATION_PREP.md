@@ -2,7 +2,8 @@
 
 ## 🎯 Visão Geral
 
-Este documento detalha a preparação completa para migração do Strapi 4.25.23 para Strapi 5.21.0, incluindo ambiente de staging, testes, análise de impacto e procedimentos de segurança.
+Este documento detalha a preparação completa para migração do Strapi 4.25.23 para Strapi 5.21.0,
+incluindo ambiente de staging, testes, análise de impacto e procedimentos de segurança.
 
 ---
 
@@ -423,6 +424,4 @@ echo "✅ Validação concluída!"
 
 ---
 
-_Última atualização: Agosto 2025_
-_Versão do Documento: 1.0.0_
-_Próxima revisão: Setembro 2025_
+_Última atualização: Agosto 2025_ _Versão do Documento: 1.0.0_ _Próxima revisão: Setembro 2025_

@@ -2,7 +2,8 @@
 
 ## 🎯 Visão Geral
 
-Este documento detalha o plano de atualização das dependências do projeto RootGames API, incluindo cronograma, riscos e procedimentos de segurança. **Atualizado para agosto de 2025**.
+Este documento detalha o plano de atualização das dependências do projeto RootGames API, incluindo
+cronograma, riscos e procedimentos de segurança. **Atualizado para agosto de 2025**.
 
 ---
 
@@ -245,6 +246,4 @@ git reset --hard HEAD~1
 
 ---
 
-_Última atualização: Agosto 2025_
-_Versão do Plano: 2.0.0_
-_Próxima revisão: Setembro 2025_
+_Última atualização: Agosto 2025_ _Versão do Plano: 2.0.0_ _Próxima revisão: Setembro 2025_

@@ -1,0 +1,45 @@
+{
+  "timestamp": "2025-08-17T23:53:45-03:00",
+  "step": 3,
+  "step_name": "diagnostico-aplicacao",
+  "app_info": {
+    "project_version": "1.0.0",
+    "db_name": "rootgames",
+    "config_config_admin_ts": "true",
+    "endpoint__admin": "false",
+    "db_connection": "false",
+    "config__env": "true",
+    "package_json": "true",
+    "node_compatible": "true",
+    "yarn_version": "1.22.22",
+    "config_config_server_ts": "true",
+    "db_user": "rootgames",
+    "src_directory": "true",
+    "dev_script": "true",
+    "build_script": "true",
+    "npm_version": "11.5.2",
+    "react_version": "^18.3.1",
+    "endpoint__": "false",
+    "strapi_version": "^5.21.0",
+    "endpoint__api_games": "false",
+    "db_host": "127.0.0.1",
+    "api_url": "http://localhost:1337",
+    "build_exists": "false",
+    "endpoint___health": "false",
+    "db_port": "5432",
+    "node_modules": "true",
+    "node_version": "v20.19.4",
+    "config_config_database_ts": "true"
+  },
+  "metrics": {
+    "errors_today": "35",
+    "endpoint_success_rate": "0",
+    "api_count": "6",
+    "node_modules_size": "1,3G",
+    "log_size": "208K",
+    "log_files": "11"
+  },
+  "issues": {
+    "db_connection_failed": "Falha na conexão com PostgreSQL"
+  }
+}

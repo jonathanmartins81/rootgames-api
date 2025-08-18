@@ -2,7 +2,9 @@
 
 ## 📋 Visão Geral
 
-Este documento explica como configurar e executar o projeto RootGames API usando Strapi CMS. O projeto é uma API headless para gerenciamento de catálogo de jogos com funcionalidades avançadas de importação automática.
+Este documento explica como configurar e executar o projeto RootGames API usando Strapi CMS. O
+projeto é uma API headless para gerenciamento de catálogo de jogos com funcionalidades avançadas de
+importação automática.
 
 ---
 
@@ -71,7 +73,8 @@ GRANT ALL PRIVILEGES ON DATABASE rootgames TO rootgames;
 
 ### **3. Configuração de Autenticação**
 
-**Importante**: O PostgreSQL pode usar diferentes métodos de autenticação. Para garantir compatibilidade:
+**Importante**: O PostgreSQL pode usar diferentes métodos de autenticação. Para garantir
+compatibilidade:
 
 ```bash
 # Editar arquivo de configuração
@@ -428,5 +431,4 @@ sudo journalctl -f
 
 ---
 
-_Última atualização: Agosto 2025_
-_Versão do Strapi: 4.12.5_
+_Última atualização: Agosto 2025_ _Versão do Strapi: 4.12.5_
