@@ -15,7 +15,7 @@ function organizeUploads() {
     const items = fs.readdirSync(UPLOADS_DIR);
     let totalFiles = 0;
     let totalDirs = 0;
-    let organizedCount = 0;
+    // let organizedCount = 0;
 
     // Separar arquivos e diretórios
     const files = [];
@@ -73,7 +73,7 @@ async function checkStrapiData() {
 
   try {
     // Verificar se o Strapi está rodando
-    const healthResponse = await axios.get(`${STRAPI_URL}/_health`);
+    await axios.get(`${STRAPI_URL}/_health`);
     console.log('✅ Strapi está rodando');
 
     // Buscar jogos

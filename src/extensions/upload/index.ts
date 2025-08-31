@@ -1,5 +1,16 @@
+interface StrapiContext {
+  strapi: {
+    plugin: (name: string) => any;
+    log: {
+      info: (message: string) => void;
+      warn: (message: string) => void;
+      error: (message: string, error: unknown) => void;
+    };
+  };
+}
+
 export default () => ({
-  register({ strapi }: any) {
+  register({ strapi }: StrapiContext) {
     // Garantir que o plugin de upload seja carregado
     if (strapi.plugin('upload')) {
       strapi.log.info('✅ Plugin de upload carregado com sucesso');
@@ -8,7 +19,7 @@ export default () => ({
     }
   },
 
-  bootstrap({ strapi }: any) {
+  bootstrap({ strapi }: StrapiContext) {
     // Verificar se o serviço de upload está disponível
     try {
       const uploadService = strapi.plugin('upload').service('upload');

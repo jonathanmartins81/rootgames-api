@@ -6,7 +6,7 @@
  * Este script testa o upload usando a API interna do Strapi
  */
 
-const axios = require('axios');
+// const axios = require('axios');
 
 async function testSimpleUpload() {
   try {

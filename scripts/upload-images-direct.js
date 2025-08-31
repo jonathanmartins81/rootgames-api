@@ -9,7 +9,7 @@ const STRAPI_URL = 'http://localhost:1337';
 const UPLOADS_DIR = '/home/jonathan/Workspace/Development/rootgames/rootgames-api/public/uploads';
 
 // Função para fazer upload de imagem para o Strapi
-async function uploadImageToStrapi(imagePath, gameName) {
+async function uploadImageToStrapi(imagePath) {
   try {
     const formData = new FormData();
     formData.append('files', fs.createReadStream(imagePath));

@@ -69,13 +69,6 @@ const createGenericImage = gameName => {
 
 // Função para buscar imagens reais dos jogos
 async function findRealGameImage(gameName) {
-  const searchTerms = [
-    gameName,
-    gameName.replace(/[^a-zA-Z0-9\s]/g, ' '),
-    gameName.split(':')[0].trim(),
-    gameName.split('-')[0].trim(),
-  ];
-
   const imageSources = [
     // Google Images (via proxy)
     `https://serpapi.com/search.json?engine=google_images&q=${encodeURIComponent(gameName + ' game cover')}&api_key=demo`,

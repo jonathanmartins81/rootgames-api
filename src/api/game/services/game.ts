@@ -129,8 +129,9 @@ const GAME_SLUGS = {
   'Resident Evil 2': 'resident_evil_2',
 };
 
-function Exception(e: any) {
-  return { e, data: e.data && e.data.errors && e.data.errors };
+function Exception(e: unknown) {
+  const error = e as any;
+  return { e, data: error.data && error.data.errors && error.data.errors };
 }
 
 async function getGameInfo(slug: string) {
@@ -202,7 +203,20 @@ async function create(name: string, entityService: string) {
   }
 }
 
-async function createManyToManyData(products: any[]) {
+interface Product {
+  title: string;
+  slug: string;
+  price: { finalMoney: { amount: number } };
+  releaseDate: string;
+  coverHorizontal?: string;
+  screenshots?: string[];
+  developers?: string[];
+  publishers?: string[];
+  genres?: Array<{ name: string }>;
+  operatingSystems?: string[];
+}
+
+async function createManyToManyData(products: Product[]) {
   const developersSet = new Set<string>();
   const publishersSet = new Set<string>();
   const categoriesSet = new Set<string>();
@@ -238,7 +252,13 @@ async function createManyToManyData(products: any[]) {
   ]);
 }
 
-async function setImage({ image, game, field = 'cover' }: { image: string; game: any; field?: string }) {
+interface Game {
+  id: number;
+  name: string;
+  [key: string]: unknown;
+}
+
+async function setImage({ image, game, field = 'cover' }: { image: string; game: Game; field?: string }) {
   try {
     console.info(`🖼️  Baixando imagem: ${image}`);
 
@@ -299,24 +319,26 @@ async function setImage({ image, game, field = 'cover' }: { image: string; game:
 
       // Limpar arquivo temporário
       fs.unlinkSync(tempFilePath);
-    } catch (uploadError: any) {
-      console.error(`❌ Erro no upload via API:`, uploadError.message);
+    } catch (uploadError: unknown) {
+      const errorMessage = uploadError instanceof Error ? uploadError.message : 'Unknown error';
+      console.error(`❌ Erro no upload via API:`, errorMessage);
 
       // Limpar arquivo temporário em caso de erro
       if (fs.existsSync(tempFilePath)) {
         fs.unlinkSync(tempFilePath);
       }
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorObj = error as any;
     console.error(`❌ Erro ao fazer upload da imagem ${field} para ${game.name}:`, {
-      error: error.message,
-      response: error.response?.data,
-      status: error.response?.status,
+      error: errorObj.message,
+      response: errorObj.response?.data,
+      status: errorObj.response?.status,
     });
   }
 }
 
-async function createGames(products: any[]) {
+async function createGames(products: Product[]) {
   console.log(`🎮 Iniciando criação de ${products.length} jogos...`);
 
   for (const product of products) {
@@ -334,13 +356,17 @@ async function createGames(products: any[]) {
             price: product.price.finalMoney.amount,
             release_date: new Date(product.releaseDate),
             categories: await Promise.all(
-              product.genres.map(({ name }: { name: string }) => getByName(name, categoryService))
+              (product.genres || []).map(({ name }: { name: string }) => getByName(name, categoryService))
             ),
             platforms: await Promise.all(
-              product.operatingSystems.map((name: string) => getByName(name, platformService))
+              (product.operatingSystems || []).map((name: string) => getByName(name, platformService))
             ),
-            developers: await Promise.all(product.developers.map((name: string) => getByName(name, developerService))),
-            publisher: await Promise.all(product.publishers.map((name: string) => getByName(name, publisherService))),
+            developers: await Promise.all(
+              (product.developers || []).map((name: string) => getByName(name, developerService))
+            ),
+            publisher: await Promise.all(
+              (product.publishers || []).map((name: string) => getByName(name, publisherService))
+            ),
             ...(await getGameInfo(product.slug)),
             publishedAt: new Date(),
           },
@@ -371,8 +397,9 @@ async function createGames(products: any[]) {
       } else {
         console.log(`⏭️  Jogo já existe: ${product.title}`);
       }
-    } catch (error: any) {
-      console.error(`❌ Erro ao criar jogo ${product.title}:`, error.message);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error(`❌ Erro ao criar jogo ${product.title}:`, errorMessage);
     }
   }
 
@@ -388,7 +415,7 @@ async function searchSpecificGames() {
 
   for (const gameName of TARGET_GAMES) {
     try {
-      const slug = (GAME_SLUGS as any)[gameName] || slugify(gameName, { strict: true, lower: true });
+      const slug = (GAME_SLUGS as Record<string, string>)[gameName] || slugify(gameName, { strict: true, lower: true });
       const gogUrl = `https://www.gog.com/game/${slug}`;
 
       console.log(`🔍 Verificando: ${gameName} (${slug})`);
@@ -420,7 +447,7 @@ async function searchSpecificGames() {
 }
 
 export default factories.createCoreService(gameService, () => ({
-  async populate(params: any) {
+  async populate(params: Record<string, string | number | boolean | string[] | number[] | null | undefined>) {
     try {
       console.log('🚀 Iniciando população de jogos específicos...');
       console.log(`📋 Total de jogos na lista: ${TARGET_GAMES.length}`);
@@ -496,8 +523,9 @@ export default factories.createCoreService(gameService, () => ({
           } else {
             console.log(`⏭️  Jogo já existe: ${gameInfo.name}`);
           }
-        } catch (error: any) {
-          console.error(`❌ Erro ao criar jogo ${gameInfo.name}:`, error.message);
+        } catch (error: unknown) {
+          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+          console.error(`❌ Erro ao criar jogo ${gameInfo.name}:`, errorMessage);
         }
       }
 

@@ -1,5 +1,4 @@
 const express = require('express');
-const axios = require('axios');
 const cors = require('cors');
 
 const app = express();
@@ -558,7 +557,7 @@ async function searchGameImages(gameName) {
     // 3. Tentar MobyGames API (futuro)
     console.log(`  🔍 Buscando imagens para: ${gameName}`);
 
-    const searchUrl = `https://www.mobygames.com/search?q=${encodeURIComponent(gameName)}`;
+    // const searchUrl = `https://www.mobygames.com/search?q=${encodeURIComponent(gameName)}`;
 
     // Nota: MobyGames não tem API pública, então seria necessário web scraping
     // Por enquanto, retornamos dados simulados

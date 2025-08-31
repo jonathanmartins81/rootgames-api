@@ -54,7 +54,7 @@ async function generateGamesList() {
 `;
 
     // Adicionar cada jogo à tabela
-    allGames.forEach((game, index) => {
+    allGames.forEach(game => {
       const hasImage = game.cover ? '✅' : '❌';
       const gameName = game.name || 'Nome não disponível';
 

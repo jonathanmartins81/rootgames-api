@@ -158,7 +158,7 @@ async function associateImageToGame(gameId, uploadedFile, imageType) {
       updateData.gallery = [...currentGallery.map(img => img.id), uploadedFile.id];
     }
 
-    const response = await axios.put(`${STRAPI_URL}/api/games/${gameId}`, {
+    await axios.put(`${STRAPI_URL}/api/games/${gameId}`, {
       data: updateData,
     });
 

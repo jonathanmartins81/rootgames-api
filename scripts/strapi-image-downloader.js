@@ -93,7 +93,7 @@ async function associateImageToGame(gameId, uploadedFile, imageType) {
   try {
     console.log(`   🔗 Associando ${imageType} ao jogo...`);
 
-    let updateData = {};
+    const updateData = {};
 
     if (imageType === 'cover') {
       updateData.cover = uploadedFile.id;
@@ -106,7 +106,7 @@ async function associateImageToGame(gameId, uploadedFile, imageType) {
       updateData.gallery = [...currentGallery.map(img => img.id), uploadedFile.id];
     }
 
-    const response = await axios.put(`${STRAPI_URL}/api/games/${gameId}`, {
+    await axios.put(`${STRAPI_URL}/api/games/${gameId}`, {
       data: updateData,
     });
 

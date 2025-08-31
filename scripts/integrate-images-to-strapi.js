@@ -19,7 +19,7 @@ async function getStrapiGames() {
 }
 
 // Função para fazer upload de imagem para o Strapi
-async function uploadImageToStrapi(imagePath, gameName) {
+async function uploadImageToStrapi(imagePath) {
   try {
     const formData = new FormData();
     formData.append('files', fs.createReadStream(imagePath));

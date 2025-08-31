@@ -4,8 +4,19 @@
  * Este middleware permite acesso público às rotas especificadas
  */
 
+interface StrapiContext {
+  path: string;
+  state: {
+    auth?: {
+      strategy: string;
+    };
+  };
+}
+
+type NextFunction = () => Promise<void>;
+
 export default () => {
-  return async (ctx: any, next: any) => {
+  return async (ctx: StrapiContext, next: NextFunction) => {
     // Lista de rotas públicas
     const publicRoutes = [
       '/api/games',

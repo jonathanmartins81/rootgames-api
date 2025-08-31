@@ -271,12 +271,10 @@ export class ImageOptimizer {
         });
         console.log(`✅ AVIF criado com sucesso: ${avifPath}`);
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.warn(`⚠️ AVIF não suportado: ${error}`);
         avifPath = undefined;
       }
 
-      // eslint-disable-next-line no-console
       console.log(
         `✅ Múltiplos formatos criados: JPEG, ${webpPath ? 'WebP' : 'WebP (falhou)'}${avifPath ? ', AVIF' : ', AVIF (falhou)'}`
       );
@@ -287,7 +285,6 @@ export class ImageOptimizer {
         ...(avifPath && { avifPath }),
       };
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error(`❌ Erro ao criar múltiplos formatos: ${error}`);
       throw error;
     }
@@ -311,7 +308,6 @@ export class ImageOptimizer {
     options: ImageOptimizationOptions = {}
   ): Promise<Array<OptimizationResult>> {
     try {
-      // eslint-disable-next-line no-console
       console.log(`🖼️ Gerando thumbnails: ${path.basename(inputPath)}`);
 
       // Garantir que o diretório de saída existe
@@ -335,12 +331,10 @@ export class ImageOptimizer {
         results.push(result);
       }
 
-      // eslint-disable-next-line no-console
       console.log(`✅ ${results.length} thumbnails gerados`);
 
       return results;
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error(`❌ Erro ao gerar thumbnails: ${error}`);
       throw error;
     }

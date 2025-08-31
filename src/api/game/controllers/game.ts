@@ -21,8 +21,9 @@ export default factories.createCoreController('api::game.game', ({ strapi }) => 
     try {
       await strapi.service('api::game.game').populateSpecific();
       ctx.send('Finished populating specific games from the target list!');
-    } catch (error: any) {
-      ctx.badRequest('Error populating specific games: ' + error.message);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      ctx.badRequest('Error populating specific games: ' + errorMessage);
     }
   },
 }));

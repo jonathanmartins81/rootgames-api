@@ -307,7 +307,7 @@ const IMAGE_SOURCES = {
 };
 
 // Função para buscar imagens de forma inteligente
-async function intelligentImageSearch(gameName, options = {}) {
+async function intelligentImageSearch(gameName) {
   try {
     console.log(`🧠 Busca inteligente de imagens para: ${gameName}`);
 
@@ -780,7 +780,7 @@ async function main() {
     console.log(JSON.stringify(results, null, 2));
   } else if (args[0] === '--sources') {
     console.log('📚 FONTES DISPONÍVEIS (50+):\n');
-    Object.entries(IMAGE_SOURCES).forEach(([key, source]) => {
+    Object.entries(IMAGE_SOURCES).forEach(([, source]) => {
       console.log(`${source.priority === 1 ? '🔥' : source.priority === 2 ? '⚡' : '💡'} ${source.name}`);
       console.log(`   Prioridade: ${source.priority} | Confiabilidade: ${source.reliability}%`);
       console.log(`   Descrição: ${source.description}`);
