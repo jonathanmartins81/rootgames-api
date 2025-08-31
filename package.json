@@ -84,10 +84,15 @@
     "images:webp": "node -e \"require('./src/utils/imageOptimizer').ImageOptimizer.createMultipleFormats('./public/uploads', './public/uploads/webp')\""
   },
   "dependencies": {
+    "@ckeditor/strapi-plugin-ckeditor": "^1.1.1",
     "@strapi/plugin-graphql": "^5.21.0",
     "@strapi/plugin-users-permissions": "^5.21.0",
     "@strapi/strapi": "^5.21.0",
     "axios": "^1.11.0",
+    "canvas": "^3.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "form-data": "^4.0.4",
     "imagemin": "^9.0.1",
     "imagemin-gifsicle": "^7.0.0",
     "imagemin-mozjpeg": "^10.0.0",

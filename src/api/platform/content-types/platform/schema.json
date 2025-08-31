@@ -64,8 +64,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::game.game",
-      "mappedBy": "platforms",
-      "required": false
+      "mappedBy": "platforms"
     }
   }
 }

@@ -1,0 +1,532 @@
+[
+  {
+    "gameName": "Stardew Valley",
+    "gameId": 57,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Dark Souls III",
+    "gameId": 58,
+    "source": "Steam Store",
+    "confidence": 0.9,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Hades",
+    "gameId": 59,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Disco Elysium",
+    "gameId": 60,
+    "source": "Steam Store",
+    "confidence": 0.9,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Sid Meier's Civilization VI",
+    "gameId": 61,
+    "source": "Steam Store",
+    "confidence": 0.8,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Baldur's Gate 3",
+    "gameId": 62,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Control Ultimate Edition",
+    "gameId": 63,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Monster Hunter: World",
+    "gameId": 64,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Hollow Knight",
+    "gameId": 65,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Payday 2",
+    "gameId": 66,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Hotline Miami",
+    "gameId": 67,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Dragon Age: Origins",
+    "gameId": 68,
+    "source": "Steam Store",
+    "confidence": 0.9,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Subnautica",
+    "gameId": 69,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Shadowrun Trilogy",
+    "gameId": 71,
+    "source": "GOG.com",
+    "confidence": 0.8,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Pillars of Eternity",
+    "gameId": 72,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Dead Cells",
+    "gameId": 73,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Age of Wonders III",
+    "gameId": 76,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Into the Breach",
+    "gameId": 77,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Ori and the Will of the Wisps",
+    "gameId": 78,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Metro Exodus",
+    "gameId": 79,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Outer Wilds",
+    "gameId": 80,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "GreedFall",
+    "gameId": 81,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Torchlight II",
+    "gameId": 83,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Celeste",
+    "gameId": 84,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Project Zomboid",
+    "gameId": 85,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Deus Ex: Mankind Divided",
+    "gameId": 87,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Warhammer: Vermintide 2",
+    "gameId": 88,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Papers, Please",
+    "gameId": 89,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "The Outer Worlds",
+    "gameId": 91,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Divinity: Original Sin 2",
+    "gameId": 54,
+    "source": "Steam Store",
+    "confidence": 0.9,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Fallout 4: Game of the Year Edition",
+    "gameId": 55,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "DOOM Eternal",
+    "gameId": 56,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "No Man's Sky",
+    "gameId": 70,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "The Long Dark",
+    "gameId": 74,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Frostpunk",
+    "gameId": 75,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Kingdom Come: Deliverance",
+    "gameId": 82,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Slay the Spire",
+    "gameId": 86,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "THIEF Gold Edition",
+    "gameId": 90,
+    "source": "GOG.com",
+    "confidence": 0.8,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Euro Truck Simulator 2",
+    "gameId": 92,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "System Shock: Enhanced Edition",
+    "gameId": 96,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Dead Island Definitive Edition",
+    "gameId": 98,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Shadow Warrior 2",
+    "gameId": 102,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Resident Evil 2",
+    "gameId": 104,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Frostpunk: Game of the Year Edition",
+    "gameId": 94,
+    "source": "GOG.com",
+    "confidence": 0.8,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Divinity: Original Sin - Enhanced Edition",
+    "gameId": 100,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Factorio",
+    "gameId": 93,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Pillars of Eternity II: Deadfire",
+    "gameId": 95,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Age of Empires II: Definitive Edition",
+    "gameId": 99,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Jurassic Park: The Game",
+    "gameId": 103,
+    "source": "GOG.com",
+    "confidence": 0.8,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Cyberpunk 2077",
+    "gameId": 52,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "The Witcher 3: Wild Hunt",
+    "gameId": 53,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "Vampire: The Masquerade - Bloodlines",
+    "gameId": 97,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  },
+  {
+    "gameName": "The Talos Principle",
+    "gameId": 101,
+    "source": "Steam Store",
+    "confidence": 1,
+    "images": {
+      "cover": null,
+      "gallery": []
+    }
+  }
+]

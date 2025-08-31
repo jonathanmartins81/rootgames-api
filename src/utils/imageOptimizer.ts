@@ -248,11 +248,18 @@ export class ImageOptimizer {
       });
 
       // Gerar versão WebP
-      const webpPath = path.join(outputDir, `${baseName}.webp`);
-      await this.optimizeWithSharp(inputPath, webpPath, {
-        ...options,
-        format: 'webp',
-      });
+      let webpPath: string | undefined;
+      try {
+        webpPath = path.join(outputDir, `${baseName}.webp`);
+        await this.optimizeWithSharp(inputPath, webpPath, {
+          ...options,
+          format: 'webp',
+        });
+        console.log(`✅ WebP criado com sucesso: ${webpPath}`);
+      } catch (error) {
+        console.warn(`⚠️ WebP não suportado ou erro na criação: ${error}`);
+        webpPath = undefined;
+      }
 
       // Gerar versão AVIF (se suportado)
       let avifPath: string | undefined;
@@ -262,17 +269,21 @@ export class ImageOptimizer {
           ...options,
           format: 'avif',
         });
+        console.log(`✅ AVIF criado com sucesso: ${avifPath}`);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.warn(`⚠️ AVIF não suportado: ${error}`);
+        avifPath = undefined;
       }
 
       // eslint-disable-next-line no-console
-      console.log(`✅ Múltiplos formatos criados: JPEG, WebP${avifPath ? ', AVIF' : ''}`);
+      console.log(
+        `✅ Múltiplos formatos criados: JPEG, ${webpPath ? 'WebP' : 'WebP (falhou)'}${avifPath ? ', AVIF' : ', AVIF (falhou)'}`
+      );
 
       return {
         ...jpegResult,
-        webpPath,
+        ...(webpPath && { webpPath }),
         ...(avifPath && { avifPath }),
       };
     } catch (error) {

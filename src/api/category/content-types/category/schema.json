@@ -57,8 +57,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::game.game",
-      "mappedBy": "categories",
-      "required": false
+      "mappedBy": "categories"
     }
   }
 }

@@ -132,10 +132,8 @@ export default {
    * - Configurar localStorage
    * - Aplicar classes CSS
    * - Configurar animações
-   *
-   * @param _app - Instância da aplicação (não utilizada)
    */
-  bootstrap(_app: unknown) {
+  bootstrap() {
     // Forçar tema escuro moderno
     // eslint-disable-next-line no-console
     console.log('🎮 Root Games Admin Panel initialized with modern gaming theme');

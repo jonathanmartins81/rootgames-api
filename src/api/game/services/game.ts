@@ -1,97 +1,169 @@
 /**
- * 🎮 Game Service - Serviço para Entidade de Jogos
- *
- * Este serviço estende o serviço padrão do Strapi com funcionalidades
- * específicas para o catálogo de jogos, incluindo:
- * - Integração com API GOG para importação de dados
- * - Otimização automática de imagens
- * - Criação de entidades relacionadas
- * - Processamento de metadados de jogos
- *
- * @author Jonathan Martins
- * @version 1.0.0
- * @since 2025
+ * game service
  */
-
 import { factories } from '@strapi/strapi';
 import axios from 'axios';
 import FormData from 'form-data';
-import { promises as fs } from 'fs';
+import fs from 'fs';
 import { JSDOM } from 'jsdom';
-import path from 'path';
 import qs from 'querystring';
 import slugify from 'slugify';
-import ImageOptimizer, { ImagePresets } from '../../../utils/imageOptimizer';
 
-// 🔧 Constantes de Serviços
 const gameService = 'api::game.game';
 const publisherService = 'api::publisher.publisher';
 const developerService = 'api::developer.developer';
 const categoryService = 'api::category.category';
 const platformService = 'api::platform.platform';
 
-/**
- * 🛠️ Função de Tratamento de Exceções
- *
- * Padroniza o tratamento de erros em toda a aplicação
- *
- * @param e - Erro capturado
- * @returns Objeto com erro e dados relacionados
- */
-function Exception(e: any): { e: any; data: any } {
-  return {
-    e,
-    data: e.data && e.data.errors && e.data.errors,
-  };
+// Lista específica de jogos fornecida pelo usuário
+const TARGET_GAMES = [
+  'Cyberpunk 2077',
+  'The Witcher 3: Wild Hunt',
+  'Divinity: Original Sin 2',
+  'Fallout 4: Game of the Year Edition',
+  'DOOM Eternal',
+  'Stardew Valley',
+  'Dark Souls III',
+  'Hades',
+  'Disco Elysium',
+  "Sid Meier's Civilization VI",
+  "Baldur's Gate 3",
+  'Control Ultimate Edition',
+  'Monster Hunter: World',
+  'Hollow Knight',
+  'Payday 2',
+  'Hotline Miami',
+  'Dragon Age: Origins',
+  'Subnautica',
+  "No Man's Sky",
+  'Shadowrun Trilogy',
+  'Pillars of Eternity',
+  'Dead Cells',
+  'The Long Dark',
+  'Frostpunk',
+  'Age of Wonders III',
+  'Into the Breach',
+  'Ori and the Will of the Wisps',
+  'Metro Exodus',
+  'Outer Wilds',
+  'GreedFall',
+  'Kingdom Come: Deliverance',
+  'Torchlight II',
+  'Celeste',
+  'Project Zomboid',
+  'Slay the Spire',
+  'Deus Ex: Mankind Divided',
+  'Warhammer: Vermintide 2',
+  'Papers, Please',
+  'THIEF Gold Edition',
+  'The Outer Worlds',
+  'Euro Truck Simulator 2',
+  'Factorio',
+  'Frostpunk: Game of the Year Edition',
+  'Pillars of Eternity II: Deadfire',
+  'System Shock: Enhanced Edition',
+  'Vampire: The Masquerade - Bloodlines',
+  'Dead Island Definitive Edition',
+  'Age of Empires II: Definitive Edition',
+  'Divinity: Original Sin - Enhanced Edition',
+  'The Talos Principle',
+  'Shadow Warrior 2',
+  'Jurassic Park: The Game',
+  'Resident Evil 2',
+];
+
+// Mapeamento de nomes para slugs da GOG
+const GAME_SLUGS = {
+  'Cyberpunk 2077': 'cyberpunk_2077',
+  'The Witcher 3: Wild Hunt': 'the_witcher_3_wild_hunt',
+  'Divinity: Original Sin 2': 'divinity_original_sin_2',
+  'Fallout 4: Game of the Year Edition': 'fallout_4_game_of_the_year_edition',
+  'DOOM Eternal': 'doom_eternal',
+  'Stardew Valley': 'stardew_valley',
+  'Dark Souls III': 'dark_souls_iii',
+  Hades: 'hades',
+  'Disco Elysium': 'disco_elysium',
+  "Sid Meier's Civilization VI": 'sid_meiers_civilization_vi',
+  "Baldur's Gate 3": 'baldurs_gate_3',
+  'Control Ultimate Edition': 'control_ultimate_edition',
+  'Monster Hunter: World': 'monster_hunter_world',
+  'Hollow Knight': 'hollow_knight',
+  'Payday 2': 'payday_2',
+  'Hotline Miami': 'hotline_miami',
+  'Dragon Age: Origins': 'dragon_age_origins',
+  Subnautica: 'subnautica',
+  "No Man's Sky": 'no_mans_sky',
+  'Shadowrun Trilogy': 'shadowrun_trilogy',
+  'Pillars of Eternity': 'pillars_of_eternity',
+  'Dead Cells': 'dead_cells',
+  'The Long Dark': 'the_long_dark',
+  Frostpunk: 'frostpunk',
+  'Age of Wonders III': 'age_of_wonders_iii',
+  'Into the Breach': 'into_the_breach',
+  'Ori and the Will of the Wisps': 'ori_and_the_will_of_the_wisps',
+  'Metro Exodus': 'metro_exodus',
+  'Outer Wilds': 'outer_wilds',
+  GreedFall: 'greedfall',
+  'Kingdom Come: Deliverance': 'kingdom_come_deliverance',
+  'Torchlight II': 'torchlight_ii',
+  Celeste: 'celeste',
+  'Project Zomboid': 'project_zomboid',
+  'Slay the Spire': 'slay_the_spire',
+  'Deus Ex: Mankind Divided': 'deus_ex_mankind_divided',
+  'Warhammer: Vermintide 2': 'warhammer_vermintide_2',
+  'Papers, Please': 'papers_please',
+  'THIEF Gold Edition': 'thief_gold_edition',
+  'The Outer Worlds': 'the_outer_worlds',
+  'Euro Truck Simulator 2': 'euro_truck_simulator_2',
+  Factorio: 'factorio',
+  'Frostpunk: Game of the Year Edition': 'frostpunk_game_of_the_year_edition',
+  'Pillars of Eternity II: Deadfire': 'pillars_of_eternity_ii_deadfire',
+  'System Shock: Enhanced Edition': 'system_shock_enhanced_edition',
+  'Vampire: The Masquerade - Bloodlines': 'vampire_the_masquerade_bloodlines',
+  'Dead Island Definitive Edition': 'dead_island_definitive_edition',
+  'Age of Empires II: Definitive Edition': 'age_of_empires_ii_definitive_edition',
+  'Divinity: Original Sin - Enhanced Edition': 'divinity_original_sin_enhanced_edition',
+  'The Talos Principle': 'the_talos_principle',
+  'Shadow Warrior 2': 'shadow_warrior_2',
+  'Jurassic Park: The Game': 'jurassic_park_the_game',
+  'Resident Evil 2': 'resident_evil_2',
+};
+
+function Exception(e: any) {
+  return { e, data: e.data && e.data.errors && e.data.errors };
 }
 
-/**
- * 📖 Obter Informações do Jogo - Busca dados detalhados do GOG
- *
- * Faz scraping da página do jogo no GOG para obter:
- * - Descrição completa
- * - Descrição curta
- * - Classificação indicativa
- *
- * @param slug - Slug do jogo no GOG
- * @returns Objeto com informações do jogo
- */
-async function getGameInfo(slug: string): Promise<any> {
+async function getGameInfo(slug: string) {
   try {
     const gogSlug = slug.replaceAll('-', '_').toLowerCase();
-    const gogUrl = `https://www.gog.com/game/${gogSlug}`;
 
-    console.log(`🔍 Buscando informações do jogo: ${gogUrl}`);
-
-    const body = await axios.get(gogUrl, {
-      timeout: 10000, // Timeout de 10 segundos
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; RootGames-Bot/1.0)',
-      },
-    });
-
+    const body = await axios.get(`https://www.gog.com/game/${gogSlug}`);
     const dom = new JSDOM(body.data);
 
-    // Extrair descrição
     const raw_description = dom.window.document.querySelector('.description');
-    const description = raw_description?.innerHTML || '';
-    const short_description = raw_description?.textContent?.slice(0, 160) || '';
 
-    // Extrair classificação indicativa
+    if (!raw_description) {
+      return {
+        description: '',
+        short_description: '',
+        rating: 'BR0',
+      };
+    }
+
+    const description = raw_description.innerHTML || '';
+    const short_description = (raw_description.textContent || '').slice(0, 160);
+
     const ratingElement = dom.window.document.querySelector('.age-restrictions__icon use');
-    const rating = ratingElement
-      ? ratingElement?.getAttribute('xlink:href')?.replace(/_/g, '')?.replace('#', '') || 'BR0'
-      : 'BR0';
-
-    console.log(`✅ Informações extraídas para: ${slug}`);
 
     return {
       description,
       short_description,
-      rating,
+      rating: ratingElement
+        ? ratingElement.getAttribute('xlink:href')?.replace(/_/g, '')?.replace('#', '') || 'BR0'
+        : 'BR0',
     };
   } catch (error) {
-    console.error(`❌ Erro ao obter informações do jogo ${slug}:`, Exception(error));
+    console.log('getGameInfo:', Exception(error));
     return {
       description: '',
       short_description: '',
@@ -100,289 +172,338 @@ async function getGameInfo(slug: string): Promise<any> {
   }
 }
 
-/**
- * 🔍 Buscar por Nome - Busca entidade por nome
- *
- * @param name - Nome da entidade
- * @param entityService - Serviço da entidade
- * @returns Entidade encontrada ou null
- */
-async function getByName(name: string, entityService: string): Promise<any> {
+async function getByName(name: string, entityService: string) {
   try {
-    const item = await (strapi as any).service(entityService).find({
+    const item = await strapi.service(entityService as any).find({
       filters: { name },
     });
 
     return item.results.length > 0 ? item.results[0] : null;
   } catch (error) {
-    console.error(`❌ Erro ao buscar ${name} em ${entityService}:`, Exception(error));
+    console.log('getByName:', Exception(error));
     return null;
   }
 }
 
-/**
- * 🖼️ Otimizar e Fazer Upload de Imagem
- *
- * Processo completo de otimização de imagem:
- * 1. Download da imagem original
- * 2. Otimização com Sharp
- * 3. Criação de múltiplos formatos (JPEG, WebP, AVIF)
- * 4. Upload para o Strapi
- * 5. Limpeza de arquivos temporários
- *
- * @param imageUrl - URL da imagem original
- * @param gameSlug - Slug do jogo
- * @param field - Campo da imagem (cover, gallery, etc.)
- */
-async function optimizeAndUploadImage(imageUrl: string, gameSlug: string, field: string = 'cover'): Promise<void> {
+async function create(name: string, entityService: string) {
   try {
-    console.log(`📸 Iniciando otimização de ${field} para: ${gameSlug}`);
+    const item = await getByName(name, entityService);
 
-    // 📥 Download da imagem
-    const { data } = await axios.get(imageUrl, {
-      responseType: 'arraybuffer',
-      timeout: 15000,
-    });
-    const buffer = Buffer.from(data, 'binary');
-
-    // 📁 Criar diretório temporário para otimização
-    const tempDir = path.join(process.cwd(), '.tmp', 'images', gameSlug);
-    await fs.mkdir(tempDir, { recursive: true });
-
-    const tempImagePath = path.join(tempDir, `${field}_original.jpg`);
-    await fs.writeFile(tempImagePath, buffer);
-
-    // ⚙️ Configurar opções de otimização baseadas no campo
-    let optimizationOptions;
-    switch (field) {
-      case 'cover':
-        optimizationOptions = ImagePresets.gameCard;
-        break;
-      case 'gallery':
-        optimizationOptions = ImagePresets.gallery;
-        break;
-      default:
-        optimizationOptions = ImagePresets.gameCard;
-    }
-
-    // 🔧 Criar versões otimizadas
-    const optimizedDir = path.join(tempDir, 'optimized');
-    const result = await ImageOptimizer.createMultipleFormats(tempImagePath, optimizedDir, optimizationOptions);
-
-    // 📤 Upload da versão principal (JPEG)
-    const formData: any = new FormData();
-    const optimizedImageBuffer = await fs.readFile(result.path);
-
-    formData.append('refId', gameSlug);
-    formData.append('ref', `${gameService}`);
-    formData.append('field', field);
-    formData.append('files', optimizedImageBuffer, { filename: `${gameSlug}_${field}.jpg` });
-
-    console.log(`📤 Fazendo upload da imagem ${field}: ${gameSlug}_${field}.jpg`);
-
-    await axios({
-      method: 'POST',
-      url: `http://localhost:1337/api/upload/`,
-      data: formData,
-      headers: {
-        'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
-      },
-      timeout: 30000,
-    });
-
-    // 📤 Upload da versão WebP se disponível
-    if (result.webpPath) {
-      const webpFormData: any = new FormData();
-      const webpBuffer = await fs.readFile(result.webpPath);
-
-      webpFormData.append('refId', gameSlug);
-      webpFormData.append('ref', `${gameService}`);
-      webpFormData.append('field', `${field}_webp`);
-      webpFormData.append('files', webpBuffer, { filename: `${gameSlug}_${field}.webp` });
-
-      await axios({
-        method: 'POST',
-        url: `http://localhost:1337/api/upload/`,
-        data: webpFormData,
-        headers: {
-          'Content-Type': `multipart/form-data; boundary=${webpFormData._boundary}`,
+    if (!item) {
+      await strapi.service(entityService as any).create({
+        data: {
+          name,
+          slug: slugify(name, { strict: true, lower: true }),
         },
-        timeout: 30000,
       });
     }
-
-    // 🧹 Limpar arquivos temporários
-    await fs.rm(tempDir, { recursive: true, force: true });
-
-    console.log(`✅ Otimização de ${field} concluída para: ${gameSlug}`);
   } catch (error) {
-    console.error(`❌ Erro na otimização de ${field} para ${gameSlug}:`, Exception(error));
+    console.log('create:', Exception(error));
   }
 }
 
-/**
- * 🎮 Criar Jogos - Processa lista de produtos da API GOG
- *
- * Para cada produto:
- * 1. Verifica se já existe
- * 2. Cria entidades relacionadas (categorias, plataformas, etc.)
- * 3. Cria o jogo com metadados
- * 4. Otimiza e faz upload das imagens
- *
- * @param products - Lista de produtos da API GOG
- */
-async function createGames(products: any[]): Promise<void> {
-  console.log(`🎮 Processando ${products.length} jogos...`);
+async function createManyToManyData(products: any[]) {
+  const developersSet = new Set<string>();
+  const publishersSet = new Set<string>();
+  const categoriesSet = new Set<string>();
+  const platformsSet = new Set<string>();
 
-  await Promise.all(
-    products.map(async (product, index) => {
-      try {
-        console.log(`🔄 Processando ${index + 1}/${products.length}: ${product.title}`);
+  products.forEach(product => {
+    const { developers, publishers, genres, operatingSystems } = product;
 
-        const item = await getByName(product.title, gameService);
+    genres?.forEach(({ name }: { name: string }) => {
+      categoriesSet.add(name);
+    });
 
-        if (!item) {
-          // 🏷️ Criar entidades relacionadas
-          const categories = await Promise.all(
-            product.genres.map(({ name }: { name: string }) => getByName(name, categoryService))
-          );
+    operatingSystems?.forEach((item: string) => {
+      platformsSet.add(item);
+    });
 
-          const platforms = await Promise.all(
-            product.operatingSystems.map((name: string) => getByName(name, platformService))
-          );
+    developers?.forEach((item: string) => {
+      developersSet.add(item);
+    });
 
-          const developers = await Promise.all(
-            product.developers.map((name: string) => getByName(name, developerService))
-          );
+    publishers?.forEach((item: string) => {
+      publishersSet.add(item);
+    });
+  });
 
-          const publishers = await Promise.all(
-            product.publishers.map((name: string) => getByName(name, publisherService))
-          );
+  const createCall = (set: Set<string>, entityName: string) => Array.from(set).map(name => create(name, entityName));
 
-          // 📝 Criar o jogo
-          const game = await (strapi as any).service(gameService).create({
-            data: {
-              name: product.title,
-              slug: slugify(product.title, { strict: true, lower: true }),
-              price: product.price.finalMoney.amount,
-              release_date: new Date(product.releaseDate),
-              categories,
-              platforms,
-              developers,
-              publisher: publishers[0] || null, // Primeiro publisher ou null
-              ...(await getGameInfo(product.slug)),
-              publishedAt: new Date(),
-            },
-          });
-
-          console.log(`✅ Jogo criado: ${game.name}`);
-
-          // 🖼️ Processar imagens
-          if (product.coverHorizontal) {
-            await optimizeAndUploadImage(product.coverHorizontal, game.slug, 'cover');
-          }
-
-          // 🖼️ Processar galeria (máximo 5 imagens)
-          await Promise.all(
-            product.screenshots
-              .slice(0, 5)
-              .map((url: string, index: number) =>
-                optimizeAndUploadImage(
-                  `${url.replace('{formatter}', 'product_card_v2_mobile_slider_639')}`,
-                  game.slug,
-                  `gallery_${index + 1}`
-                )
-              )
-          );
-        } else {
-          console.log(`⏭️ Jogo já existe: ${product.title}`);
-        }
-      } catch (error) {
-        console.error(`❌ Erro ao processar ${product.title}:`, Exception(error));
-      }
-    })
-  );
-
-  console.log(`🎉 Processamento de ${products.length} jogos concluído!`);
+  return Promise.all([
+    ...createCall(developersSet, developerService),
+    ...createCall(publishersSet, publisherService),
+    ...createCall(categoriesSet, categoryService),
+    ...createCall(platformsSet, platformService),
+  ]);
 }
 
-/**
- * 🎮 Game Service - Serviço principal
- */
-export default factories.createCoreService(gameService, () => ({
-  /**
-   * 📥 Popular Jogos - Importa jogos da API GOG
-   *
-   * @param params - Parâmetros da API GOG (limit, order, etc.)
-   */
-  async populate(params: any): Promise<void> {
+async function setImage({ image, game, field = 'cover' }: { image: string; game: any; field?: string }) {
+  try {
+    console.info(`🖼️  Baixando imagem: ${image}`);
+
+    // Baixar a imagem
+    const { data } = await axios.get(image, {
+      responseType: 'arraybuffer',
+      timeout: 10000, // 10 segundos de timeout
+    });
+
+    // Converter para buffer
+    const buffer = Buffer.from(data);
+
+    // Criar arquivo temporário
+    const tempFileName = `${game.slug}_${field}_${Date.now()}.jpg`;
+    const tempFilePath = `./temp_${tempFileName}`;
+
+    // Salvar arquivo temporário
+    fs.writeFileSync(tempFilePath, buffer);
+
+    console.info(`📤 Fazendo upload da imagem ${field}: ${tempFileName}`);
+
     try {
-      const gogApiUrl = `https://catalog.gog.com/v1/catalog?${qs.stringify(params)}`;
+      // Usar upload via API REST (mais confiável)
+      const formData = new FormData();
 
-      console.log(`🌐 Conectando com API GOG: ${gogApiUrl}`);
+      formData.append('refId', game.id);
+      formData.append('ref', gameService);
+      formData.append('field', field);
+      formData.append('files', buffer, {
+        filename: tempFileName,
+        contentType: 'image/jpeg',
+      });
 
-      const {
-        data: { products },
-      } = await axios.get(gogApiUrl, {
-        timeout: 30000,
+      const uploadResponse = await axios({
+        method: 'POST',
+        url: 'http://localhost:1337/api/upload',
+        data: formData,
         headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; RootGames-Bot/1.0)',
+          'Content-Type': 'multipart/form-data',
         },
       });
 
-      console.log(`📦 Recebidos ${products.length} produtos da API GOG`);
+      console.info(`✅ Imagem ${field} enviada com sucesso para ${game.name}`);
 
-      await createGames(products);
+      // Atualizar o jogo com a referência da imagem
+      if (uploadResponse.data && uploadResponse.data[0]) {
+        const uploadedFile = uploadResponse.data[0];
 
-      console.log('🎉 População de jogos concluída com sucesso!');
+        // Atualizar o campo da imagem no jogo
+        await strapi.service(gameService).update(game.id, {
+          data: {
+            [field]: uploadedFile.id,
+          },
+        });
+
+        console.info(`🔗 Imagem ${field} vinculada ao jogo ${game.name}`);
+      }
+
+      // Limpar arquivo temporário
+      fs.unlinkSync(tempFilePath);
+    } catch (uploadError: any) {
+      console.error(`❌ Erro no upload via API:`, uploadError.message);
+
+      // Limpar arquivo temporário em caso de erro
+      if (fs.existsSync(tempFilePath)) {
+        fs.unlinkSync(tempFilePath);
+      }
+    }
+  } catch (error: any) {
+    console.error(`❌ Erro ao fazer upload da imagem ${field} para ${game.name}:`, {
+      error: error.message,
+      response: error.response?.data,
+      status: error.response?.status,
+    });
+  }
+}
+
+async function createGames(products: any[]) {
+  console.log(`🎮 Iniciando criação de ${products.length} jogos...`);
+
+  for (const product of products) {
+    try {
+      const item = await getByName(product.title, gameService);
+
+      if (!item) {
+        console.info(`🎯 Criando jogo: ${product.title}...`);
+
+        // Criar o jogo primeiro
+        const game = await strapi.service(`${gameService}`).create({
+          data: {
+            name: product.title,
+            slug: product.slug,
+            price: product.price.finalMoney.amount,
+            release_date: new Date(product.releaseDate),
+            categories: await Promise.all(
+              product.genres.map(({ name }: { name: string }) => getByName(name, categoryService))
+            ),
+            platforms: await Promise.all(
+              product.operatingSystems.map((name: string) => getByName(name, platformService))
+            ),
+            developers: await Promise.all(product.developers.map((name: string) => getByName(name, developerService))),
+            publisher: await Promise.all(product.publishers.map((name: string) => getByName(name, publisherService))),
+            ...(await getGameInfo(product.slug)),
+            publishedAt: new Date(),
+          },
+        });
+
+        console.log(`✅ Jogo criado: ${game.name} (ID: ${game.id})`);
+
+        // Fazer upload da imagem de capa
+        if (product.coverHorizontal) {
+          console.log(`🖼️  Fazendo upload da capa para: ${game.name}`);
+          await setImage({ image: product.coverHorizontal, game, field: 'cover' });
+        }
+
+        // Fazer upload das imagens da galeria
+        if (product.screenshots && product.screenshots.length > 0) {
+          console.log(
+            `🖼️  Fazendo upload de ${Math.min(product.screenshots.length, 5)} imagens da galeria para: ${game.name}`
+          );
+
+          const galleryImages = product.screenshots.slice(0, 5);
+          for (const screenshot of galleryImages) {
+            const imageUrl = screenshot.replace('{formatter}', 'product_card_v2_mobile_slider_639');
+            await setImage({ image: imageUrl, game, field: 'gallery' });
+          }
+        }
+
+        console.log(`🎉 Jogo ${game.name} criado com sucesso!`);
+      } else {
+        console.log(`⏭️  Jogo já existe: ${product.title}`);
+      }
+    } catch (error: any) {
+      console.error(`❌ Erro ao criar jogo ${product.title}:`, error.message);
+    }
+  }
+
+  console.log(`🏁 Criação de jogos concluída!`);
+}
+
+// Função para buscar jogos específicos da lista
+async function searchSpecificGames() {
+  console.log('🔍 Buscando jogos específicos da lista...');
+
+  const foundGames = [];
+  const notFoundGames = [];
+
+  for (const gameName of TARGET_GAMES) {
+    try {
+      const slug = (GAME_SLUGS as any)[gameName] || slugify(gameName, { strict: true, lower: true });
+      const gogUrl = `https://www.gog.com/game/${slug}`;
+
+      console.log(`🔍 Verificando: ${gameName} (${slug})`);
+
+      const response = await axios.get(gogUrl);
+      if (response.status === 200) {
+        console.log(`✅ Encontrado: ${gameName}`);
+        foundGames.push({ name: gameName, slug, url: gogUrl });
+      }
     } catch (error) {
-      console.error('❌ Erro na população de jogos:', Exception(error));
-      throw error;
+      console.log(`❌ Não encontrado: ${gameName}`);
+      notFoundGames.push(gameName);
+    }
+
+    // Aguardar entre requisições para não sobrecarregar
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  }
+
+  console.log(`\n📊 RESULTADO DA BUSCA:`);
+  console.log(`✅ Jogos encontrados: ${foundGames.length}`);
+  console.log(`❌ Jogos não encontrados: ${notFoundGames.length}`);
+
+  if (notFoundGames.length > 0) {
+    console.log(`\n❌ Jogos não encontrados na GOG:`);
+    notFoundGames.forEach(game => console.log(`   - ${game}`));
+  }
+
+  return foundGames;
+}
+
+export default factories.createCoreService(gameService, () => ({
+  async populate(params: any) {
+    try {
+      console.log('🚀 Iniciando população de jogos específicos...');
+      console.log(`📋 Total de jogos na lista: ${TARGET_GAMES.length}`);
+
+      // Buscar jogos específicos primeiro
+      const foundGames = await searchSpecificGames();
+
+      if (foundGames.length === 0) {
+        console.log('❌ Nenhum jogo foi encontrado na GOG');
+        return;
+      }
+
+      // Usar a API da GOG para buscar informações detalhadas
+      const gogApiUrl = `https://catalog.gog.com/v1/catalog?${qs.stringify(params)}`;
+
+      console.log('📡 Buscando informações detalhadas da API da GOG...');
+
+      const {
+        data: { products },
+      } = await axios.get(gogApiUrl);
+
+      // Filtrar apenas os jogos da nossa lista
+      const targetProducts = products.filter((product: any) => TARGET_GAMES.includes(product.title));
+
+      console.log(`🎯 Jogos da lista encontrados na API: ${targetProducts.length}`);
+
+      if (targetProducts.length > 0) {
+        await createManyToManyData(targetProducts);
+        await createGames(targetProducts);
+      }
+
+      console.log('🏁 População de jogos específicos concluída!');
+    } catch (error) {
+      console.log('populate:', Exception(error));
     }
   },
 
-  /**
-   * 🖼️ Otimizar Imagens Existentes - Reprocessa todas as imagens
-   *
-   * Método para otimizar imagens de jogos já existentes no banco
-   */
-  async optimizeExistingImages(): Promise<void> {
+  // Nova função para população específica
+  async populateSpecific() {
     try {
-      const games = await (strapi as any).service(gameService).find({
-        populate: ['cover', 'gallery'],
-      });
+      console.log('🎯 Iniciando população específica dos jogos da lista...');
 
-      console.log(`🔄 Iniciando otimização para ${games.results.length} jogos...`);
+      // Buscar jogos específicos
+      const foundGames = await searchSpecificGames();
 
-      for (const game of games.results) {
+      if (foundGames.length === 0) {
+        console.log('❌ Nenhum jogo foi encontrado na GOG');
+        return;
+      }
+
+      // Criar jogos manualmente com informações básicas
+      for (const gameInfo of foundGames) {
         try {
-          console.log(`📸 Processando imagens de: ${game.name}`);
+          const existingGame = await getByName(gameInfo.name, gameService);
 
-          // 🖼️ Otimizar imagem de capa
-          if (game.cover?.url) {
-            console.log(`📸 Otimizando capa para: ${game.name}`);
-            await optimizeAndUploadImage(game.cover.url, game.slug, 'cover');
-          }
+          if (!existingGame) {
+            console.log(`🎮 Criando jogo: ${gameInfo.name}`);
 
-          // 🖼️ Otimizar imagens da galeria
-          if (game.gallery && game.gallery.length > 0) {
-            for (let i = 0; i < game.gallery.length; i++) {
-              const image = game.gallery[i];
-              if (image.url) {
-                console.log(`📸 Otimizando imagem ${i + 1} da galeria para: ${game.name}`);
-                await optimizeAndUploadImage(image.url, game.slug, `gallery_${i + 1}`);
-              }
-            }
+            const game = await strapi.service(gameService).create({
+              data: {
+                name: gameInfo.name,
+                slug: gameInfo.slug,
+                price: 0, // Preço será atualizado depois
+                release_date: new Date(),
+                description: `Jogo ${gameInfo.name} disponível na GOG`,
+                short_description: `Jogo ${gameInfo.name}`,
+                rating: 'BR0',
+                publishedAt: new Date(),
+              },
+            });
+
+            console.log(`✅ Jogo criado: ${game.name} (ID: ${game.id})`);
+          } else {
+            console.log(`⏭️  Jogo já existe: ${gameInfo.name}`);
           }
-        } catch (error) {
-          console.error(`❌ Erro ao processar imagens de ${game.name}:`, Exception(error));
+        } catch (error: any) {
+          console.error(`❌ Erro ao criar jogo ${gameInfo.name}:`, error.message);
         }
       }
 
-      console.log('✅ Otimização de imagens concluída para todos os jogos!');
+      console.log('🏁 População específica concluída!');
     } catch (error) {
-      console.error('❌ Erro na otimização de imagens:', Exception(error));
-      throw error;
+      console.log('populateSpecific:', Exception(error));
     }
   },
 }));
