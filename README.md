@@ -6,8 +6,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen?style=for-the-badge)](https://github.com/jonathanmartins81/rootgames-api)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Errors-0-brightgreen?style=for-the-badge)](https://github.com/jonathanmartins81/rootgames-api)
+[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen?style=for-badge)](https://github.com/jonathanmartins81/rootgames-api)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Errors-0-brightgreen?style=for-badge)](https://github.com/jonathanmartins81/rootgames-api)
 
 > **🎯 API Headless para Catálogo de Jogos** - Uma solução completa construída com Strapi 5.x CMS
 > para gerenciamento de jogos, categorias, plataformas, desenvolvedores e publicadores.
@@ -20,7 +20,6 @@
 - 🔐 **Autenticação robusta** com JWT e tokens de API
 - 📱 **Painel administrativo** customizado
 - 🌍 **Suporte a internacionalização** (i18n)
-- 🖊️ **CKEditor 5** para descrições (editor rico completo e funcional)
 - 📊 **Relacionamentos complexos** entre entidades
 - 🔄 **Webhooks** para integrações
 - 📈 **Escalável** e pronto para produção
@@ -31,8 +30,8 @@
 - ✅ **Zero erros TypeScript**
 - 🚀 **Sistema de Qualidade** completo (ESLint, Prettier, Commitlint, Husky)
 - 🖼️ **Otimização de Imagens** automática (Sharp + Imagemin)
-- 🧪 **Sistema de Testes** completo (Vitest + Playwright + Percy + axe-core)
-- 🖊️ **CKEditor 5** - Editor de texto rico completo para descrições de jogos
+- 🧪 **Sistema de Testes** completo (Vitest + Playwright)
+- 🔧 **Scripts de Automação** avançados para diagnóstico e monitoramento
 
 ## 🏗️ Arquitetura
 
@@ -51,7 +50,7 @@ rootgames-api/
 ├── 📁 database/             # Migrações e dados
 ├── 📁 docs/                 # 📚 Documentação completa
 ├── 📁 public/               # Arquivos públicos
-├── 📁 scripts/              # Scripts de automação
+├── 📁 scripts/              # Scripts de automação avançados
 └── 📁 patches/              # Patches personalizados
 ```
 
@@ -303,17 +302,20 @@ yarn images:thumbnails # Gerar thumbnails de diferentes tamanhos
 yarn images:webp     # Converter imagens para WebP
 ```
 
-### **Testes e Qualidade**
+### **Diagnóstico e Monitoramento**
 
 ```bash
-yarn test           # Executar testes unitários (Vitest)
-yarn test:ui        # Interface visual dos testes
-yarn test:coverage  # Relatório de cobertura
-yarn test:e2e       # Testes end-to-end (Playwright)
-yarn test:e2e:ui    # Interface visual dos testes E2E
-yarn test:visual    # Testes visuais (Percy)
-yarn test:accessibility # Testes de acessibilidade
-yarn test:all       # Executar todos os testes
+# Sistema de diagnóstico completo
+./scripts/diagnostico-completo.sh
+
+# Monitoramento avançado
+./scripts/monitor-avancado.sh start
+
+# Health check com rollback automático
+./scripts/health-check-improved.sh
+
+# Backup automático
+./scripts/backup-improved.sh
 ```
 
 ## 🧪 Sistema de Testes e Qualidade
@@ -322,8 +324,6 @@ yarn test:all       # Executar todos os testes
 
 - **Vitest 3.2.4**: Testes unitários e de integração
 - **Playwright 1.54.2**: Testes end-to-end
-- **Percy**: Testes de regressão visual
-- **axe-core**: Testes de acessibilidade
 - **ESLint 9.32.0**: Linting avançado
 - **Prettier 3.6.2**: Formatação de código
 
@@ -343,21 +343,6 @@ yarn test:all       # Executar todos os testes
 - Testes de GraphQL
 - Múltiplos navegadores (Chrome, Firefox, Safari)
 - Testes mobile e tablet
-
-#### **Testes Visuais (Percy)**
-
-- Regressão visual automática
-- Comparação de screenshots
-- Testes responsivos
-- Modo escuro/claro
-
-#### **Testes de Acessibilidade (axe-core)**
-
-- Conformidade WCAG 2.1 AA
-- Navegação por teclado
-- Contraste de cores
-- Estrutura de headings
-- Alt text para imagens
 
 ### **🔧 Configuração de Testes**
 
@@ -408,71 +393,6 @@ yarn test:e2e
 # Gera relatórios em ./test-results/
 ```
 
-#### **Testes de Acessibilidade**
-
-```bash
-yarn test:accessibility
-# Verifica conformidade WCAG 2.1 AA
-```
-
-### **🚀 Integração Contínua**
-
-#### **Git Hooks**
-
-- Pre-commit: Lint + Format + Unit Tests
-- Commit-msg: Validação de mensagens
-- Pre-push: Todos os testes
-
-#### **Scripts de Qualidade**
-
-```bash
-yarn quality        # Lint + Format + Type Check
-yarn quality:fix    # Corrigir problemas automaticamente
-yarn test:all       # Todos os testes
-```
-
-### **📝 Exemplos de Testes**
-
-#### **Teste Unitário (Vitest)**
-
-```typescript
-import { describe, it, expect } from 'vitest';
-import ImageOptimizer from '@/utils/imageOptimizer';
-
-describe('ImageOptimizer', () => {
-  it('should optimize image with default options', async () => {
-    const result = await ImageOptimizer.optimizeWithSharp('input.jpg', 'output.jpg');
-
-    expect(result.compressionRatio).toBeGreaterThan(0);
-    expect(result.format).toBe('jpeg');
-  });
-});
-```
-
-#### **Teste E2E (Playwright)**
-
-```typescript
-import { test, expect } from '@playwright/test';
-
-test('should return games list', async ({ request }) => {
-  const response = await request.get('/api/games');
-  expect([200, 403]).toContain(response.status());
-});
-```
-
-#### **Teste de Acessibilidade**
-
-```typescript
-import { test, expect } from '@playwright/test';
-import { AxeBuilder } from '@axe-core/playwright';
-
-test('admin panel should be accessible', async ({ page }) => {
-  await page.goto('/admin');
-  const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
-  expect(accessibilityScanResults.violations).toEqual([]);
-});
-```
-
 ## 🖼️ Sistema de Otimização de Imagens
 
 ### **🛠️ Ferramentas Implementadas**
@@ -499,13 +419,6 @@ test('admin panel should be accessible', async ({ page }) => {
 - **Gallery**: 800x600px (90% qualidade)
 - **Avatar**: 100x100px (90% qualidade)
 
-#### **Formatos Suportados**
-
-- JPEG/PNG → WebP/AVIF
-- Compressão inteligente
-- Múltiplas versões por imagem
-- Otimização automática no upload
-
 ### **🔧 Uso Programático**
 
 ```typescript
@@ -524,19 +437,6 @@ const formats = await ImageOptimizer.createMultipleFormats(
   './output/',
   ImagePresets.webp
 );
-
-// Gerar thumbnails
-const thumbnails = await ImageOptimizer.generateThumbnails('input.jpg', './thumbnails/', [
-  { width: 150, height: 150, suffix: '_thumb' },
-  { width: 300, height: 200, suffix: '_card' },
-]);
-```
-
-### **🌐 API Endpoints**
-
-```bash
-# Otimizar imagens existentes
-POST /api/games/optimize-images
 ```
 
 ## 🚀 Sistema de Qualidade de Código
@@ -570,12 +470,34 @@ chore: update dependencies
 - **Commit-msg**: Valida formato da mensagem de commit
 - **Lint-staged**: Processa apenas arquivos modificados
 
-### **⚙️ Configurações**
+## 🛡️ Sistema de Diagnóstico e Monitoramento
 
-- **`.prettierrc.json`**: Regras de formatação
-- **`eslint.config.js`**: Regras de linting
-- **`commitlint.config.js`**: Regras de commit
-- **`.lintstagedrc.js`**: Configuração de lint-staged
+### **🔍 Diagnóstico Completo**
+
+O projeto inclui um sistema avançado de diagnóstico com 7 etapas sequenciais:
+
+1. **Pré-diagnóstico** - Verificação de dependências e ambiente
+2. **Diagnóstico do Sistema** - Análise de infraestrutura
+3. **Diagnóstico da Aplicação** - Validação do Strapi
+4. **Diagnóstico de Performance** - Métricas e otimizações
+5. **Diagnóstico de Segurança** - Auditoria de segurança
+6. **Backup e Verificação** - Proteção de dados
+7. **Relatório Final** - Consolidação e recomendações
+
+### **📊 Monitoramento Inteligente**
+
+- Monitoramento em tempo real de recursos
+- Alertas inteligentes com cooldown
+- Integração com webhooks (Slack/Discord)
+- Métricas salvas em JSON para análise
+- Histórico de alertas e métricas
+
+### **🚀 Scripts de Automação**
+
+- **Backup automático** com verificação de integridade
+- **Health check** com rollback automático
+- **Deploy seguro** com todas as proteções
+- **Monitoramento contínuo** para produção
 
 ## 🔧 Configurações Avançadas
 
@@ -618,16 +540,18 @@ module.exports = [
 - [x] Importação automática da GOG
 - [x] Painel administrativo customizado
 - [x] Sistema de permissões
-- [x] Editor rico CKEditor 5
 - [x] Relacionamentos entre entidades
 - [x] Documentação completa
 - [x] TypeScript configurado
 - [x] ESLint + Prettier
-- [x] Scripts de automação
+- [x] Scripts de automação avançados
 - [x] Configurações otimizadas
 - [x] Build funcional (20.94s)
 - [x] Zero erros TypeScript
 - [x] Database connection otimizada
+- [x] Sistema de diagnóstico completo
+- [x] Monitoramento inteligente
+- [x] Backup automático com verificação
 
 ### **🔄 Em Desenvolvimento**
 

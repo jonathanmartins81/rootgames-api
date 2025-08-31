@@ -89,7 +89,9 @@
     "*.json.log",
     "metrics/**/*",
     "monitor_stats.json",
-    "backups/**/*"
+    "backups/**/*",
+    "test-results/**/*",
+    "playwright-report/**/*"
   ],
 
   "ts-node": {

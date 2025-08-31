@@ -31,6 +31,7 @@ export default defineConfig({
     timeout: 120 * 1000,
   },
   outputDir: 'test-results/',
-  globalSetup: require.resolve('./tests/e2e/global-setup.ts'),
-  globalTeardown: require.resolve('./tests/e2e/global-teardown.ts'),
+  // Removendo referências aos arquivos de setup que não existem
+  // globalSetup: require.resolve('./tests/e2e/global-setup.ts'),
+  // globalTeardown: require.resolve('./tests/e2e/global-teardown.ts'),
 });
