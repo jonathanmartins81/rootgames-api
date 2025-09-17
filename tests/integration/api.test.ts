@@ -3,21 +3,28 @@
  * Testa integração entre controllers, services e database
  */
 
-import { describe, it, expect, beforeAll, afterAll, beforeEach } from '@jest/globals';
-import request from 'supertest';
-import { createStrapiInstance } from '@strapi/strapi';
+import {
+  describe,
+  it,
+  expect,
+  beforeAll,
+  afterAll,
+  beforeEach,
+} from "@jest/globals";
+import request from "supertest";
+import { createStrapiInstance } from "@strapi/strapi";
 
 let strapi: any;
 let app: any;
 
-describe('🌐 API Integration Tests', () => {
+describe("🌐 API Integration Tests", () => {
   beforeAll(async () => {
     // Inicializar Strapi para testes
     strapi = await createStrapiInstance({
       appDir: process.cwd(),
       distDir: process.cwd(),
     });
-    
+
     await strapi.start();
     app = strapi.server.app;
   });
@@ -30,60 +37,58 @@ describe('🌐 API Integration Tests', () => {
 
   beforeEach(async () => {
     // Limpar dados de teste antes de cada teste
-    await strapi.entityService.deleteMany('api::game.game', {});
+    await strapi.entityService.deleteMany("api::game.game", {});
   });
 
-  describe('🎮 Games API', () => {
-    describe('GET /api/games', () => {
-      it('deve retornar lista de jogos', async () => {
+  describe("🎮 Games API", () => {
+    describe("GET /api/games", () => {
+      it("deve retornar lista de jogos", async () => {
         // Criar dados de teste
-        await strapi.entityService.create('api::game.game', {
+        await strapi.entityService.create("api::game.game", {
           data: {
-            name: 'Test Game 1',
-            slug: 'test-game-1',
-            description: 'A test game',
-            releaseDate: '2024-01-01',
+            name: "Test Game 1",
+            slug: "test-game-1",
+            description: "A test game",
+            releaseDate: "2024-01-01",
           },
         });
 
-        const response = await request(app)
-          .get('/api/games')
-          .expect(200);
+        const response = await request(app).get("/api/games").expect(200);
 
         expect(response.body.data).toHaveLength(1);
-        expect(response.body.data[0].attributes.name).toBe('Test Game 1');
+        expect(response.body.data[0].attributes.name).toBe("Test Game 1");
       });
 
-      it('deve filtrar jogos por categoria', async () => {
+      it("deve filtrar jogos por categoria", async () => {
         // Criar jogos de diferentes categorias
-        await strapi.entityService.create('api::game.game', {
+        await strapi.entityService.create("api::game.game", {
           data: {
-            name: 'RPG Game',
-            slug: 'rpg-game',
-            category: 'RPG',
+            name: "RPG Game",
+            slug: "rpg-game",
+            category: "RPG",
           },
         });
 
-        await strapi.entityService.create('api::game.game', {
+        await strapi.entityService.create("api::game.game", {
           data: {
-            name: 'Action Game',
-            slug: 'action-game',
-            category: 'Action',
+            name: "Action Game",
+            slug: "action-game",
+            category: "Action",
           },
         });
 
         const response = await request(app)
-          .get('/api/games?filters[category][$eq]=RPG')
+          .get("/api/games?filters[category][$eq]=RPG")
           .expect(200);
 
         expect(response.body.data).toHaveLength(1);
-        expect(response.body.data[0].attributes.category).toBe('RPG');
+        expect(response.body.data[0].attributes.category).toBe("RPG");
       });
 
-      it('deve paginar resultados', async () => {
+      it("deve paginar resultados", async () => {
         // Criar múltiplos jogos
         for (let i = 1; i <= 15; i++) {
-          await strapi.entityService.create('api::game.game', {
+          await strapi.entityService.create("api::game.game", {
             data: {
               name: `Game ${i}`,
               slug: `game-${i}`,
@@ -92,7 +97,7 @@ describe('🌐 API Integration Tests', () => {
         }
 
         const response = await request(app)
-          .get('/api/games?pagination[pageSize]=10')
+          .get("/api/games?pagination[pageSize]=10")
           .expect(200);
 
         expect(response.body.data).toHaveLength(10);
@@ -100,13 +105,13 @@ describe('🌐 API Integration Tests', () => {
       });
     });
 
-    describe('GET /api/games/:id', () => {
-      it('deve retornar um jogo específico', async () => {
-        const game = await strapi.entityService.create('api::game.game', {
+    describe("GET /api/games/:id", () => {
+      it("deve retornar um jogo específico", async () => {
+        const game = await strapi.entityService.create("api::game.game", {
           data: {
-            name: 'Specific Game',
-            slug: 'specific-game',
-            description: 'A specific game',
+            name: "Specific Game",
+            slug: "specific-game",
+            description: "A specific game",
           },
         });
 
@@ -114,65 +119,60 @@ describe('🌐 API Integration Tests', () => {
           .get(`/api/games/${game.id}`)
           .expect(200);
 
-        expect(response.body.data.attributes.name).toBe('Specific Game');
-        expect(response.body.data.attributes.slug).toBe('specific-game');
+        expect(response.body.data.attributes.name).toBe("Specific Game");
+        expect(response.body.data.attributes.slug).toBe("specific-game");
       });
 
-      it('deve retornar 404 para jogo inexistente', async () => {
-        await request(app)
-          .get('/api/games/999')
-          .expect(404);
+      it("deve retornar 404 para jogo inexistente", async () => {
+        await request(app).get("/api/games/999").expect(404);
       });
     });
 
-    describe('POST /api/games', () => {
-      it('deve criar um novo jogo', async () => {
+    describe("POST /api/games", () => {
+      it("deve criar um novo jogo", async () => {
         const gameData = {
           data: {
-            name: 'New Game',
-            slug: 'new-game',
-            description: 'A new game',
-            releaseDate: '2024-01-01',
+            name: "New Game",
+            slug: "new-game",
+            description: "A new game",
+            releaseDate: "2024-01-01",
           },
         };
 
         const response = await request(app)
-          .post('/api/games')
+          .post("/api/games")
           .send(gameData)
           .expect(201);
 
-        expect(response.body.data.attributes.name).toBe('New Game');
-        expect(response.body.data.attributes.slug).toBe('new-game');
+        expect(response.body.data.attributes.name).toBe("New Game");
+        expect(response.body.data.attributes.slug).toBe("new-game");
       });
 
-      it('deve validar dados obrigatórios', async () => {
+      it("deve validar dados obrigatórios", async () => {
         const invalidData = {
           data: {
             // name ausente
-            slug: 'invalid-game',
+            slug: "invalid-game",
           },
         };
 
-        await request(app)
-          .post('/api/games')
-          .send(invalidData)
-          .expect(400);
+        await request(app).post("/api/games").send(invalidData).expect(400);
       });
     });
 
-    describe('PUT /api/games/:id', () => {
-      it('deve atualizar um jogo existente', async () => {
-        const game = await strapi.entityService.create('api::game.game', {
+    describe("PUT /api/games/:id", () => {
+      it("deve atualizar um jogo existente", async () => {
+        const game = await strapi.entityService.create("api::game.game", {
           data: {
-            name: 'Original Game',
-            slug: 'original-game',
+            name: "Original Game",
+            slug: "original-game",
           },
         });
 
         const updateData = {
           data: {
-            name: 'Updated Game',
-            description: 'Updated description',
+            name: "Updated Game",
+            description: "Updated description",
           },
         };
 
@@ -181,73 +181,72 @@ describe('🌐 API Integration Tests', () => {
           .send(updateData)
           .expect(200);
 
-        expect(response.body.data.attributes.name).toBe('Updated Game');
-        expect(response.body.data.attributes.description).toBe('Updated description');
+        expect(response.body.data.attributes.name).toBe("Updated Game");
+        expect(response.body.data.attributes.description).toBe(
+          "Updated description"
+        );
       });
     });
 
-    describe('DELETE /api/games/:id', () => {
-      it('deve deletar um jogo', async () => {
-        const game = await strapi.entityService.create('api::game.game', {
+    describe("DELETE /api/games/:id", () => {
+      it("deve deletar um jogo", async () => {
+        const game = await strapi.entityService.create("api::game.game", {
           data: {
-            name: 'Game to Delete',
-            slug: 'game-to-delete',
+            name: "Game to Delete",
+            slug: "game-to-delete",
           },
         });
 
-        await request(app)
-          .delete(`/api/games/${game.id}`)
-          .expect(200);
+        await request(app).delete(`/api/games/${game.id}`).expect(200);
 
         // Verificar se foi deletado
-        const deletedGame = await strapi.entityService.findOne('api::game.game', game.id);
+        const deletedGame = await strapi.entityService.findOne(
+          "api::game.game",
+          game.id
+        );
         expect(deletedGame).toBeNull();
       });
     });
   });
 
-  describe('🖼️ Images API', () => {
-    describe('GET /api/games/images/search', () => {
-      it('deve buscar imagens de jogos', async () => {
+  describe("🖼️ Images API", () => {
+    describe("GET /api/games/images/search", () => {
+      it("deve buscar imagens de jogos", async () => {
         const response = await request(app)
-          .get('/api/games/images/search?query=baldur')
+          .get("/api/games/images/search?query=baldur")
           .expect(200);
 
-        expect(response.body).toHaveProperty('images');
+        expect(response.body).toHaveProperty("images");
         expect(Array.isArray(response.body.images)).toBe(true);
       });
 
-      it('deve retornar erro para query vazia', async () => {
-        await request(app)
-          .get('/api/games/images/search')
-          .expect(400);
+      it("deve retornar erro para query vazia", async () => {
+        await request(app).get("/api/games/images/search").expect(400);
       });
     });
   });
 
-  describe('🔐 Admin API', () => {
-    describe('GET /api/admin/system-info', () => {
-      it('deve retornar informações do sistema', async () => {
+  describe("🔐 Admin API", () => {
+    describe("GET /api/admin/system-info", () => {
+      it("deve retornar informações do sistema", async () => {
         const response = await request(app)
-          .get('/api/admin/system-info')
-          .set('X-API-Key', 'rootgames-admin-key-2024')
+          .get("/api/admin/system-info")
+          .set("X-API-Key", "rootgames-admin-key-2024")
           .expect(200);
 
-        expect(response.body).toHaveProperty('system');
-        expect(response.body.system).toHaveProperty('version');
-        expect(response.body.system).toHaveProperty('uptime');
+        expect(response.body).toHaveProperty("system");
+        expect(response.body.system).toHaveProperty("version");
+        expect(response.body.system).toHaveProperty("uptime");
       });
 
-      it('deve retornar 401 sem API key', async () => {
-        await request(app)
-          .get('/api/admin/system-info')
-          .expect(401);
+      it("deve retornar 401 sem API key", async () => {
+        await request(app).get("/api/admin/system-info").expect(401);
       });
 
-      it('deve retornar 401 com API key inválida', async () => {
+      it("deve retornar 401 com API key inválida", async () => {
         await request(app)
-          .get('/api/admin/system-info')
-          .set('X-API-Key', 'invalid-key')
+          .get("/api/admin/system-info")
+          .set("X-API-Key", "invalid-key")
           .expect(401);
       });
     });

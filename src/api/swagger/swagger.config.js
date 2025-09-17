@@ -14,18 +14,18 @@ const options = {
       version: '1.0.0',
       description: `
         Uma API robusta e segura para gerenciamento de jogos, construída com Strapi.
-        
+
         ## 🚀 Funcionalidades
         - **Gerenciamento de Jogos**: CRUD completo com metadados detalhados
         - **Integração com APIs Externas**: RAWG, Steam, GOG, IGDB
         - **Sistema de Imagens**: Upload, busca e otimização automática
         - **Segurança Avançada**: Rate limiting, headers de segurança, validação
         - **Monitoramento**: Logs, métricas e alertas em tempo real
-        
+
         ## 🔐 Autenticação
         Algumas rotas requerem autenticação por API Key. Inclua o header:
         \`X-API-Key: rootgames-admin-key-2024\`
-        
+
         ## 📊 Rate Limiting
         - **API Geral**: 100 requisições por minuto
         - **Upload**: 10 requisições por minuto

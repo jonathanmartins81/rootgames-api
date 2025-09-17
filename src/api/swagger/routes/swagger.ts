@@ -6,24 +6,24 @@
 export default {
   routes: [
     {
-      method: 'GET',
-      path: '/api-docs',
-      handler: 'swagger.getDocs',
+      method: "GET",
+      path: "/api-docs",
+      handler: "swagger.getDocs",
       config: {
         auth: false,
         policies: [],
-        middlewares: []
-      }
+        middlewares: [],
+      },
     },
     {
-      method: 'GET',
-      path: '/api-docs.json',
-      handler: 'swagger.getSpecs',
+      method: "GET",
+      path: "/api-docs.json",
+      handler: "swagger.getSpecs",
       config: {
         auth: false,
         policies: [],
-        middlewares: []
-      }
-    }
-  ]
+        middlewares: [],
+      },
+    },
+  ],
 };

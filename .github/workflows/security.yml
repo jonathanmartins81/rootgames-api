@@ -2,44 +2,44 @@ name: 🔒 Security Pipeline
 
 on:
   schedule:
-    - cron: '0 2 * * *' # Diariamente às 2h
+    - cron: "0 2 * * *" # Diariamente às 2h
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 
 env:
-  NODE_VERSION: '20.19.4'
+  NODE_VERSION: "20.19.4"
 
 jobs:
   # 🔍 Análise de Segurança
   security-analysis:
     name: 🔍 Security Analysis
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
-      
+
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'yarn'
-      
+          cache: "yarn"
+
       - name: 📦 Install Dependencies
         run: yarn install --frozen-lockfile
-      
+
       - name: 🔒 Run Security Tests
         run: node scripts/test-security.js
-      
+
       - name: 🛡️ Vulnerability Scan
         run: node scripts/vulnerability-scanner.js
-      
+
       - name: 🔍 Dependency Audit
         run: yarn audit --level high
         continue-on-error: true
-      
+
       - name: 📊 Security Report
         run: |
           echo "## 🔒 Security Analysis Report" >> $GITHUB_STEP_SUMMARY
@@ -53,16 +53,16 @@ jobs:
     name: 🚨 Security Alerts
     runs-on: ubuntu-latest
     if: failure()
-    
+
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
-      
+
       - name: 🚨 Send Security Alert
         run: |
           echo "🚨 Security issues detected in ${{ github.ref_name }}"
           echo "Please review the security report and take necessary actions."
-      
+
       - name: 📧 Notify Team
         run: |
           # Adicionar notificação por email/Slack/Discord

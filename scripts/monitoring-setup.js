@@ -25,11 +25,11 @@ scrape_configs:
       - targets: ['localhost:1337']
     metrics_path: '/api/metrics'
     scrape_interval: 5s
-    
+
   - job_name: 'node-exporter'
     static_configs:
       - targets: ['localhost:9100']
-      
+
   - job_name: 'postgres-exporter'
     static_configs:
       - targets: ['localhost:9187']
@@ -135,7 +135,7 @@ groups:
         annotations:
           summary: "High error rate detected"
           description: "Error rate is {{ $value }} errors per second"
-          
+
       - alert: HighResponseTime
         expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 0.5
         for: 2m
@@ -144,7 +144,7 @@ groups:
         annotations:
           summary: "High response time detected"
           description: "95th percentile response time is {{ $value }}s"
-          
+
       - alert: HighMemoryUsage
         expr: process_resident_memory_bytes > 1000000000
         for: 5m
@@ -153,7 +153,7 @@ groups:
         annotations:
           summary: "High memory usage detected"
           description: "Memory usage is {{ $value }} bytes"
-          
+
       - alert: DatabaseDown
         expr: up{job="postgres-exporter"} == 0
         for: 1m
