@@ -4,9 +4,9 @@ on:
   schedule:
     - cron: "0 2 * * *" # Diariamente às 2h
   push:
-    branches: [main, master]
+    branches: [master]
   pull_request:
-    branches: [main, master]
+    branches: [master]
 
 env:
   NODE_VERSION: "20.19.4"
